@@ -1,0 +1,11 @@
+#pragma once
+#include "fable/FCore.h"
+#include "fable/MainGameComponent.h"
+#include "fable/World.h"
+#include "fable/PlayerManager.h"
+#include "fable/Player.h"
+#include "fable/GameCamera.h"
+#include "fable/Thing.h"
+#include "fable/Hero.h"
+#include "fable/InputProcess.h"
+#include "fable/HUD.h"
