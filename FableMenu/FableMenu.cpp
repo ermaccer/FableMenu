@@ -109,6 +109,17 @@ void FableMenu::Render()
 
 					ImGui::Checkbox("Freeze Position", &ms_bFreezeCamera);
 					ImGui::Checkbox("Free Camera", &ms_bEnableFreeCamera);
+
+					if (ImGui::Button("Teleport Player To Camera Location"))
+					{
+						CPlayer* plr = CMainGameComponent::Get()->GetPlayerManager()->GetPlayer();
+						if (plr)
+						{
+							CThing* t = plr->GetCharacterThing();
+							*t->GetPosition() = mouseLookCam->pos;
+						}
+					}
+
 					ImGui::EndTabItem();
 				}
 				if (ImGui::BeginTabItem("World"))
