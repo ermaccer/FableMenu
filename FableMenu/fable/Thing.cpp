@@ -21,6 +21,15 @@ CTCHeroMorph* CThing::GetHeroMorph()
     return *(CTCHeroMorph**)(v5 + 4);
 }
 
+CTCHeroExperience* CThing::GetHeroExperience()
+{
+    int v29 = 104;
+    int v5 = CallMethodAndReturn<int, 0x40F020, int, int*>((int)((int)this + 68), &v29);
+    if (v5 == *(int*)(this + 72) || *(int*)v5 > 104)
+        v5 = *(int*)(this + 72);
+    return *(CTCHeroExperience**)(v5 + 4);
+}
+
 CTCHero* CThing::GetHero()
 {
     int v29 = 41;

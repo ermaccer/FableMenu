@@ -8,6 +8,13 @@ public:
 
 };
 
+enum eExperience {
+	EXPERIENCE_STRENGTH,
+	EXPERIENCE_SKILL,
+	EXPERIENCE_WILL,
+	TOTAL_EXPERIENCE
+};
+
 class CTCHeroStats {
 public:
 	char pad[0x30];
@@ -15,6 +22,11 @@ public:
 	float m_unk; 
 	float m_fFatLevel;
 	int m_nGold;
+	char _pad[24];
+	int m_nWillPower;
+	int m_nMaxWillPower; 
+	char __pad[184];
+
 };
 
 class CTCHeroMorph {
@@ -30,4 +42,11 @@ public:
 	float m_fFat;
 	float m_fUnk;
 	bool  m_bKid;
+};
+
+class CTCHeroExperience : public CTCBase {
+public:
+	char pad[8];
+	int  m_nGeneralExperience;
+	int* m_pExperience;
 };

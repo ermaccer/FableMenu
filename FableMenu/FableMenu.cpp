@@ -42,6 +42,7 @@ void FableMenu::Render()
 						CThing* t = plr->GetCharacterThing();
 						CTCHeroStats* stats = t->GetHeroStats();
 						CTCHeroMorph* morph = t->GetHeroMorph();
+						CTCHeroExperience* exp = t->GetHeroExperience();
 						CTCHero* hero = t->GetHero();
 						if (stats)
 						{
@@ -49,6 +50,8 @@ void FableMenu::Render()
 							ImGui::Separator();
 							ImGui::InputFloat("Health", &t->m_fHealth);
 							ImGui::InputFloat("Max. Health", &t->m_fMaxHealth);
+							ImGui::InputInt("Will Power", &stats->m_nWillPower,0);
+							ImGui::InputInt("Max. Will", &stats->m_nMaxWillPower,0);
 							ImGui::InputInt("Gold", &stats->m_nGold);
 							ImGui::InputFloat("Age", &stats->m_fAge);
 							if (hero)
@@ -56,7 +59,16 @@ void FableMenu::Render()
 								ImGui::Checkbox("Can Use Weapons", &hero->m_bCanUseWeapons);
 								ImGui::Checkbox("Can Use Will", &hero->m_bCanUseWill);
 							}
-
+							if (exp)
+							{
+								ImGui::Separator();
+								ImGui::Text("Experience");
+								ImGui::Separator();
+								ImGui::InputInt("General##exp", &exp->m_nGeneralExperience, 0);
+								ImGui::InputInt("Strength##exp", &exp->m_pExperience[EXPERIENCE_STRENGTH], 0);
+								ImGui::InputInt("Will##exp", &exp->m_pExperience[EXPERIENCE_WILL], 0);
+								ImGui::InputInt("Skill##exp", &exp->m_pExperience[EXPERIENCE_SKILL], 0);
+							}
 							ImGui::Separator();
 						}
 						if (morph)
@@ -199,6 +211,7 @@ void FableMenu::Render()
 						CThing* t = plr->GetCharacterThing();
 						ImGui::Text("Player Stats: 0x%X", t->GetHeroStats());
 						ImGui::Text("Player Morph: 0x%X\n", t->GetHeroMorph());
+						ImGui::Text("Player Experience: 0x%X\n", t->GetHeroExperience());
 						ImGui::Text("Player Thing: 0x%X\n", t);
 						ImGui::Text("Player: 0x%X\n", plr);
 					}
@@ -241,6 +254,9 @@ void FableMenu::Process()
 
 void HookWorldUpdate()
 {
+	if (!InGame())
+		return;
+
 	CWorld* wrld = CMainGameComponent::Get()->GetWorld();
 	if (wrld)
 	{

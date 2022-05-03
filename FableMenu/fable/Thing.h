@@ -10,6 +10,7 @@ public:
 
 	CTCHeroStats* GetHeroStats();
 	CTCHeroMorph* GetHeroMorph();
+	CTCHeroExperience* GetHeroExperience();
 	CTCHero* GetHero();
 
 
