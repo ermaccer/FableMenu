@@ -50,7 +50,7 @@ void FableMenu::Render()
 							ImGui::Separator();
 							ImGui::InputFloat("Health", &t->m_fHealth);
 							ImGui::InputFloat("Max. Health", &t->m_fMaxHealth);
-							ImGui::InputInt("Will Power", &stats->m_nWillPower,0);
+							ImGui::InputInt("Will##data", &stats->m_nWillPower,0);
 							ImGui::InputInt("Max. Will", &stats->m_nMaxWillPower,0);
 							ImGui::InputInt("Gold", &stats->m_nGold);
 							ImGui::InputFloat("Age", &stats->m_fAge);
@@ -191,7 +191,7 @@ void FableMenu::Render()
 				if (ImGui::BeginTabItem("Misc."))
 				{
 					ImGui::Checkbox("Display HUD", &GetHud()->m_bDisplay);
-					ImGui::Checkbox("God Mode", &godMode);
+
 
 					CWorld* wrld = CMainGameComponent::Get()->GetWorld();
 					if (wrld)
@@ -205,6 +205,11 @@ void FableMenu::Render()
 					}
 
 					ImGui::Separator();
+					ImGui::Text("Cheats");
+					ImGui::Separator();
+					ImGui::Checkbox("Infinite Health", &godMode);
+					ImGui::Checkbox("Infinite Will", &infiniteWill);
+					ImGui::Separator();;
 #ifdef _DEBUG
 					if (mouseLookCam)
 					{
@@ -290,6 +295,17 @@ void HookWorldUpdate()
 				CThing* t = plr->GetCharacterThing();
 				if (t)
 					t->m_fHealth = 1000.0f;
+			}
+
+			if (TheMenu->infiniteWill)
+			{
+				CThing* t = plr->GetCharacterThing();
+				if (t)
+				{
+					CTCHeroStats* stats = t->GetHeroStats();
+					stats->m_nWillPower = 1000.0f;
+				}
+				
 			}
 		}
 

@@ -13,6 +13,7 @@ public:
 	bool freezeCam = false;
 	bool frozeControls = false;
 	bool godMode = false;
+	bool infiniteWill = false;
 
 	void Init();
 	void Render();
