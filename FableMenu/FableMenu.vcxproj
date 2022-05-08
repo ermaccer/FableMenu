@@ -195,6 +195,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Fable.h" />
     <ClInclude Include="FableMenu.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="utils\MemoryMgr.h" />
   </ItemGroup>
   <ItemGroup>
@@ -231,6 +232,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="FableMenu.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="FableMenu.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
