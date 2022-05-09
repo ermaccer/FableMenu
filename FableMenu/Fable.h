@@ -9,3 +9,4 @@
 #include "fable/Hero.h"
 #include "fable/InputProcess.h"
 #include "fable/HUD.h"
+#include "fable/EngineWeather.h"

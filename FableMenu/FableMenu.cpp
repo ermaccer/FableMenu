@@ -136,6 +136,7 @@ void FableMenu::Render()
 							bool& enemies = *(bool*)((int)plr + 0x21B);
 							ImGui::Checkbox("Kill Mode", &enemies);
 						}
+						ImGui::Separator();
 					}
 					if (wrld)
 					{
@@ -157,6 +158,7 @@ void FableMenu::Render()
 									
 							}
 						}
+						ImGui::Separator();
 					}
 
 					ImGui::Text("Objects");
@@ -219,6 +221,7 @@ void FableMenu::Render()
 					{
 						ImGui::Text("World Pointer: 0x%X", wrld);
 						ImGui::Text("Game Component Pointer: 0x%X", CMainGameComponent::Get());
+						ImGui::Text("Weather Settings: 0x%X", WeatherSettings);
 					}
 
 					CPlayer* plr = CMainGameComponent::Get()->GetPlayerManager()->GetPlayer();
@@ -303,7 +306,7 @@ void HookWorldUpdate()
 				if (t)
 				{
 					CTCHeroStats* stats = t->GetHeroStats();
-					stats->m_nWillPower = 1000.0f;
+					stats->m_nWillPower = 10000.0f;
 				}
 				
 			}

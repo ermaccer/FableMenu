@@ -163,6 +163,7 @@
     <ClInclude Include="eSettingsManager.h" />
     <ClInclude Include="fable\Base.h" />
     <ClInclude Include="fable\BulletTime.h" />
+    <ClInclude Include="fable\EngineWeather.h" />
     <ClInclude Include="fable\FCore.h" />
     <ClInclude Include="fable\GameCamera.h" />
     <ClInclude Include="fable\Hero.h" />
@@ -202,6 +203,7 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="eDirectX9Hook.cpp" />
     <ClCompile Include="eSettingsManager.cpp" />
+    <ClCompile Include="fable\EngineWeather.cpp" />
     <ClCompile Include="fable\FCore.cpp" />
     <ClCompile Include="fable\GameCamera.cpp" />
     <ClCompile Include="fable\HUD.cpp" />

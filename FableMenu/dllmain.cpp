@@ -7,6 +7,7 @@
 #include "fable/HUD.h"
 #include "fable/GameCamera.h"
 #include "eSettingsManager.h"
+#include "fable/EngineWeather.h"
 
 using namespace Memory::VP;
 int GenericTrueReturn() { return 1; }
@@ -68,6 +69,8 @@ void Init()
 	Patch<bool>(0x137544A, SettingsMgr->bUseBuiltInWindowedMode ^ 1);
 	Patch<int>(0x137545C, SettingsMgr->iDefaultX);
 	Patch<int>(0x1375460, SettingsMgr->iDefaultY);
+
+	InjectHook(0xB5237F, HookEngineWeatherConstructor, PATCH_CALL);
 	
 }
 
