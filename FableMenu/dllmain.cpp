@@ -8,6 +8,8 @@
 #include "fable/GameCamera.h"
 #include "eSettingsManager.h"
 #include "fable/EngineWeather.h"
+#include "eDirectInput8Hook.h"
+#include "helper/eMouse.h"
 
 using namespace Memory::VP;
 int GenericTrueReturn() { return 1; }
@@ -19,6 +21,7 @@ void ImGuiInputWatcher()
 {
 	while (true)
 	{
+		eMouse::UpdateMouse();
 		if (eDirectX9Hook::ms_bInit)
 		{
 			ImGuiIO& io = ImGui::GetIO();
@@ -82,9 +85,11 @@ BOOL WINAPI DllMain(HMODULE hMod, DWORD dwReason, LPVOID lpReserved)
 		Init();
 		CreateThread(nullptr, 0, reinterpret_cast<LPTHREAD_START_ROUTINE>(ImGuiInputWatcher), nullptr, 0, nullptr);
 		DisableThreadLibraryCalls(hMod);
+		eDirectInput8Hook::SetModule(hMod);
 		break;
 	case DLL_PROCESS_DETACH:
 		kiero::shutdown();
+		eDirectInput8Hook::Destroy();
 		break;
 	}
 	return TRUE;

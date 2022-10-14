@@ -39,6 +39,24 @@ CTCHero* CThing::GetHero()
     return *(CTCHero**)(v5 + 4);
 }
 
+CTCEnemy* CThing::GetEnemy()
+{
+    int v29 = 73;
+    int v5 = CallMethodAndReturn<int, 0x40F020, int, int*>((int)((int)this + 68), &v29);
+    if (v5 == *(int*)(this + 72) || *(int*)v5 > 73)
+        v5 = *(int*)(this + 72);
+    return *(CTCEnemy**)(v5 + 4);
+}
+
+CTCRegionFollower* CThing::GetRegionFollower()
+{
+    int v29 = 122;
+    int v5 = CallMethodAndReturn<int, 0x40F020, int, int*>((int)((int)this + 68), &v29);
+    if (v5 == *(int*)(this + 72) || *(int*)v5 > 122)
+        v5 = *(int*)(this + 72);
+    return *(CTCRegionFollower**)(v5 + 4);
+}
+
 CVector* CThing::GetPosition()
 {
     return CallMethodAndReturn<CVector*, 0x4C73D0, CThing*>(this);
@@ -60,4 +78,31 @@ int GetThingID(char* name)
         id = CallMethodAndReturn<int, 0x9AD410, int, CCharString*>(manager, &str);
     }
     return id;
+}
+
+CThing* __fastcall CreateCreature(int id, CVector* pos, int plr)
+{
+    CreatureAI ai = {};
+    ai.IsPlayer = false;
+    ai.Draw = true;
+    ai.unk[0] = true;
+
+    return FASTCallAndReturn<CThing*, 0x833800, int, CVector*, int, CreatureAI*>(id, pos, plr, &ai);
+}
+
+
+
+void CTCEnemy::SetFaction(CCharString* str)
+{
+    CallMethod<0x76C810, CTCEnemy*, CCharString*>(this, str);
+}
+
+void CTCEnemy::AddAlly(CThing* thing)
+{
+    CallMethod<0x76D270, CTCEnemy*, CThing*>(this, thing);
+}
+
+void CTCRegionFollower::AddFollower(CThing* thing)
+{
+    CallMethod<0x6AEDC0, CTCRegionFollower*, CThing*>(this, thing);
 }

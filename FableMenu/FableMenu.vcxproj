@@ -30,26 +30,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -98,7 +98,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>d3d9.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;dinput8.lib;Dxguid.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -118,7 +118,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>d3d9.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;dinput8.lib;Dxguid.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -134,7 +134,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>d3d9.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;dinput8.lib;Dxguid.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -154,21 +154,25 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>d3d9.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;dinput8.lib;Dxguid.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="core.h" />
+    <ClInclude Include="eDirectInput8Hook.h" />
     <ClInclude Include="eDirectX9Hook.h" />
     <ClInclude Include="eSettingsManager.h" />
     <ClInclude Include="fable\Base.h" />
     <ClInclude Include="fable\BulletTime.h" />
+    <ClInclude Include="fable\Creature.h" />
     <ClInclude Include="fable\EngineWeather.h" />
     <ClInclude Include="fable\FCore.h" />
     <ClInclude Include="fable\GameCamera.h" />
     <ClInclude Include="fable\Hero.h" />
     <ClInclude Include="fable\HUD.h" />
     <ClInclude Include="fable\InputProcess.h" />
+    <ClInclude Include="fable\Matrix.h" />
+    <ClInclude Include="fable\Pointer.h" />
     <ClInclude Include="fable\MainGameComponent.h" />
     <ClInclude Include="fable\Player.h" />
     <ClInclude Include="fable\PlayerManager.h" />
@@ -176,6 +180,8 @@
     <ClInclude Include="fable\World.h" />
     <ClInclude Include="font.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="helper\eKeyboardMan.h" />
+    <ClInclude Include="helper\eMouse.h" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />
     <ClInclude Include="imgui\imgui_impl_dx9.h" />
@@ -196,23 +202,30 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Fable.h" />
     <ClInclude Include="FableMenu.h" />
+    <ClInclude Include="plugin\FreeCamera.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="utils\MemoryMgr.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="eDirectInput8Hook.cpp" />
     <ClCompile Include="eDirectX9Hook.cpp" />
     <ClCompile Include="eSettingsManager.cpp" />
+    <ClCompile Include="fable\Creature.cpp" />
     <ClCompile Include="fable\EngineWeather.cpp" />
     <ClCompile Include="fable\FCore.cpp" />
     <ClCompile Include="fable\GameCamera.cpp" />
     <ClCompile Include="fable\HUD.cpp" />
     <ClCompile Include="fable\InputProcess.cpp" />
     <ClCompile Include="fable\MainGameComponent.cpp" />
+    <ClCompile Include="fable\Matrix.cpp" />
     <ClCompile Include="fable\Player.cpp" />
     <ClCompile Include="fable\PlayerManager.cpp" />
+    <ClCompile Include="fable\Pointer.cpp" />
     <ClCompile Include="fable\Thing.cpp" />
     <ClCompile Include="fable\World.cpp" />
+    <ClCompile Include="helper\eKeyboardMan.cpp" />
+    <ClCompile Include="helper\eMouse.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
     <ClCompile Include="imgui\imgui_draw.cpp" />
@@ -234,6 +247,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="FableMenu.cpp" />
+    <ClCompile Include="plugin\FreeCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FableMenu.rc" />

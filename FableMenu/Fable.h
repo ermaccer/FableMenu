@@ -10,3 +10,5 @@
 #include "fable/InputProcess.h"
 #include "fable/HUD.h"
 #include "fable/EngineWeather.h"
+#include "fable/Pointer.h"
+#include "fable/Matrix.h"

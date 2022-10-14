@@ -2,7 +2,7 @@
 #include "GameCamera.h"
 #include "..\Fable.h"
 
-struct CCamera;
+class CCamera;
 class DirectInputState {
 public:
 	int GetDIKeyCode();

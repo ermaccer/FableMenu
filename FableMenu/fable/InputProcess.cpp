@@ -16,15 +16,15 @@ void CInputProcessControlFreeCamera::Update(DirectInputState* keyState, int unk)
 void CInputProcessCameraLookAround::Update(DirectInputState* keyState, int unk)
 {
 	DI_keyState = keyState;
-	if (!FableMenu::ms_bEnableFreeCamera)
+	if (!FableMenu::ms_bFreeCam)
 		((void(__thiscall*)(CInputProcess*, DirectInputState*, int))0x68D790)(this, keyState, unk);
 	else
 	{
-		if (FableMenu::ms_bEnableFreeCamera)
+		if (FableMenu::ms_bFreeCam && TheMenu->m_nFreeCameraMode == FREE_CAMERA_ORIGINAL)
 		{
-			if (mouseLookCam)
+			if (TheCamera)
 			{
-				freeCam.cam = mouseLookCam;
+				freeCam.cam = TheCamera;
 				freeCam.Update(keyState, unk);
 			}
 		}

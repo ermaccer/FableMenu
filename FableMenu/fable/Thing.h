@@ -1,6 +1,10 @@
 #pragma once
 #include "Hero.h"
 #include "FCore.h"
+#include "Creature.h"
+
+class CTCEnemy;
+class CTCRegionFollower;
 
 class CThing {
 public:
@@ -12,9 +16,23 @@ public:
 	CTCHeroMorph* GetHeroMorph();
 	CTCHeroExperience* GetHeroExperience();
 	CTCHero* GetHero();
+	CTCEnemy* GetEnemy();
+	CTCRegionFollower* GetRegionFollower();
 
 
 	CVector* GetPosition();
+};
+
+
+class CTCEnemy {
+public:
+	void SetFaction(CCharString* str);
+	void AddAlly(CThing* thing);
+};
+
+class CTCRegionFollower {
+public:
+	void AddFollower(CThing* thing);
 };
 
 
@@ -22,28 +40,18 @@ CThing* __fastcall CreateThing(int id, CVector* pos, int plr, int unk, int unk2,
 
 int GetThingID(char* name);
 
-class CreatureAI
+struct  CreatureAI
 {
-public:
-	char field_0;
-	char field_1;
-	char field_2;
-	char field_3;
-	char field_4;
-	char field_5;
-	char field_6;
-	char field_7;
-	int field_8;
-	int field_C;
-	char field_10;
-	char field_11;
-	char field_12;
-	char field_13;
-	int field_14;
-	int field_18;
-	char field_1C;
-	char field_1D;
-	char field_1E;
-	char field_1F;
-	int field_20;
+	int field_0;
+	int field_4;
+	CCharString* name;
+	CCharString* str;
+	bool IsPlayer;
+	bool Draw;
+	bool unk[2];
+	int homeBuilding;
+	int workBuilding;
+
 };
+
+CThing* __fastcall CreateCreature(int id, CVector* pos, int plr);

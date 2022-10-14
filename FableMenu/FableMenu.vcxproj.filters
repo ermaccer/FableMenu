@@ -25,6 +25,12 @@
     <Filter Include="Header Files\kiero\minhook">
       <UniqueIdentifier>{f8afcd73-2788-4d74-8f6b-d37eebf22e6f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\helper">
+      <UniqueIdentifier>{ae317733-2edc-48ca-be41-a9d379d211dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\plugin">
+      <UniqueIdentifier>{3afdb301-6a3d-4fad-a4d0-7deaced6094d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -147,6 +153,27 @@
     <ClInclude Include="fable\EngineWeather.h">
       <Filter>Header Files\fable</Filter>
     </ClInclude>
+    <ClInclude Include="helper\eKeyboardMan.h">
+      <Filter>Header Files\helper</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\Creature.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\Pointer.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="eDirectInput8Hook.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\Matrix.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="plugin\FreeCamera.h">
+      <Filter>Header Files\plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="helper\eMouse.h">
+      <Filter>Header Files\helper</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -235,6 +262,27 @@
     </ClCompile>
     <ClCompile Include="fable\EngineWeather.cpp">
       <Filter>Header Files\fable</Filter>
+    </ClCompile>
+    <ClCompile Include="helper\eKeyboardMan.cpp">
+      <Filter>Header Files\helper</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\Creature.cpp">
+      <Filter>Header Files\fable</Filter>
+    </ClCompile>
+    <ClCompile Include="eDirectInput8Hook.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\Matrix.cpp">
+      <Filter>Header Files\fable</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\Pointer.cpp">
+      <Filter>Header Files\fable</Filter>
+    </ClCompile>
+    <ClCompile Include="plugin\FreeCamera.cpp">
+      <Filter>Header Files\plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="helper\eMouse.cpp">
+      <Filter>Header Files\helper</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

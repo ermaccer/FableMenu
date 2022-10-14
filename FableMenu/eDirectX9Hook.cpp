@@ -4,6 +4,8 @@
 #include "utils/MemoryMgr.h"
 #include "font.h"
 #include "eSettingsManager.h"
+#include "eDirectInput8Hook.h"
+#include "helper/eMouse.h"
 
 using namespace Memory::VP;
 
@@ -31,6 +33,7 @@ void eDirectX9Hook::SetImGuiStyle()
 	style->ItemSpacing = ImVec2(7, 5.5);
 	style->FrameRounding = 2.0f;
 	style->FramePadding = ImVec2(6, 4.25);
+	style->ButtonTextAlign = {};
 
 	ImVec4* colors = ImGui::GetStyle().Colors;
 	colors[ImGuiCol_FrameBg] = ImVec4(0.34f, 0.25f, 0.04f, 1.00f);
@@ -80,7 +83,7 @@ void eDirectX9Hook::ReloadImGuiFont()
 	ImGuiStyle* style = &ImGui::GetStyle();
 	ImGuiIO io = ImGui::GetIO();
 	io.Fonts->Clear();
-	io.Fonts->AddFontFromMemoryCompressedTTF(Font_compressed_data, Font_compressed_size, fontSize);
+	io.Fonts->AddFontFromMemoryCompressedTTF(Font_compressed_data, Font_compressed_size, fontSize * SettingsMgr->fMenuScale);
 	io.Fonts->Build();
 	ImGui_ImplDX9_InvalidateDeviceObjects();
 
@@ -104,7 +107,7 @@ long __stdcall eDirectX9Hook::EndScene(LPDIRECT3DDEVICE9 pDevice)
 	if (ms_bShouldReloadFonts)
 		ReloadImGuiFont();
 
-	if (TheMenu->active)
+	if (TheMenu->m_bIsActive)
 	{
 		ImGui_ImplDX9_NewFrame();
 		ImGui_ImplWin32_NewFrame();
@@ -112,7 +115,7 @@ long __stdcall eDirectX9Hook::EndScene(LPDIRECT3DDEVICE9 pDevice)
 		ImGui::GetIO().MouseDrawCursor = true;
 
 
-		TheMenu->Render();
+		TheMenu->Draw();
 		TheMenu->Process();
 
 		ImGui::EndFrame();
@@ -135,17 +138,23 @@ long __stdcall eDirectX9Hook::Reset(LPDIRECT3DDEVICE9 pDevice, D3DPRESENT_PARAME
 
 LRESULT __stdcall eDirectX9Hook::WndProc(const HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam);
-
 	switch (uMsg)
 	{
+	case WM_KILLFOCUS:
+		TheMenu->m_bIsFocused = false;
+		break;
+	case WM_SETFOCUS:
+		TheMenu->m_bIsFocused = true;
+		break;
 	case WM_KEYDOWN:
 		if (wParam == SettingsMgr->iMenuOpenKey && InGame())
-			TheMenu->active ^= 1;
+			TheMenu->m_bIsActive ^= 1;
 		break;
 	default:
 		break;
 	}
+	if (TheMenu->m_bIsActive)
+		return ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam);
 
 
 	return CallWindowProc(ms_pWndProc, hWnd, uMsg, wParam, lParam);
@@ -155,6 +164,7 @@ IDirect3D9* __stdcall eDirectX9Hook::Direct3DCreate9_Hook(UINT SDKVersion)
 {
 	IDirect3D9* device = Direct3DCreate9(SDKVersion);
 	CreateThread(nullptr, 0, DirectXHookThread, nullptr, 0, nullptr);
+	eDirectInput8Hook::Init();
 	return device;
 }
 
