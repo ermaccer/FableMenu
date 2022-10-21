@@ -5,6 +5,8 @@
 
 class CTCEnemy;
 class CTCRegionFollower;
+class CTCLook;
+class CTCGraphicAppearance;
 
 class CThing {
 public:
@@ -18,7 +20,8 @@ public:
 	CTCHero* GetHero();
 	CTCEnemy* GetEnemy();
 	CTCRegionFollower* GetRegionFollower();
-
+	CTCLook* GetLook();
+	CTCGraphicAppearance* GetGraphicAppearance();
 
 	CVector* GetPosition();
 };
@@ -35,8 +38,19 @@ public:
 	void AddFollower(CThing* thing);
 };
 
+class CTCLook {
+public:
+	void GetHeadLocation(CVector* out);
+};
 
-CThing* __fastcall CreateThing(int id, CVector* pos, int plr, int unk, int unk2, char* name);
+class CTCGraphicAppearance {
+public:
+	void SetAlpha(char value);
+	void SetColor(int* color, CTCBase* base);
+	void SetScale(float value);
+};
+
+
 
 int GetThingID(char* name);
 
@@ -53,5 +67,5 @@ struct  CreatureAI
 	int workBuilding;
 
 };
-
+CThing* __fastcall CreateThing(int id, CVector* pos, int plr, int unk, int unk2, char* name);
 CThing* __fastcall CreateCreature(int id, CVector* pos, int plr);

@@ -10,6 +10,7 @@
 #include "fable/EngineWeather.h"
 #include "eDirectInput8Hook.h"
 #include "helper/eMouse.h"
+#include "eNotifManager.h"
 
 using namespace Memory::VP;
 int GenericTrueReturn() { return 1; }
@@ -22,6 +23,8 @@ void ImGuiInputWatcher()
 	while (true)
 	{
 		eMouse::UpdateMouse();
+		Notifications->Update();
+
 		if (eDirectX9Hook::ms_bInit)
 		{
 			ImGuiIO& io = ImGui::GetIO();
@@ -52,13 +55,15 @@ void Init()
 	freopen("CONOUT$", "w", stderr);
 #endif // DEBUG
 
-
+	Notifications->Init();
 	TheMenu->Init();
 	InjectHook(0x4A5DFB, HookWorldUpdate);
 	InjectHook(0x69B7F4, &CGameCameraManager::Update);
 	InjectHook(0x69EAEE, HUD::Display);
 	Patch(0x1237A00, &CInputProcessCameraLookAround::Update);
-	Patch(0x14405A0, eDirectX9Hook::Direct3DCreate9_Hook);
+
+	eDirectX9Hook::RegisterHook(0x9BEF60, 0x9BEF67, Method_EndScene);
+	eDirectX9Hook::RegisterHook(0x9BFCFA, 0x9BFCFF, Method_Reset);
 
 	if (!(SettingsMgr->iOverwriteConstantFPS == 15))
 	{
@@ -88,7 +93,6 @@ BOOL WINAPI DllMain(HMODULE hMod, DWORD dwReason, LPVOID lpReserved)
 		eDirectInput8Hook::SetModule(hMod);
 		break;
 	case DLL_PROCESS_DETACH:
-		kiero::shutdown();
 		eDirectInput8Hook::Destroy();
 		break;
 	}

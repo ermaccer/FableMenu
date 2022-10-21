@@ -10,6 +10,7 @@
 #include "eSettingsManager.h"
 #include "helper/eMouse.h"
 #include "plugin/FreeCamera.h"
+#include "eNotifManager.h"
 
 using namespace Memory::VP;
 
@@ -70,7 +71,7 @@ void FableMenu::Draw()
 {
 	if (!m_bIsActive)
 		return;
-
+	ImGui::GetIO().MouseDrawCursor = true;
 
 	ImGui::Begin("FableMenu by ermaccer", &m_bIsActive, ImGuiWindowFlags_MenuBar);
 	{
@@ -156,6 +157,7 @@ void FableMenu::DrawPlayerTab()
 		CTCHeroStats* stats = t->GetHeroStats();
 		CTCHeroMorph* morph = t->GetHeroMorph();
 		CTCHeroExperience* exp = t->GetHeroExperience();
+		CTCLook* look = t->GetLook();
 		CTCHero* hero = t->GetHero();
 		if (stats)
 		{
@@ -201,6 +203,69 @@ void FableMenu::DrawPlayerTab()
 					morph->m_bUpdate = true;
 			}
 		}
+		if (ImGui::CollapsingHeader("Spell Data"))
+		{
+			int& curSummonCreature = *(int*)(0x138306C);
+			ImGui::TextWrapped("Current Summon Creature ID"); 
+			ImGui::SameLine();
+			ShowHelpMarker("You can get desired creature ID from World->Creatures section.");
+			ImGui::PushItemWidth(-FLT_MIN);
+			ImGui::InputInt("##creaturesumid", &curSummonCreature);
+			ImGui::PopItemWidth();
+			ImGui::Separator();
+
+		}
+		if (ImGui::CollapsingHeader("Input"))
+		{
+			if (ImGui::Button("Disable Input", { -FLT_MIN, 0 }))
+			{
+				if (plr)
+					plr->SetMode(17, false);
+			}
+			if (ImGui::Button("Enable Input", { -FLT_MIN, 0 }))
+			{
+				if (plr)
+					plr->ClearMode(17);
+			}
+		}
+		if (ImGui::CollapsingHeader("Appearance"))
+		{
+			static int alpha = 255;
+			ImGui::SliderInt("Alpha", &alpha, 0, 255);
+			
+			static ImVec4 color = {1.0, 1.0, 1.0, 1.0};
+			ImGui::ColorEdit3("Color", (float*)&color);
+
+			union rgba {
+				char rgba[4];
+				int color;
+			};
+
+			rgba rcolor;
+
+			rcolor.rgba[0] = (unsigned char)((color.z) * 255.0f);
+			rcolor.rgba[1] = (unsigned char)((color.y) * 255.0f);
+			rcolor.rgba[2] = (unsigned char)((color.x) * 255.0f);
+			rcolor.rgba[3] = (unsigned char)((color.w) * 255.0f);
+
+
+			static float scale = 1.0f;
+			ImGui::InputFloat("Scale", &scale);
+
+			if (ImGui::Button("Update", {-FLT_MIN, 0}))
+			{
+				CTCGraphicAppearance* ga = t->GetGraphicAppearance();
+				if (ga)
+				{
+					ga->SetAlpha(alpha);
+					ga->SetColor(&rcolor.color, t->GetHero());
+					ga->SetScale(scale);
+				}
+
+			}
+
+		}
+		ImGui::Separator();
 		ImGui::Text("Position");
 		ImGui::InputFloat3("", &t->GetPosition()->X);
 }
@@ -268,6 +333,8 @@ void FableMenu::DrawWorldTab()
 			bool& enemies = *(bool*)((int)plr + 0x21B);
 			ImGui::Checkbox("Kill Mode", &enemies);
 		}
+		bool& quest_regions = *(bool*)(0x1375741);
+		ImGui::Checkbox("Quest Regions", &quest_regions);
 		ImGui::Separator();
 	}
 	if (wrld)
@@ -414,6 +481,10 @@ void FableMenu::DrawWorldTab()
 	}
 }
 
+void FableMenu::DrawSummonOverrideTab()
+{
+}
+
 void FableMenu::DrawMiscTab()
 {
 	ImGui::Checkbox("Display HUD", &GetHud()->m_bDisplay);
@@ -457,6 +528,7 @@ void FableMenu::DrawMiscTab()
 		ImGui::Text("Player Experience: 0x%X\n", t->GetHeroExperience());
 		ImGui::Text("Player Thing: 0x%X\n", t);
 		ImGui::Text("Player: 0x%X\n", plr);
+		ImGui::Text("Draw: 0x%X\n", t->GetGraphicAppearance());
 	}
 #endif
 }
@@ -524,6 +596,8 @@ void FableMenu::DrawSettings()
 		if (ImGui::Button("Reset Keys", { -FLT_MIN, 0 }))
 		{
 			SettingsMgr->ResetKeys();
+			Notifications->SetNotificationTime(2500);
+			Notifications->PushNotification("Keys reset! Remember to save.");
 		}
 
 		ImGui::Separator();
@@ -569,8 +643,9 @@ void FableMenu::DrawSettings()
 
 	if (ImGui::Button("Save", { -FLT_MIN, 0 }))
 	{
+		Notifications->SetNotificationTime(2500);
+		Notifications->PushNotification("Settings saved to FableMenu.ini and fablemenu_user.ini!");
 		eDirectX9Hook::ms_bShouldReloadFonts = true;
-		MessageBeep(MB_ICONINFORMATION);
 		SettingsMgr->SaveSettings();
 	}
 
@@ -610,6 +685,8 @@ void HookWorldUpdate()
 		CPlayer* plr = CMainGameComponent::Get()->GetPlayerManager()->GetPlayer();
 		if (plr)
 		{
+			CThing* t = plr->GetCharacterThing();
+
 			if (TheMenu->m_bIsActive && !TheMenu->m_bFrozeControls)
 			{
 				plr->SetMode(17, false);
@@ -630,7 +707,6 @@ void HookWorldUpdate()
 
 			if (TheMenu->m_bInfiniteWill)
 			{
-				CThing* t = plr->GetCharacterThing();
 				if (t)
 				{
 					CTCHeroStats* stats = t->GetHeroStats();
@@ -638,6 +714,7 @@ void HookWorldUpdate()
 				}
 				
 			}
+
 			if (TheMenu->m_bCustomCameraPos && TheMenu->ms_bFreeCam && TheMenu->m_nFreeCameraMode == FREE_CAMERA_CUSTOM)
 				FreeCamera::Update();
 		}
@@ -663,4 +740,9 @@ float GetDeltaTime()
 		delta = 1.0f / ImGui::GetIO().Framerate;
 
 	return delta;
+}
+
+bool IsWindowFocused()
+{
+	return TheMenu->m_bIsFocused;
 }

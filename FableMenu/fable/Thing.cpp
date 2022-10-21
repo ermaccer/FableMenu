@@ -57,6 +57,24 @@ CTCRegionFollower* CThing::GetRegionFollower()
     return *(CTCRegionFollower**)(v5 + 4);
 }
 
+CTCLook* CThing::GetLook()
+{
+    int v29 = 67;
+    int v5 = CallMethodAndReturn<int, 0x40F020, int, int*>((int)((int)this + 68), &v29);
+    if (v5 == *(int*)(this + 72) || *(int*)v5 > 67)
+        v5 = *(int*)(this + 72);
+    return *(CTCLook**)(v5 + 4);
+}
+
+CTCGraphicAppearance* CThing::GetGraphicAppearance()
+{
+    int v29 = 91;
+    int v5 = CallMethodAndReturn<int, 0x40F020, int, int*>((int)((int)this + 68), &v29);
+    if (v5 == *(int*)(this + 72) || *(int*)v5 > 91)
+        v5 = *(int*)(this + 72);
+    return *(CTCGraphicAppearance**)(v5 + 4);
+}
+
 CVector* CThing::GetPosition()
 {
     return CallMethodAndReturn<CVector*, 0x4C73D0, CThing*>(this);
@@ -105,4 +123,25 @@ void CTCEnemy::AddAlly(CThing* thing)
 void CTCRegionFollower::AddFollower(CThing* thing)
 {
     CallMethod<0x6AEDC0, CTCRegionFollower*, CThing*>(this, thing);
+}
+
+void CTCLook::GetHeadLocation(CVector* out)
+{
+    CallMethod<0x751B30, CTCLook*, CVector*>(this, out);
+}
+
+void CTCGraphicAppearance::SetAlpha(char value)
+{
+    CallMethod<0x4BFAC0, CTCGraphicAppearance*,char>(this, value);
+}
+
+void CTCGraphicAppearance::SetColor(int* color, CTCBase* base)
+{
+    CallMethod<0x4C00B0, CTCGraphicAppearance*, int*, CTCBase*>(this, color, base);
+}
+
+void CTCGraphicAppearance::SetScale(float value)
+{
+    CallMethod<0x4BFA50, CTCGraphicAppearance*, float>(this, value);
+
 }

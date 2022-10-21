@@ -1,7 +1,7 @@
 #include "eDirectInput8Hook.h"
 #include "imgui/imgui.h"
 #include <iostream>
-#include "kiero/minhook/include/MinHook.h"
+#include "minhook/include/MinHook.h"
 #include "FableMenu.h"
 #include "eDirectX9Hook.h"
 

@@ -6,20 +6,71 @@
 #include "eSettingsManager.h"
 #include "eDirectInput8Hook.h"
 #include "helper/eMouse.h"
-
+#include "eNotifManager.h"
+#include "helper/eKeyboardMan.h"
 using namespace Memory::VP;
 
-EndScene eDirectX9Hook::m_pEndScene;
 HWND eDirectX9Hook::ms_hWindow;
 WNDPROC eDirectX9Hook::ms_pWndProc;
-Reset eDirectX9Hook::m_pReset;
-
+uintptr_t eDirectX9Hook::ms_pHookJumpEndScene;
+uintptr_t eDirectX9Hook::ms_pHookJumpReset; 
 bool eDirectX9Hook::ms_bInit;
 bool eDirectX9Hook::ms_bShouldReloadFonts;
 
+
+void eDirectX9Hook::RegisterHook(uintptr_t addr, uintptr_t offset, eMethodType type)
+{
+	switch (type)
+	{
+	case Method_EndScene:
+		ms_pHookJumpEndScene = offset;
+		InjectHook(addr, Hook_EndScene, PATCH_JUMP);
+		break;
+	case Method_Reset:
+		ms_pHookJumpReset = offset;
+		InjectHook(addr, Hook_Reset, PATCH_JUMP);
+		break;
+	default:
+		break;
+	}
+}
+
+void __declspec(naked) eDirectX9Hook::Hook_EndScene()
+{
+	static LPDIRECT3DDEVICE9 pDevice = 0;
+	_asm {
+		mov pDevice, eax
+		pushad
+	}
+	EndScene(pDevice);
+	_asm {
+		popad
+		push eax
+		call    dword ptr[ecx + 168]
+		jmp ms_pHookJumpEndScene
+	}
+}
+
+void __declspec(naked) eDirectX9Hook::Hook_Reset()
+{
+	_asm pushad
+	ImGui_ImplDX9_InvalidateDeviceObjects();
+	_asm {
+		popad
+		push    ecx
+		push    eax
+		call    dword ptr[edx + 64]
+		pushad
+	}
+	ImGui_ImplDX9_CreateDeviceObjects();
+	_asm { 
+		popad
+		jmp	ms_pHookJumpReset
+	}
+}
+
 void eDirectX9Hook::Init()
 {
-	m_pEndScene = 0;
 	ms_hWindow = 0;
 	ms_pWndProc = 0;
 	ms_bInit = false;
@@ -92,7 +143,7 @@ void eDirectX9Hook::ReloadImGuiFont()
 }
 
 
-long __stdcall eDirectX9Hook::EndScene(LPDIRECT3DDEVICE9 pDevice)
+void __stdcall eDirectX9Hook::EndScene(LPDIRECT3DDEVICE9 pDevice)
 {
 	if (!ms_bInit)
 	{
@@ -107,34 +158,37 @@ long __stdcall eDirectX9Hook::EndScene(LPDIRECT3DDEVICE9 pDevice)
 	if (ms_bShouldReloadFonts)
 		ReloadImGuiFont();
 
-	if (TheMenu->m_bIsActive)
+	ImGui_ImplDX9_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
+	ImGui::GetIO().MouseDrawCursor = false;
+
+	static bool draw = true;
+	if (draw)
 	{
-		ImGui_ImplDX9_NewFrame();
-		ImGui_ImplWin32_NewFrame();
-		ImGui::NewFrame();
-		ImGui::GetIO().MouseDrawCursor = true;
-
-
-		TheMenu->Draw();
-		TheMenu->Process();
-
-		ImGui::EndFrame();
-
-		ImGui::Render();
-		ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
+		Notifications->SetNotificationTime(5500);
+		Notifications->PushNotification("FableMenu %s is running! Press %s to open the menu.", FABLEMENU_VERSION, eKeyboardMan::KeyToString(SettingsMgr->iMenuOpenKey));
+		draw = false;
 	}
 
-	return m_pEndScene(pDevice);
+#ifdef _DEBUG
+	ImDrawList* drawList = ImGui::GetBackgroundDrawList();
+	float x = ImGui::GetIO().DisplaySize.x;
+	float len = ImGui::CalcTextSize("FableMenu Debug Build").x;
+	drawList->AddText({ (x / 2.0f) - (len / 2.0f) ,0 }, IM_COL32(255, 255, 255, 200), "FableMenu Debug Build");
+#endif // _DEBUG
+
+	Notifications->Draw();
+
+	TheMenu->Draw();
+	TheMenu->Process();
+
+	ImGui::EndFrame();
+
+	ImGui::Render();
+	ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
 }
 
-long __stdcall eDirectX9Hook::Reset(LPDIRECT3DDEVICE9 pDevice, D3DPRESENT_PARAMETERS * pPresentationParameters)
-{
-	ImGui_ImplDX9_InvalidateDeviceObjects();
-	HRESULT hr = m_pReset(pDevice, pPresentationParameters);
-	ImGui_ImplDX9_CreateDeviceObjects();
-	return hr;
-
-}
 
 LRESULT __stdcall eDirectX9Hook::WndProc(const HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -147,7 +201,7 @@ LRESULT __stdcall eDirectX9Hook::WndProc(const HWND hWnd, UINT uMsg, WPARAM wPar
 		TheMenu->m_bIsFocused = true;
 		break;
 	case WM_KEYDOWN:
-		if (wParam == SettingsMgr->iMenuOpenKey && InGame())
+		if (wParam == SettingsMgr->iMenuOpenKey)
 			TheMenu->m_bIsActive ^= 1;
 		break;
 	default:
@@ -158,28 +212,4 @@ LRESULT __stdcall eDirectX9Hook::WndProc(const HWND hWnd, UINT uMsg, WPARAM wPar
 
 
 	return CallWindowProc(ms_pWndProc, hWnd, uMsg, wParam, lParam);
-}
-
-IDirect3D9* __stdcall eDirectX9Hook::Direct3DCreate9_Hook(UINT SDKVersion)
-{
-	IDirect3D9* device = Direct3DCreate9(SDKVersion);
-	CreateThread(nullptr, 0, DirectXHookThread, nullptr, 0, nullptr);
-	eDirectInput8Hook::Init();
-	return device;
-}
-
-
-DWORD WINAPI DirectXHookThread(LPVOID lpReserved)
-{
-	bool attached = false;
-	do
-	{
-		if (kiero::init(kiero::RenderType::D3D9) == kiero::Status::Success)
-		{
-			kiero::bind(42, (void**)&eDirectX9Hook::m_pEndScene, eDirectX9Hook::EndScene);
-			kiero::bind(16, (void**)&eDirectX9Hook::m_pReset, eDirectX9Hook::Reset);
-			attached = true;
-		}
-	} while (!attached);
-	return TRUE;
 }

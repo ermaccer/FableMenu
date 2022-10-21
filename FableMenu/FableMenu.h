@@ -1,6 +1,9 @@
 #pragma once
 #include "Fable.h"
 
+
+#define FABLEMENU_VERSION "0.4"
+
 enum eMenuTab {
 	TAB_PLAYER,
 	TAB_CAMERA,
@@ -44,6 +47,7 @@ public:
 	float  m_fFreeCamSpeed = 300.0f;
 
 	CVector camPos = {};
+	CVector headPos = {};
 
 	void Init();
 	void Draw();
@@ -52,6 +56,7 @@ public:
 	void DrawPlayerTab();
 	void DrawCameraTab();
 	void DrawWorldTab();
+	void DrawSummonOverrideTab();
 	void DrawMiscTab();
 
 	void DrawSettings();
@@ -75,3 +80,4 @@ void HookWorldUpdate();
 bool InGame();
 
 float GetDeltaTime();
+bool IsWindowFocused();

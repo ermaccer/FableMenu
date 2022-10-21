@@ -23,7 +23,7 @@ void eMouse::Clear()
 
 void eMouse::UpdateMouse()
 {
-	if (!TheMenu->m_bIsActive && TheMenu->ms_bFreeCam && TheMenu->m_nFreeCameraMode == FREE_CAMERA_CUSTOM && TheMenu->m_bIsFocused)
+	if (!TheMenu->m_bIsActive && TheMenu->ms_bFreeCam && TheMenu->m_nFreeCameraMode == FREE_CAMERA_CUSTOM && IsWindowFocused())
 	{
 		mouse.Clear();
 		POINT point;
