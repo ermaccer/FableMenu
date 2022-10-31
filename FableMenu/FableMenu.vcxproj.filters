@@ -171,6 +171,12 @@
     <ClInclude Include="minhook\src\hde\table64.h">
       <Filter>Header Files\minhook</Filter>
     </ClInclude>
+    <ClInclude Include="fable\Script.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\QuestManager.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -280,6 +286,12 @@
     </ClCompile>
     <ClCompile Include="minhook\src\hde\hde64.c">
       <Filter>Header Files\minhook</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\Script.cpp">
+      <Filter>Header Files\fable</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\QuestManager.cpp">
+      <Filter>Header Files\fable</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

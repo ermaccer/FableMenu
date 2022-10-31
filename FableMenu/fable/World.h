@@ -1,6 +1,7 @@
 #pragma once
 #include "Player.h"
 #include "BulletTime.h"
+#include "Script.h"
 
 class CWorld {
 public:
@@ -9,6 +10,7 @@ public:
 	void SetMinimap(bool status);
 	CPlayer* GetPlayer(int id);
 	CBulletTimeManager* GetBulletTime();
+	CScriptInfoManager* GetScriptInfoManager();
 
 	static int& ms_curFrame;
 };

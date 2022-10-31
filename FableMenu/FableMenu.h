@@ -37,6 +37,8 @@ public:
 	bool	 m_bInfiniteWill = false;
 	bool	 m_bMouseControl = false;
 
+	bool	 m_bNoBodyGuardsLimit = false;
+
 	char szFactionName[128] = {};
 
 	int		m_nFreeCameraMode = FREE_CAMERA_CUSTOM;
@@ -56,7 +58,7 @@ public:
 	void DrawPlayerTab();
 	void DrawCameraTab();
 	void DrawWorldTab();
-	void DrawSummonOverrideTab();
+	void DrawQuestTab();
 	void DrawMiscTab();
 
 	void DrawSettings();

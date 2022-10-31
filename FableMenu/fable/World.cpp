@@ -17,3 +17,8 @@ CBulletTimeManager* CWorld::GetBulletTime()
 {
 	return *(CBulletTimeManager**)((int)this + 104);
 }
+
+CScriptInfoManager* CWorld::GetScriptInfoManager()
+{
+	return *(CScriptInfoManager**)((int)this + 88);
+}

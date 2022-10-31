@@ -3,6 +3,16 @@
 #include "FCore.h"
 #include "Creature.h"
 
+enum eMovementTypes {
+	ST_SLOW_WALK,
+	ST_WALK,
+	ST_JOG,
+	ST_RUN,
+	ST_SPRINT,
+	STANDARD_FLY,
+	TOTAL_MOVEMENT_TYPES
+};
+
 class CTCEnemy;
 class CTCRegionFollower;
 class CTCLook;
@@ -13,7 +23,7 @@ public:
 	char pad[0xB0];
 	float m_fMaxHealth;
 	float m_fHealth;
-
+	// 184
 	CTCHeroStats* GetHeroStats();
 	CTCHeroMorph* GetHeroMorph();
 	CTCHeroExperience* GetHeroExperience();

@@ -104,6 +104,11 @@ void FableMenu::Draw()
 					DrawWorldTab();
 					ImGui::EndTabItem();
 				}
+				if (ImGui::BeginTabItem("Quest"))
+				{
+					DrawQuestTab();
+					ImGui::EndTabItem();
+				}
 				if (ImGui::BeginTabItem("Misc."))
 				{
 					DrawMiscTab();
@@ -146,6 +151,11 @@ void FableMenu::Process()
 		Patch<char>(0x6BBA58 + 1, 0x56);
 		Patch<char>(0x6BBA58 + 2, 0x08);
 	}
+
+	if (m_bNoBodyGuardsLimit)
+		Patch<char>(0xE60689 + 2, 0xFF);
+	else
+		Patch<char>(0xE60689 + 2, 2);
 }
 
 void FableMenu::DrawPlayerTab()
@@ -184,6 +194,34 @@ void FableMenu::DrawPlayerTab()
 					ImGui::InputInt("Will##exp", &exp->m_pExperience[EXPERIENCE_WILL], 0);
 					ImGui::InputInt("Skill##exp", &exp->m_pExperience[EXPERIENCE_SKILL], 0);
 				}
+				enum eMovementTypes {
+					ST_SLOW_WALK,
+					ST_WALK,
+					ST_JOG,
+					ST_RUN,
+					ST_SPRINT,
+					STANDARD_FLY,
+					TOTAL_MOVEMENT_TYPES
+				};
+				ImGui::Separator();
+				ImGui::Text("Movement Speed");
+				ImGui::Separator();
+
+				static const char* movementNames[] = {
+					"Slow Walk",
+					"Walk",
+					"Jog",
+					"Run",
+					"Roll"
+				};
+
+				for (int i = 0; i < TOTAL_MOVEMENT_TYPES - 1; i++)
+				{
+					float& speed = *(float*)((int)t + 0x18C + (i * sizeof(int)));
+
+					ImGui::InputFloat(movementNames[i], &speed);
+				}
+
 			}
 		}
 		if (morph)
@@ -481,8 +519,81 @@ void FableMenu::DrawWorldTab()
 	}
 }
 
-void FableMenu::DrawSummonOverrideTab()
+void FableMenu::DrawQuestTab()
 {
+	if (!CQuestManager::Get())
+	  return;
+
+
+	CQuestManager* q = CQuestManager::Get();
+	static char scriptName[256] = {};
+	if (ImGui::CollapsingHeader("Status Control"))
+	{
+		ImGui::Text("Quest Name");
+		ImGui::PushItemWidth(-FLT_MIN);
+		ImGui::InputText("##quest", scriptName, sizeof(scriptName));
+		ImGui::PopItemWidth();
+		if (ImGui::Button("Activate", { -FLT_MIN, 0 }))
+		{
+			CCharString str(scriptName);
+			if (q->IsActive(&str))
+			{
+				Notifications->SetNotificationTime(3500);
+				Notifications->PushNotification("Quest \"%s\" is already active!", scriptName);
+			}
+			else
+			{
+				if (q->ActivateQuest(&str, false, true))
+				{
+					Notifications->SetNotificationTime(3500);
+					Notifications->PushNotification("Quest \"%s\" activated!", scriptName);
+				}
+				else
+				{
+					Notifications->SetNotificationTime(3500);
+					Notifications->PushNotification("Failed to activate quest \"%s\"!", scriptName);
+				}
+			}
+
+		}
+		if (ImGui::Button("Deactivate", { -FLT_MIN, 0 }))
+		{
+			CCharString str(scriptName);
+			if (!q->IsActive(&str))
+			{
+				Notifications->SetNotificationTime(3500);
+				Notifications->PushNotification("Quest \"%s\" is not active!", scriptName);
+			}
+			else
+			{
+				q->DeactivateQuest(&str, 0);
+				Notifications->SetNotificationTime(3500);
+				Notifications->PushNotification("Quest \"%s\" deactivated!", scriptName);
+			}
+		}
+		
+	}
+
+
+	if (ImGui::CollapsingHeader("Tweaks"))
+	{
+		ImGui::Checkbox("No Bodyguards Limit", &m_bNoBodyGuardsLimit);
+		ImGui::SameLine(); ShowHelpMarker("Allows to hire all bodyguards. Default limit is 2.");
+	}
+#ifdef _DEBUG
+	if (ImGui::CollapsingHeader("Quest Debug"))
+	{
+		if (ImGui::Button("Print All", { -FLT_MIN, 0 }))
+		{
+			CWorld* wrld = CMainGameComponent::Get()->GetWorld();
+			if (wrld)
+			{
+				CScriptInfoManager* sim = wrld->GetScriptInfoManager();
+				sim->PrintAllScripts();
+			}
+		}
+	}
+#endif
 }
 
 void FableMenu::DrawMiscTab()
@@ -529,6 +640,7 @@ void FableMenu::DrawMiscTab()
 		ImGui::Text("Player Thing: 0x%X\n", t);
 		ImGui::Text("Player: 0x%X\n", plr);
 		ImGui::Text("Draw: 0x%X\n", t->GetGraphicAppearance());
+		ImGui::Text("Script Manager: 0x%X\n", wrld->GetScriptInfoManager());
 	}
 #endif
 }

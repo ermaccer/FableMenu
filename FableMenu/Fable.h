@@ -12,3 +12,5 @@
 #include "fable/EngineWeather.h"
 #include "fable/Pointer.h"
 #include "fable/Matrix.h"
+#include "fable/Script.h"
+#include "fable/QuestManager.h"
