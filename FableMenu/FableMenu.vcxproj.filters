@@ -177,6 +177,12 @@
     <ClInclude Include="fable\QuestManager.h">
       <Filter>Header Files\fable</Filter>
     </ClInclude>
+    <ClInclude Include="fable\ActionBase.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ScriptInterface.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -291,6 +297,9 @@
       <Filter>Header Files\fable</Filter>
     </ClCompile>
     <ClCompile Include="fable\QuestManager.cpp">
+      <Filter>Header Files\fable</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ActionBase.cpp">
       <Filter>Header Files\fable</Filter>
     </ClCompile>
   </ItemGroup>

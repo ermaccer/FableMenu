@@ -2,19 +2,13 @@
 #include "Fable.h"
 
 
-#define FABLEMENU_VERSION "0.4"
-
-enum eMenuTab {
-	TAB_PLAYER,
-	TAB_CAMERA,
-	TAB_WORLD,
-	TAB_MISC
-};
+#define FABLEMENU_VERSION "0.5"
 
 
 enum eMenuSubMenus {
 	SUBMENU_SETTINGS,
-	SUBMENU_SCRIPT,
+	SUBMENU_CREATURE_LIST,
+	SUBMENU_OBJECT_LIST,
 	TOTAL_SUBMENUS
 };
 
@@ -62,7 +56,8 @@ public:
 	void DrawMiscTab();
 
 	void DrawSettings();
-
+	void DrawCreatureList();
+	void DrawObjectList();
 
 	void DrawKeyBind(char* name, int* var);
 	void KeyBind(int* var, char* bindName, char* name);
@@ -76,8 +71,6 @@ public:
 };
 
 extern FableMenu* TheMenu;
-
-
 void HookWorldUpdate();
 bool InGame();
 

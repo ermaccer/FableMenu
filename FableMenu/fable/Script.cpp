@@ -20,9 +20,9 @@ int GetScript(CCharString* name)
 	return script;
 }
 
-void CScriptInfoManager::AddScript(CScriptInfo* info, char* shortName)
+void CScriptInfoManager::AddScript(CScriptInfo* info, CCharString* str)
 {
-	CallMethod<0xCB5C90, CScriptInfoManager*, CScriptInfo*, char*>(this, info, shortName);
+	CallMethod<0xCB5C90, CScriptInfoManager*, CScriptInfo*, CCharString*>(this, info, str);
 }
 
 void CScriptInfoManager::PrintAllScripts()

@@ -2,6 +2,7 @@
 #include "Hero.h"
 #include "FCore.h"
 #include "Creature.h"
+#include "ActionBase.h"
 
 enum eMovementTypes {
 	ST_SLOW_WALK,
@@ -17,6 +18,8 @@ class CTCEnemy;
 class CTCRegionFollower;
 class CTCLook;
 class CTCGraphicAppearance;
+class CTCScriptedControl;
+class CTCPhysics;
 
 class CThing {
 public:
@@ -24,6 +27,8 @@ public:
 	float m_fMaxHealth;
 	float m_fHealth;
 	// 184
+
+	CTCBase* GetTC(int id);
 	CTCHeroStats* GetHeroStats();
 	CTCHeroMorph* GetHeroMorph();
 	CTCHeroExperience* GetHeroExperience();
@@ -32,7 +37,8 @@ public:
 	CTCRegionFollower* GetRegionFollower();
 	CTCLook* GetLook();
 	CTCGraphicAppearance* GetGraphicAppearance();
-
+	CTCScriptedControl* GetSC();
+	CTCPhysics* GetPhysics();
 	CVector* GetPosition();
 };
 
@@ -58,6 +64,11 @@ public:
 	void SetAlpha(char value);
 	void SetColor(int* color, CTCBase* base);
 	void SetScale(float value);
+};
+
+class CTCScriptedControl {
+public:
+	void AddAction(CActionBase* action);
 };
 
 

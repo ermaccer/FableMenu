@@ -78,8 +78,7 @@ void Init()
 	Patch<int>(0x137545C, SettingsMgr->iDefaultX);
 	Patch<int>(0x1375460, SettingsMgr->iDefaultY);
 
-	InjectHook(0xB5237F, HookEngineWeatherConstructor, PATCH_CALL);
-	
+	InjectHook(0xB5237F, HookEngineWeatherConstructor, PATCH_CALL);	
 }
 
 BOOL WINAPI DllMain(HMODULE hMod, DWORD dwReason, LPVOID lpReserved)

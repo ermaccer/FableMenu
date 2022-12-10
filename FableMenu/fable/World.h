@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "BulletTime.h"
 #include "Script.h"
+#include "ScriptInterface.h"
 
 class CWorld {
 public:
@@ -11,6 +12,7 @@ public:
 	CPlayer* GetPlayer(int id);
 	CBulletTimeManager* GetBulletTime();
 	CScriptInfoManager* GetScriptInfoManager();
+	CGameScriptInterface* GetGameScriptInterface();
 
 	static int& ms_curFrame;
 };

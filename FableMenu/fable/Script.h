@@ -14,7 +14,7 @@ class CScriptInfo {
 public:
 	int func;
 	int masterFunc;
-	CCharString* Name;
+	CCharString Name;
 	int id;
 	bool isMaster;
 };
@@ -29,7 +29,7 @@ class CScriptInfoManager {
 public:
 	int unk;
 	CScriptInfoManager_Data* data;
-	void AddScript(CScriptInfo* info, char* shortName);
+	void AddScript(CScriptInfo* info, CCharString* str);
 
 	void PrintAllScripts();
 };

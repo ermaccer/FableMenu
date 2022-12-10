@@ -3,6 +3,15 @@
 #include "..\core.h"
 
 
+CTCBase* CThing::GetTC(int id)
+{
+    int v29 = id;
+    int v5 = CallMethodAndReturn<int, 0x40F020, int, int*>((int)((int)this + 68), &v29);
+    if (v5 == *(int*)(this + 72) || *(int*)v5 > id)
+        v5 = *(int*)(this + 72);
+    return *(CTCBase**)(v5 + 4);
+}
+
 CTCHeroStats* CThing::GetHeroStats()
 {
     int v29 = 4;
@@ -75,6 +84,20 @@ CTCGraphicAppearance* CThing::GetGraphicAppearance()
     return *(CTCGraphicAppearance**)(v5 + 4);
 }
 
+CTCScriptedControl* CThing::GetSC()
+{
+    int v29 = 31;
+    int v5 = CallMethodAndReturn<int, 0x40F020, int, int*>((int)((int)this + 68), &v29);
+    if (v5 == *(int*)(this + 72) || *(int*)v5 > 31)
+        v5 = *(int*)(this + 72);
+    return *(CTCScriptedControl**)(v5 + 4);
+}
+
+CTCPhysics* CThing::GetPhysics()
+{
+    return (CTCPhysics*)GetTC(2);
+}
+
 CVector* CThing::GetPosition()
 {
     return CallMethodAndReturn<CVector*, 0x4C73D0, CThing*>(this);
@@ -143,5 +166,9 @@ void CTCGraphicAppearance::SetColor(int* color, CTCBase* base)
 void CTCGraphicAppearance::SetScale(float value)
 {
     CallMethod<0x4BFA50, CTCGraphicAppearance*, float>(this, value);
+}
 
+void CTCScriptedControl::AddAction(CActionBase* action)
+{
+    CallMethod<0x7137D0, CTCScriptedControl*, CActionBase*>(this, action);
 }

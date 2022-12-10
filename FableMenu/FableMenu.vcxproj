@@ -163,6 +163,7 @@
     <ClInclude Include="eDirectX9Hook.h" />
     <ClInclude Include="eNotifManager.h" />
     <ClInclude Include="eSettingsManager.h" />
+    <ClInclude Include="fable\ActionBase.h" />
     <ClInclude Include="fable\Base.h" />
     <ClInclude Include="fable\BulletTime.h" />
     <ClInclude Include="fable\Creature.h" />
@@ -179,6 +180,7 @@
     <ClInclude Include="fable\PlayerManager.h" />
     <ClInclude Include="fable\QuestManager.h" />
     <ClInclude Include="fable\Script.h" />
+    <ClInclude Include="fable\ScriptInterface.h" />
     <ClInclude Include="fable\Thing.h" />
     <ClInclude Include="fable\World.h" />
     <ClInclude Include="font.h" />
@@ -214,6 +216,7 @@
     <ClCompile Include="eDirectX9Hook.cpp" />
     <ClCompile Include="eNotifManager.cpp" />
     <ClCompile Include="eSettingsManager.cpp" />
+    <ClCompile Include="fable\ActionBase.cpp" />
     <ClCompile Include="fable\Creature.cpp" />
     <ClCompile Include="fable\EngineWeather.cpp" />
     <ClCompile Include="fable\FCore.cpp" />
