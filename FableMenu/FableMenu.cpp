@@ -764,8 +764,9 @@ const char* szCreatureList[] = {
 	"CREATURE_NW_DEMON_DOOR_FACE_01",
 	"CREATURE_ORACLE_HEAD_01",
 };
+
 const char* szObjectsList[] = {
-        "OBJECT_BASE",
+    "OBJECT_BASE",
     "OBJECT_FENCE_TEMPLATE",
     "OBJECT_FENCE_PLACEABLE_TEMPLATE",
     "OBJECT_TREE_TEMPLATE",
@@ -3588,18 +3589,16 @@ const char* szObjectsList[] = {
     "OBJECT_WW_TOTEM_SNAKE_LEFT",
     "OBJECT_WW_TOTEM_SNAKE_RIGHT",
 };
+
 const char* szBuiltInQuests[] = {
     "CS_OakValeRevisited",
     "CS_PlayCutscene",
     "ChapterAndSceneManager",
     "CreatureGenerators",
-    "CreatureGenerators",
     "DummyQuestForHeroLevels",
     "DummyQuestForScarletRoseStatue",
     "ForceKHGGatesOpen",
     "Gameflow",
-    "Gameflow",
-    "GameflowAssistance",
     "GameflowAssistance",
     "HeroBoasts",
     "Hook_BalverinesInKHGPreWhiteBalv",
@@ -3629,7 +3628,6 @@ const char* szBuiltInQuests[] = {
     "QS_GuardianSisterInfo",
     "QS_GuardianSisterInfo2_SisterInBanditCamp",
     "QS_GuardianTrophyDealerInfo",
-    "QS_GuardianTrophyDealerInfo",
     "QS_MeetSister",
     "QS_ScytheInfo",
     "Q_AmbushTraders",
@@ -3645,7 +3643,6 @@ const char* szBuiltInQuests[] = {
     "Q_BanditCampHoldingScript",
     "Q_BanditCamp_Barriers",
     "Q_BountyHunt",
-    "Q_BowerstoneTownLifeIntro",
     "Q_BowerstoneTownLifeIntro",
     "Q_BreakSiege",
     "Q_BreakSiege_Blockage",
@@ -3666,25 +3663,17 @@ const char* szBuiltInQuests[] = {
     "Q_GuildTrainingWoodsDeparture"
     "Q_GuildTrainingWoodsDeparture",
     "Q_GuildTrainingWoodsMelee",
-    "Q_GuildTrainingWoodsMelee",
-    "Q_GuildTrainingWoodsWill",
     "Q_GuildTrainingWoodsWill",
     "Q_HangingTreeEvil",
-    "Q_HangingTreeEvil",
-    "Q_HangingTreeGood",
     "Q_HangingTreeGood",
     "Q_HeroSouls",
     "Q_HeroSoulsArena",
-    "Q_HeroSoulsArena",
-    "Q_HeroSoulsBriar",
     "Q_HeroSoulsBriar",
     "Q_HeroSoulsBriarMagicBarrier",
     "Q_HeroSoulsGuildmaster",
     "Q_HeroSoulsMother",
-    "Q_HeroSoulsMother",
     "Q_HeroSoulsNostro",
     "Q_HeroSoulsPermanentArena",
-    "Q_HeroSoulsThunder",
     "Q_HeroSoulsThunder",
     "Q_HerosOldHouse",
     "Q_HobbeCave",
@@ -3704,11 +3693,9 @@ const char* szBuiltInQuests[] = {
     "Q_OrchardFarm_Barricade",
     "Q_PrisonEscapeFromCell",
     "Q_PrisonEscapeRescueMother",
-    "Q_PrisonEscapeRescueMother",
     "Q_PrisonRace",
     "Q_PrisonWardenGame",
     "Q_RansomVictim",
-    "Q_RansomVictimChiefsHouse",
     "Q_RansomVictimChiefsHouse",
     "Q_RansomVictimNaturesRevenge",
     "Q_RansomVictimRevenge",
@@ -3719,8 +3706,6 @@ const char* szBuiltInQuests[] = {
     "Q_SunnyvaleMaster",
     "Q_TentacleKrakenBossFight",
     "Q_TraderConflictEvil",
-    "Q_TraderConflictEvil",
-    "Q_TraderConflictGood",
     "Q_TraderConflictGood",
     "Q_TraderConflictGood_Extras",
     "Q_TraderEscort",
@@ -3739,50 +3724,32 @@ const char* szBuiltInQuests[] = {
     "V_AmbushScamEvil",
     "V_AmbushScamGood",
     "V_ArcheryCompetition",
-    "V_ArcheryCompetition",
     "V_ArcheryCompetition_Activate",
-    "V_AssassinAttacks",
     "V_AssassinAttacks",
     "V_AssassinAttacks_Activate",
     "V_BanditCampPath",
-    "V_BanditCampPath",
     "V_BanditToll",
     "V_BeardyBaldy",
-    "V_BeardyBaldy",
-    "V_BeggarAndChild",
     "V_BeggarAndChild",
     "V_BodyGuard",
-    "V_BodyGuard",
-    "V_BookCollecting",
     "V_BookCollecting",
     "V_Bordello",
-    "V_Bordello",
-    "V_ChapelOfEvil",
     "V_ChapelOfEvil",
     "V_ChapelOfEvil_Activate",
     "V_ChickenKicking",
-    "V_ChickenKicking",
     "V_DemonDoors",
-    "V_ExposeMayor",
     "V_ExposeMayor",
     "V_ExposeMayorRhodri",
     "V_Fisherman",
-    "V_Fisherman",
     "V_FishingCompetition",
-    "V_FishingCompetition",
-    "V_FisticuffsClub",
     "V_FisticuffsClub",
     "V_FisticuffsClubOnlyAtNight",
     "V_GhostGrannyNecklace",
-    "V_GhostGrannyNecklace",
     "V_GuildMaster",
-    "V_HauntedHouse",
     "V_HauntedHouse",
     "V_HelpTips",
     "V_HeroDolls",
-    "V_HeroDolls",
     "V_HeroDuel",
-    "V_HiddenBooty",
     "V_HiddenBooty",
     "V_HiddenBooty_Activate",
     "V_IntroductionToTrophies",
@@ -3795,7 +3762,6 @@ const char* szBuiltInQuests[] = {
     "V_ParanoidWhispers",
     "V_PicnicAreaAfterWaspBoss",
     "V_RandomPopulationSim",
-    "V_RockTrollFirstEncounter",
     "V_RockTrollFirstEncounter",
     "V_RockTrollFirstEncounter_Activate",
     "V_SickChild",
@@ -3816,6 +3782,7 @@ const char* szBuiltInQuests[] = {
     "V_TrophyDealer",
 };
 
+
 void FableMenu::Init()
 {
 	sprintf(szFactionName, szFactions[0]);
@@ -3833,20 +3800,25 @@ void FableMenu::Draw()
 		{
 			if (ImGui::BeginMenu("Settings"))
 			{
-				m_bSubmenuActive[SUBMENU_SETTINGS] = true;
+				m_bSubmenuActive[SM_Settings] = true;
 				ImGui::EndMenu();
 			}
 			if (ImGui::BeginMenu("Help"))
 			{
                 if (ImGui::MenuItem("Creature List"))
                 {
-                    m_bSubmenuActive[SUBMENU_CREATURE_LIST] = true;
+                    m_bSubmenuActive[SM_Creature_List] = true;
                 }
                 if (ImGui::MenuItem("Object List"))
                 {
-                    m_bSubmenuActive[SUBMENU_OBJECT_LIST] = true;
+                    m_bSubmenuActive[SM_Object_List] = true;
                 }
-
+                if (ImGui::BeginMenu("About"))
+                {
+                    ImGui::MenuItem("Version: " FABLEMENU_VERSION);
+                    ImGui::MenuItem("Date: " __DATE__);
+                    ImGui::EndMenu();
+                }
 				ImGui::EndMenu();
 			}
 			ImGui::EndMenuBar();
@@ -3889,13 +3861,13 @@ void FableMenu::Draw()
 	}
 	ImGui::End();
 
-	if (m_bSubmenuActive[SUBMENU_SETTINGS])
+	if (m_bSubmenuActive[SM_Settings])
 		DrawSettings();
 
-	if (m_bSubmenuActive[SUBMENU_CREATURE_LIST])
+	if (m_bSubmenuActive[SM_Creature_List])
 		DrawCreatureList();
 
-    if (m_bSubmenuActive[SUBMENU_OBJECT_LIST])
+    if (m_bSubmenuActive[SM_Object_List])
         DrawObjectList();
 }
 
@@ -4150,8 +4122,7 @@ void FableMenu::DrawWorldTab()
 	}
 	if (wrld)
 	{
-		ImGui::Text("Time");
-		ImGui::Separator();
+        if (ImGui::CollapsingHeader("Time"))
 		{
 			int time = *(int*)((int)wrld + 28);
 			if (time)
@@ -4168,11 +4139,12 @@ void FableMenu::DrawWorldTab()
 
 			}
 		}
-		ImGui::Separator();
 	}
 
 	if (ImGui::CollapsingHeader("Objects"))
 	{
+        ImGui::TextWrapped("Object list is available in Help menu.");
+        ImGui::Separator();
 		static CVector pos = {};
 		static int id = 0;
 		static char text[512] = { };
@@ -4204,6 +4176,8 @@ void FableMenu::DrawWorldTab()
 	}
 	if (ImGui::CollapsingHeader("Creatures"))
 	{
+        ImGui::TextWrapped("Creature list is available in Help menu.");
+        ImGui::Separator();
 		static CVector cpos = {};
 		static int cid = 0;
 		static int caiID = 0;
@@ -4298,6 +4272,9 @@ void FableMenu::DrawQuestTab()
 
 
 	CQuestManager* q = CQuestManager::Get();
+
+    ImGui::TextWrapped("NOTE: Quest changes might break your savegame! To be safe, do any quest changes on a backup/alternative save.");
+
 	static char scriptName[256] = {};
 	if (ImGui::CollapsingHeader("Status Control"))
 	{
@@ -4329,44 +4306,48 @@ void FableMenu::DrawQuestTab()
         ImGui::Checkbox("Manual Input", &writeName);
 
 		ImGui::PopItemWidth();
-		if (ImGui::Button("Activate", { -FLT_MIN, 0 }))
-		{
-			CCharString str(scriptName);
-			if (q->IsActive(&str))
-			{
-				Notifications->SetNotificationTime(2500);
-				Notifications->PushNotification("Quest \"%s\" is already active!", scriptName);
-			}
-			else
-			{
-				if (q->ActivateQuest(&str, false, true))
-				{
-					Notifications->SetNotificationTime(2500);
-					Notifications->PushNotification("Quest \"%s\" activated!", scriptName);
-				}
-				else
-				{
-					Notifications->SetNotificationTime(2500);
-					Notifications->PushNotification("Failed to activate quest \"%s\"!", scriptName);
-				}
-			}
 
-		}
-		if (ImGui::Button("Deactivate", { -FLT_MIN, 0 }))
-		{
-			CCharString str(scriptName);
-			if (!q->IsActive(&str))
-			{
-				Notifications->SetNotificationTime(2500);
-				Notifications->PushNotification("Quest \"%s\" is not active!", scriptName);
-			}
-			else
-			{
-				q->DeactivateQuest(&str, 0);
-				Notifications->SetNotificationTime(2500);
-				Notifications->PushNotification("Quest \"%s\" deactivated!", scriptName);
-			}
-		}
+        if (strlen(scriptName) > 0)
+        {
+            if (ImGui::Button("Activate", { -FLT_MIN, 0 }))
+            {
+                CCharString str(scriptName);
+                if (q->IsActive(&str))
+                {
+                    Notifications->SetNotificationTime(2500);
+                    Notifications->PushNotification("Quest \"%s\" is already active!", scriptName);
+                }
+                else
+                {
+                    if (q->ActivateQuest(&str, false, true))
+                    {
+                        Notifications->SetNotificationTime(2500);
+                        Notifications->PushNotification("Quest \"%s\" activated!", scriptName);
+                    }
+                    else
+                    {
+                        Notifications->SetNotificationTime(2500);
+                        Notifications->PushNotification("Failed to activate quest \"%s\"!", scriptName);
+                    }
+                }
+
+            }
+            if (ImGui::Button("Deactivate", { -FLT_MIN, 0 }))
+            {
+                CCharString str(scriptName);
+                if (!q->IsActive(&str))
+                {
+                    Notifications->SetNotificationTime(2500);
+                    Notifications->PushNotification("Quest \"%s\" is not active!", scriptName);
+                }
+                else
+                {
+                    q->DeactivateQuest(&str, 0);
+                    Notifications->SetNotificationTime(2500);
+                    Notifications->PushNotification("Quest \"%s\" deactivated!", scriptName);
+                }
+            }
+        }
 		
 	}
 
@@ -4433,7 +4414,7 @@ void FableMenu::DrawSettings()
 	ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, { 0.5f, 0.5f });
 	ImGui::SetNextWindowPos({ ImGui::GetIO().DisplaySize.x / 2.0f, ImGui::GetIO().DisplaySize.y / 2.0f }, ImGuiCond_Once, { 0.5f, 0.5f });
 	ImGui::SetNextWindowSize({ 700,700 }, ImGuiCond_Once);
-	ImGui::Begin("Settings", &m_bSubmenuActive[SUBMENU_SETTINGS]);
+	ImGui::Begin("Settings", &m_bSubmenuActive[SM_Settings]);
 
 	static int settingID = 0;
 	static const char* settingNames[] = {
@@ -4555,13 +4536,13 @@ void FableMenu::DrawCreatureList()
 	ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, { 0.5f, 0.5f });
 	ImGui::SetNextWindowPos({ ImGui::GetIO().DisplaySize.x / 2.0f, ImGui::GetIO().DisplaySize.y / 2.0f }, ImGuiCond_Once, { 0.5f, 0.5f });
 	ImGui::SetNextWindowSize({ 700,700 }, ImGuiCond_Once);
-	ImGui::Begin("Creature List", &m_bSubmenuActive[SUBMENU_CREATURE_LIST]);
+	ImGui::Begin("Creature List", &m_bSubmenuActive[SM_Creature_List]);
 
 	static ImGuiTextFilter filter;
 	ImGui::TextWrapped("Click on any entry to copy to clipboard.");
 	ImGui::Text("Search");
 	ImGui::PushItemWidth(-FLT_MIN);
-	filter.Draw("");
+	filter.Draw("##wclist");
 	ImGui::PopItemWidth();
 
 	ImGui::BeginChild("##list", { 0, -ImGui::GetFrameHeightWithSpacing() }, true);
@@ -4605,7 +4586,7 @@ void FableMenu::DrawObjectList()
     ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, { 0.5f, 0.5f });
     ImGui::SetNextWindowPos({ ImGui::GetIO().DisplaySize.x / 2.0f, ImGui::GetIO().DisplaySize.y / 2.0f }, ImGuiCond_Once, { 0.5f, 0.5f });
     ImGui::SetNextWindowSize({ 700,700 }, ImGuiCond_Once);
-    ImGui::Begin("Object List", &m_bSubmenuActive[SUBMENU_OBJECT_LIST]);
+    ImGui::Begin("Object List", &m_bSubmenuActive[SM_Object_List]);
 
     static ImGuiTextFilter filter;
     ImGui::TextWrapped("Click on any entry to copy to clipboard.");

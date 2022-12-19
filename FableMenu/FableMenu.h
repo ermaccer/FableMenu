@@ -6,10 +6,10 @@
 
 
 enum eMenuSubMenus {
-	SUBMENU_SETTINGS,
-	SUBMENU_CREATURE_LIST,
-	SUBMENU_OBJECT_LIST,
-	TOTAL_SUBMENUS
+	SM_Settings,
+	SM_Creature_List,
+	SM_Object_List,
+	SM_Total
 };
 
 enum eFreeCameraType {
@@ -21,7 +21,7 @@ enum eFreeCameraType {
 class FableMenu {
 public:
 	bool	 m_bIsActive = false;
-	bool	 m_bSubmenuActive[TOTAL_SUBMENUS] = {};
+	bool	 m_bSubmenuActive[SM_Total] = {};
 	bool     m_bPressingKey = false;
 	bool	 m_bIsFocused = true;
 
