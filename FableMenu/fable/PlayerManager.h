@@ -3,5 +3,5 @@
 
 class CPlayerManager {
 public:
-	CPlayer* GetPlayer();
+	CPlayer* GetMainPlayer();
 };

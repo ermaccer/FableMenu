@@ -5,7 +5,12 @@ int& CWorld::ms_curFrame = *(int*)0x13B89BC;
 
 void CWorld::SetMinimap(bool status)
 {
-	*(bool*)(this + 0xDD) = status;
+	*(bool*)(this + 221) = status;
+}
+
+bool* CWorld::GetMinimap()
+{
+	return (bool*)(this + 221);
 }
 
 CPlayer* CWorld::GetPlayer(int id)
@@ -16,6 +21,11 @@ CPlayer* CWorld::GetPlayer(int id)
 CBulletTimeManager* CWorld::GetBulletTime()
 {
 	return *(CBulletTimeManager**)((int)this + 104);
+}
+
+CThingSearchTools* CWorld::GetThingSearchTools()
+{
+	return *(CThingSearchTools**)(this + 32);
 }
 
 CScriptInfoManager* CWorld::GetScriptInfoManager()

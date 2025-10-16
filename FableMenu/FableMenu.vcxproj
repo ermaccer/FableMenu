@@ -107,10 +107,12 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;SCARFACEMENU_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>false</ConformanceMode>
+      <PreprocessorDefinitions>WIN32;NDEBUG;SCARFACEMENU_EXPORTS;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <ConformanceMode>false</ConformanceMode>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -163,14 +165,20 @@
     <ClInclude Include="eDirectX9Hook.h" />
     <ClInclude Include="eNotifManager.h" />
     <ClInclude Include="eSettingsManager.h" />
-    <ClInclude Include="fable\ActionBase.h" />
-    <ClInclude Include="fable\Base.h" />
     <ClInclude Include="fable\BulletTime.h" />
+    <ClInclude Include="fable\CreatureActions\CreatureAction_DropWeapon.h" />
+    <ClInclude Include="fable\GameDefinitionManager.h" />
     <ClInclude Include="fable\Creature.h" />
+    <ClInclude Include="fable\CreatureActions\ActionPlayAnimation.h" />
+    <ClInclude Include="fable\CreatureActions\CreatureAction_PickUpGenericBox.h" />
+    <ClInclude Include="fable\CreatureActions\CreatureAction_PickUpJugToFill.h" />
+    <ClInclude Include="fable\ProgressDisplay.h" />
+    <ClInclude Include="fable\ThingCreature\Door.h" />
+    <ClInclude Include="fable\ThingSearchTools.h" />
     <ClInclude Include="fable\EngineWeather.h" />
     <ClInclude Include="fable\FCore.h" />
+    <ClInclude Include="fable\FGlobals.h" />
     <ClInclude Include="fable\GameCamera.h" />
-    <ClInclude Include="fable\Hero.h" />
     <ClInclude Include="fable\HUD.h" />
     <ClInclude Include="fable\InputProcess.h" />
     <ClInclude Include="fable\Matrix.h" />
@@ -182,6 +190,33 @@
     <ClInclude Include="fable\Script.h" />
     <ClInclude Include="fable\ScriptInterface.h" />
     <ClInclude Include="fable\Thing.h" />
+    <ClInclude Include="fable\ThingCreature\ActionUse.h" />
+    <ClInclude Include="fable\ThingCreature\AIScratchPad.h" />
+    <ClInclude Include="fable\ThingCreature\Base.h" />
+    <ClInclude Include="fable\ThingCreature\BuyableHouse.h" />
+    <ClInclude Include="fable\ThingCreature\Carrying.h" />
+    <ClInclude Include="fable\ThingCreature\Combat.h" />
+    <ClInclude Include="fable\ThingCreature\CreatureAI.h" />
+    <ClInclude Include="fable\ThingCreature\OwnedEntity.h" />
+    <ClInclude Include="fable\ThingCreature\ThingOwner.h" />
+    <ClInclude Include="fable\ThingCreature\Enemy.h" />
+    <ClInclude Include="fable\ThingCreature\Followed.h" />
+    <ClInclude Include="fable\ThingCreature\GraphicAppearance.h" />
+    <ClInclude Include="fable\ThingCreature\Haste.h" />
+    <ClInclude Include="fable\ThingCreature\Hero.h" />
+    <ClInclude Include="fable\ThingCreature\HeroMorph.h" />
+    <ClInclude Include="fable\ThingCreature\HeroOpinionLog.h" />
+    <ClInclude Include="fable\ThingCreature\HeroStats.h" />
+    <ClInclude Include="fable\ThingCreature\InventoryClothing.h" />
+    <ClInclude Include="fable\ThingCreature\ModeManager.h" />
+    <ClInclude Include="fable\ThingCreature\ParticleEmitter.h" />
+    <ClInclude Include="fable\ThingCreature\PhysicsBase.h" />
+    <ClInclude Include="fable\ThingCreature\QuestCard.h" />
+    <ClInclude Include="fable\ThingCreature\RegionFollower.h" />
+    <ClInclude Include="fable\ThingCreature\ScriptedControl.h" />
+    <ClInclude Include="fable\ThingCreature\Village.h" />
+    <ClInclude Include="fable\ThingCreature\VillageMember.h" />
+    <ClInclude Include="fable\ThingCreature\Wife.h" />
     <ClInclude Include="fable\World.h" />
     <ClInclude Include="font.h" />
     <ClInclude Include="framework.h" />
@@ -216,10 +251,18 @@
     <ClCompile Include="eDirectX9Hook.cpp" />
     <ClCompile Include="eNotifManager.cpp" />
     <ClCompile Include="eSettingsManager.cpp" />
-    <ClCompile Include="fable\ActionBase.cpp" />
+    <ClCompile Include="fable\CreatureActions\CreatureAction_DropWeapon.cpp" />
+    <ClCompile Include="fable\GameDefinitionManager.cpp" />
     <ClCompile Include="fable\Creature.cpp" />
+    <ClCompile Include="fable\CreatureActions\ActionPlayAnimation.cpp" />
+    <ClCompile Include="fable\CreatureActions\CreatureAction_PickUpGenericBox.cpp" />
+    <ClCompile Include="fable\CreatureActions\CreatureAction_PickUpJugToFill.cpp" />
+    <ClCompile Include="fable\ProgressDisplay.cpp" />
+    <ClCompile Include="fable\ThingCreature\Door.cpp" />
+    <ClCompile Include="fable\ThingSearchTools.cpp" />
     <ClCompile Include="fable\EngineWeather.cpp" />
     <ClCompile Include="fable\FCore.cpp" />
+    <ClCompile Include="fable\FGlobals.cpp" />
     <ClCompile Include="fable\GameCamera.cpp" />
     <ClCompile Include="fable\HUD.cpp" />
     <ClCompile Include="fable\InputProcess.cpp" />
@@ -231,6 +274,33 @@
     <ClCompile Include="fable\QuestManager.cpp" />
     <ClCompile Include="fable\Script.cpp" />
     <ClCompile Include="fable\Thing.cpp" />
+    <ClCompile Include="fable\ThingCreature\ActionUse.cpp" />
+    <ClCompile Include="fable\ThingCreature\AIScratchPad.cpp" />
+    <ClCompile Include="fable\ThingCreature\Base.cpp" />
+    <ClCompile Include="fable\ThingCreature\BuyableHouse.cpp" />
+    <ClCompile Include="fable\ThingCreature\Carrying.cpp" />
+    <ClCompile Include="fable\ThingCreature\Combat.cpp" />
+    <ClCompile Include="fable\ThingCreature\CreatureAI.cpp" />
+    <ClCompile Include="fable\ThingCreature\OwnedEntity.cpp" />
+    <ClCompile Include="fable\ThingCreature\ThingOwner.cpp" />
+    <ClCompile Include="fable\ThingCreature\Enemy.cpp" />
+    <ClCompile Include="fable\ThingCreature\Followed.cpp" />
+    <ClCompile Include="fable\ThingCreature\GraphicAppearance.cpp" />
+    <ClCompile Include="fable\ThingCreature\Haste.cpp" />
+    <ClCompile Include="fable\ThingCreature\Hero.cpp" />
+    <ClCompile Include="fable\ThingCreature\HeroMorph.cpp" />
+    <ClCompile Include="fable\ThingCreature\HeroOpinionLog.cpp" />
+    <ClCompile Include="fable\ThingCreature\HeroStats.cpp" />
+    <ClCompile Include="fable\ThingCreature\InventoryClothing.cpp" />
+    <ClCompile Include="fable\ThingCreature\ModeManager.cpp" />
+    <ClCompile Include="fable\ThingCreature\ParticleEmitter.cpp" />
+    <ClCompile Include="fable\ThingCreature\PhysicsBase.cpp" />
+    <ClCompile Include="fable\ThingCreature\QuestCard.cpp" />
+    <ClCompile Include="fable\ThingCreature\RegionFollower.cpp" />
+    <ClCompile Include="fable\ThingCreature\ScriptedControl.cpp" />
+    <ClCompile Include="fable\ThingCreature\Village.cpp" />
+    <ClCompile Include="fable\ThingCreature\VillageMember.cpp" />
+    <ClCompile Include="fable\ThingCreature\Wife.cpp" />
     <ClCompile Include="fable\World.cpp" />
     <ClCompile Include="helper\eKeyboardMan.cpp" />
     <ClCompile Include="helper\eMouse.cpp" />

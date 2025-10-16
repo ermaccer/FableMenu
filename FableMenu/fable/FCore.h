@@ -1,6 +1,11 @@
 #pragma once
 #include <math.h>
+#include <list>
 
+class CBaseClass
+{
+
+};
 
 class CVector
 {
@@ -86,18 +91,60 @@ inline CVector operator/(const CVector& left, float right)
 }
 
 CVector CrossProduct(const CVector& v1, const CVector& v2);
-class CWideString {
+
+struct RHSet
+{
+	CVector Up;
+	CVector Forward;
+};
+
+class CRGBAColour
+{
+public:
+	unsigned char B;
+	unsigned char G;
+	unsigned char R;
+	unsigned char A;
+
+	CRGBAColour(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+	CRGBAColour(void) {};
+};
+
+class CRGBAFloat
+{
+public:
+	float R;
+	float G;
+	float B;
+	float A;
+
+	CRGBAFloat(float r, float g, float b, float a);
+	CRGBAFloat(void) {};
+
+	CRGBAColour GetUINTColor();
+};
+
+class CWideString
+{
 	int unk;
 	wchar_t* str;
-
-	CWideString(wchar_t*);
+	CWideString(wchar_t* string);
 };
 
 class CCharString {
 public:
 	int unk;
 	char* str;
-
+	char* GetStringData();
 	CCharString(char* _str);
 	CCharString();
 };
+
+class CDefString {
+public:
+	int m_nTablePos;
+	CDefString();
+	static CCharString* GetString(CCharString* a2, int a3);
+};
+
+CBaseClass* GameMalloc(unsigned int size);

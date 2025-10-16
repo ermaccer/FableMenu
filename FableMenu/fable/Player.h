@@ -1,11 +1,85 @@
 #pragma once
 #include "Thing.h"
+
+enum EPlayerMode
+{
+    PLAYER_MODE_NULL = 0,
+    PLAYER_MODE_CONTROL_CREATURE = 1,
+    PLAYER_MODE_Z_TARGET = 2,
+    PLAYER_MODE_DEAD = 3,
+    PLAYER_MODE_NAVIGATE_INVENTORY = 4,
+    PLAYER_MODE_NAVIGATE_INVENTORY_CLOTHING = 5,
+    PLAYER_MODE_NAVIGATE_INVENTORY_WEAPONS = 6,
+    PLAYER_MODE_NAVIGATE_INVENTORY_ABILITIES_SCREEN = 7,
+    PLAYER_MODE_NAVIGATE_INVENTORY_MAP_SCREEN = 8,
+    PLAYER_MODE_NAVIGATE_INVENTORY_MAGIC_SCREEN = 9,
+    PLAYER_MODE_NAVIGATE_INVENTORY_STATS_SCREEN = 10,
+    PLAYER_MODE_NAVIGATE_INVENTORY_EXPERIENCE_SCREEN = 11,
+    PLAYER_MODE_NAVIGATE_INVENTORY_TRADE_SCREEN = 12,
+    PLAYER_MODE_NAVIGATE_INVENTORY_QUESTS_SCREEN = 13,
+    PLAYER_MODE_CLICK_PAST_TEXT = 14,
+    PLAYER_MODE_YES_NO_QUESTION = 15,
+    PLAYER_MODE_FIRST_PERSON = 16,
+    PLAYER_MODE_FREEZE_CONTROLS = 17,
+    PLAYER_MODE_SPECIAL_ABILITY_FREEZE_CONTROLS = 18,
+    PLAYER_MODE_CONTROL_CAMERA = 19,
+    PLAYER_MODE_LOOK_THROUGH_WINDOW = 20,
+    PLAYER_MODE_REBOOT_GAME = 21,
+    PLAYER_MODE_FIRST_PERSON_TARGETING = 22,
+    PLAYER_MODE_NAVIGATE_IN_GAME_MENU = 23,
+    PLAYER_MODE_CONTROL_SPIRIT = 24,
+    PLAYER_MODE_USE_PROJECTILE_WEAPON = 25,
+    PLAYER_MODE_TAVERN_GAME = 26,
+    PLAYER_MODE_CUT_SCENE = 27,
+    PLAYER_MODE_CHARGE_QUICK_ACCESS = 28,
+    PLAYER_MODE_FISHING = 29,
+    PLAYER_MODE_DIGGING = 30,
+    PLAYER_MODE_PARALYSED = 31,
+    PLAYER_MODE_BOAST_UI = 32,
+    PLAYER_MODE_BERSERK = 33,
+    PLAYER_MODE_USE_PROJECTILE_WEAPON_THIRD_PERSON = 34,
+    PLAYER_MODE_CHARGE_UP_WILL_SPELL = 35,
+    PLAYER_MODE_QUICK_ACCESS_MENU = 36,
+    PLAYER_MODE_QUEST_COMPLETION_UI = 37,
+    PLAYER_MODE_CREDITS_UI = 38,
+    PLAYER_MODE_BETTING = 39,
+    PLAYER_MODE_LIGHTNING = 40,
+    PLAYER_MODE_ORACLE_MINIGAME = 41,
+    PLAYER_MODE_FIREHEART_MINIGAME = 42,
+    PLAYER_MODE_LIVE_GUI = 43,
+    PLAYER_MODE_CONSOLE = 44,
+    PLAYER_MODE_TAKE_SCREENSHOT_FOR_PHOTOJOURNAL = 45,
+    PLAYER_MODE_PC_PROJECTILE_WEAPON_THIRD_PERSON_AIMING = 46,
+    PLAYER_MODE_VIEW_HERO = 47,
+    MAX_NO_PLAYER_MODES = 48
+};
+
 class CPlayer {
 public:
-	void SetMode(int id, bool unk);
-	void ClearMode(int id);
+    char pad[0x9];
+    bool m_bPlayerIsCharacter;
+    char _pad[0x1E];
+    int m_dNumber;
+    char __pad[0x1DC];
+    bool m_bLocal;
+    bool m_bShowWorldThing;
+    bool m_bZTargeting;
+    char ___pad[0x5];
+    std::list<enum EPlayerMode> m_lPlayerModes;
+
+    void AddMode(EPlayerMode mode, bool set_mode_as_only_mode);
+    bool HasMode(EPlayerMode mode);
+    EPlayerMode GetCurrentMode();
+    void RemoveMode(EPlayerMode mode);
+
+    void SetAgressiveMode(bool on);
+    void ToggleAggressiveMode();
 
 	CThing* GetCharacterThing();
+
+    void InitCharacterAs(CCharString* def_name);
+    void SetControlledCreature(CThing* creature);
+    void UninitCharacter();
 
 	void DisableInput();
 	void EnableInput();
