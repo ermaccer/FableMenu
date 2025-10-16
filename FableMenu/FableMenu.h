@@ -2,7 +2,7 @@
 #include "Fable.h"
 
 
-#define FABLEMENU_VERSION "??"
+#define FABLEMENU_VERSION "1.0"
 
 
 enum eMenuSubMenus {
