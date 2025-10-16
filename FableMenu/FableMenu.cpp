@@ -6219,9 +6219,9 @@ void FableMenu::DrawCreaturesTab()
     static int creatureId;
     static bool advanced;
     static bool playerFollower;
-    ImGui::InputFloat3("Spawn Position(X | Y | Z)", &creaturePosition.X);
+    ImGui::InputFloat3("Spawn Position (X | Y | Z)", &creaturePosition.X);
 
-    if (ImGui::Button("Get Player Position"))
+    if (ImGui::Button("Get Player Position", { -FLT_MIN, 0 }))
     {
         if (plr)
             creaturePosition = *playerCharacter->GetPosition();
