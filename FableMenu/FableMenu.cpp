@@ -5591,8 +5591,7 @@ const char* szCreatureWeapons[] = {
     "OBJECT_HERO_SWORD_MED",
     "OBJECT_SUMMONER_SWORD_01"
     "OBJECT_LEGENDARY_BROADSWORD",
-    "OBJECT_LEGENDARY_BROADSWORD_02",
-
+    "OBJECT_LEGENDARY_BROADSWORD_02"
 };
 
 const char* szAttackStyleNames[] = {
@@ -6793,20 +6792,31 @@ void FableMenu::DrawActionsCollapse(CThing* thing)
         character->FinishCurrentAction();
     }
     ImGui::SeparatorText("Carrying");
+    static bool destroyDropped = true;
+    ImGui::Checkbox("Destroy dropped weapon", &destroyDropped);
     if (ImGui::Button("Take Crate"))
     {
         FableMenu::TakeActionItem(character, (char*)"OBJECT_CRATE_SMALL_EXPLOSIVE_01_USABLE");
     }
     ImGui::SameLine();
-    if (ImGui::Button("Drop Weapon"))
+    if (ImGui::Button("Drop Carried"))
     {
         // to make it work for swords
         Patch<char>(0x845D86 + 1, 0x84);
-
+        
         CCreatureAction_DropWeapon* drop = (CCreatureAction_DropWeapon*)GameMalloc(100);
         new CCreatureAction_DropWeapon(drop, character);
 
         character->SetCurrentAction((CTCBase*)drop);
+
+        CTCCarrying* carrying = character->GetCarrying();
+        CThing* primarySlotThing = carrying->GetThingInPrimarySlot();
+        
+        if (destroyDropped && primarySlotThing->HasTC(TCI_INVENTORY_ITEM))
+        {
+            CTCInventoryItem* item = primarySlotThing->GetInventoryItem();
+            item->RemoveFromInventory();
+        }
     }
 }
 
@@ -7127,7 +7137,7 @@ void FableMenu::DrawCreatureData(const char* windowTitle, CThing* creature, bool
                 static int selectedCarrySlot;
                 static int selectedWeaponID = 0;
                 CTCCarrying* carry = creature->GetCarrying();
-                bool isCarryWeapon = carry->isCarryingWeapon(creature);
+                bool isCarryWeapon = carry->IsCarryingWeapon(creature);
 
                 ImGui::Text("Is Carrying Weapons: %s", isCarryWeapon ? "Yes" : "No");
 

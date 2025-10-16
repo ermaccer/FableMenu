@@ -193,6 +193,11 @@ bool CThing::HasTC(int interface_type)
     return CallMethodAndReturn<bool, 0x4118C0, CThing*, int>(this, interface_type);
 }
 
+void CThing::RemoveTC(ETCInterfaceType id)
+{
+    CallMethod<0x4C9840, CThing*, int>(this, id);
+}
+
 CTCDParticleEmitter* CThing::GetParticleEmitter()
 {
     int v29 = 75;
@@ -335,6 +340,15 @@ CTCCarrying* CThing::GetCarrying()
     if (v5 == *(int*)(this + 72) || *(int*)v5 > 70)
         v5 = *(int*)(this + 72);
     return *(CTCCarrying**)(v5 + 4);
+}
+
+CTCInventoryItem* CThing::GetInventoryItem()
+{
+    int v29 = 26;
+    int v5 = CallMethodAndReturn<int, 0x40F020, int, int*>((int)((int)this + 68), &v29);
+    if (v5 == *(int*)(this + 72) || *(int*)v5 > 26)
+        v5 = *(int*)(this + 72);
+    return *(CTCInventoryItem**)(v5 + 4);
 }
 
 CTCThingOwner* CThing::GetThingOwner()

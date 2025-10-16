@@ -29,6 +29,7 @@
 #include "ThingCreature/OwnedEntity.h"
 #include "ThingCreature/BuyableHouse.h"
 #include "ThingCreature/Door.h"
+#include "ThingCreature/InventoryItem.h"
 
 #include "CreatureActions/CreatureAction_PickUpGenericBox.h"
 #include "CreatureActions/CreatureAction_PickUpJugToFill.h"
@@ -211,12 +212,14 @@ public:
     CTCHaste* GetHaste();
     CTCQuestCard* GetQuestCard();
     CTCDoor* GetDoor();
+    CTCInventoryItem* GetInventoryItem();
 
     void LockAllDoors(bool lock, bool avoid_hero);
     void Kill(bool perform);
     bool IsChild();
     void SetNewBrain(int brain_def);
     bool HasTC(int interface_type);
+    void RemoveTC(ETCInterfaceType id);
     int GetActionID();
     void ClearQueuedActions();
     void FinishCurrentAction();

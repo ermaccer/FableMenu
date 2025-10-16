@@ -26,7 +26,8 @@ enum EHeroAbility
     MAX_NUMBER_OF_HERO_ABILITIES
 };
 
-enum eExperience {
+enum eExperience 
+{
     EXPERIENCE_STRENGTH,
     EXPERIENCE_SKILL,
     EXPERIENCE_WILL,

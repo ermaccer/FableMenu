@@ -6,7 +6,7 @@ CTCCarrying* CTCCarrying::Alloc(CThing* creature)
 	CallMethodAndReturn<CTCCarrying*, 0x4E7DFC, CThing*>(creature);
 }
 
-bool CTCCarrying::isCarryingWeapon(CThing* creature)
+bool CTCCarrying::IsCarryingWeapon(CThing* creature)
 {
 	return FASTCallAndReturn<bool, 0x6A1540, CThing*>(creature);
 }
@@ -23,7 +23,17 @@ void CTCCarrying::RemoveThingInCarrySlot(int slot, bool update_pos_before_remova
 
 CThing* CTCCarrying::GetThingInCarrySlot(int slot)
 {
-	return CallMethodAndReturn<CThing*,0x6A11F0, CTCCarrying*, int>(this, slot);
+	return CallMethodAndReturn<CThing*, 0x6A11F0, CTCCarrying*, int>(this, slot);
+}
+
+CThing* CTCCarrying::GetCarriedThing(int def_index)
+{
+	return CallMethodAndReturn<CThing*, 0x6A1120, CTCCarrying*, int>(this, def_index);
+}
+
+CThing* CTCCarrying::GetThingInPrimarySlot()
+{
+	return CallMethodAndReturn<CThing*, 0x6A1440, CTCCarrying*>(this);
 }
 
 bool CTCCarrying::IsCarrySlotFree(int slot)
