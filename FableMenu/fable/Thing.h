@@ -30,6 +30,7 @@
 #include "ThingCreature/BuyableHouse.h"
 #include "ThingCreature/Door.h"
 #include "ThingCreature/InventoryItem.h"
+#include "ThingCreature/Light.h"
 
 #include "CreatureActions/CreatureAction_PickUpGenericBox.h"
 #include "CreatureActions/CreatureAction_PickUpJugToFill.h"
@@ -213,6 +214,7 @@ public:
     CTCQuestCard* GetQuestCard();
     CTCDoor* GetDoor();
     CTCInventoryItem* GetInventoryItem();
+    CTCLight* GetLight();
 
     void LockAllDoors(bool lock, bool avoid_hero);
     void Kill(bool perform);

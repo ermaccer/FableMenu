@@ -1,3 +1,4 @@
+#pragma onces
 
 class CThing;
 

@@ -175,6 +175,7 @@
     <ClInclude Include="fable\ProgressDisplay.h" />
     <ClInclude Include="fable\ThingCreature\Door.h" />
     <ClInclude Include="fable\ThingCreature\InventoryItem.h" />
+    <ClInclude Include="fable\ThingCreature\Light.h" />
     <ClInclude Include="fable\ThingSearchTools.h" />
     <ClInclude Include="fable\EngineWeather.h" />
     <ClInclude Include="fable\FCore.h" />
@@ -261,6 +262,7 @@
     <ClCompile Include="fable\ProgressDisplay.cpp" />
     <ClCompile Include="fable\ThingCreature\Door.cpp" />
     <ClCompile Include="fable\ThingCreature\InventoryItem.cpp" />
+    <ClCompile Include="fable\ThingCreature\Light.cpp" />
     <ClCompile Include="fable\ThingSearchTools.cpp" />
     <ClCompile Include="fable\EngineWeather.cpp" />
     <ClCompile Include="fable\FCore.cpp" />

@@ -1,3 +1,4 @@
+#pragma once
 #include "../FCore.h"
 
 class CThing;

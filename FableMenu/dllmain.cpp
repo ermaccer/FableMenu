@@ -44,7 +44,6 @@ void ImGuiInputWatcher()
 }
 
 
-
 void Init()
 {
 	SettingsMgr->Init();

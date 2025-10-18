@@ -1,10 +1,9 @@
 #include "GraphicAppearance.h"
 #include "../../core.h"
 
-void CTCGraphicAppearance::SetAsHighlighted(float width_world_space, float width_screen_space, int* col, 
-	bool effect_carried_items, int effect_weapons, EAppearanceMeshEffectPriority priority, void* key)
+void CTCGraphicAppearance::SetAsHighlighted(float width_world_space, float width_screen_space, CRGBAColour* col, bool effect_carried_items, int effect_weapons, EAppearanceMeshEffectPriority priority, void* key)
 {
-	CallMethod<0x4C04C0, CTCGraphicAppearance*, float, float, int*, bool, int, EAppearanceMeshEffectPriority, void*>(this, width_world_space, width_screen_space, col, effect_carried_items, effect_weapons, priority, key);
+	CallMethod<0x4C04C0, CTCGraphicAppearance*, float, float, CRGBAColour*, bool, int, EAppearanceMeshEffectPriority, void*>(this, width_world_space, width_screen_space, col, effect_carried_items, effect_weapons, priority, key);
 }
 
 void CTCGraphicAppearance::SetAlpha(unsigned int alpha)
@@ -27,7 +26,7 @@ void CTCGraphicAppearance::SetLightingChannel(CThing* channel, bool effect_carri
 	CallMethod<0x4BFB40, CTCGraphicAppearance*, CThing*, bool, int>(this, channel, effect_carried_items, effect_weapons);
 }
 
-void CTCGraphicAppearance::SetColor(int* color, void* key)
+void CTCGraphicAppearance::SetColor(CRGBAColour* color, void* key)
 {
-	CallMethod<0x4C00B0, CTCGraphicAppearance*, int*, void*>(this, color, key);
+	CallMethod<0x4C00B0, CTCGraphicAppearance*, CRGBAColour*, void*>(this, color, key);
 }

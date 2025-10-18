@@ -1,3 +1,4 @@
+#pragma once
 
 class CThing;
 
@@ -5,5 +6,6 @@ class CThing;
 class CTCAIScratchPad {
 public:
 	char pad[0x6C];
-	bool allowToFollow;
+	bool m_bAllowToFollow;
+	static float* TradingPriceMult;
 };

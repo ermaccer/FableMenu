@@ -291,6 +291,9 @@
     <ClInclude Include="fable\ThingCreature\InventoryItem.h">
       <Filter>Header Files\fable\ThingCreature</Filter>
     </ClInclude>
+    <ClInclude Include="fable\ThingCreature\Light.h">
+      <Filter>Header Files\fable\ThingCreature</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -516,6 +519,9 @@
       <Filter>Header Files\fable\CreatureActions</Filter>
     </ClCompile>
     <ClCompile Include="fable\ThingCreature\InventoryItem.cpp">
+      <Filter>Header Files\fable\ThingCreature</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingCreature\Light.cpp">
       <Filter>Header Files\fable\ThingCreature</Filter>
     </ClCompile>
   </ItemGroup>

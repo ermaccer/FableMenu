@@ -6684,26 +6684,11 @@ void FableMenu::DrawAppearanceCollapse(CThing* thing)
     static ImVec4 highlightColor = { 1.0, 1.0, 1.0, 1.0 };
     ImGui::ColorEdit4("Highlight", (float*)&highlightColor);
 
-    union rgba {
-        char rgba[4];
-        int color;
-    };
-
-    rgba mcolor;
-
-    mcolor.rgba[0] = (unsigned char)((meshColor.z) * 255.0f);
-    mcolor.rgba[1] = (unsigned char)((meshColor.y) * 255.0f);
-    mcolor.rgba[2] = (unsigned char)((meshColor.x) * 255.0f);
-    mcolor.rgba[3] = (unsigned char)((meshColor.w) * 255.0f);
-
-    rgba hcolor;
-
-    hcolor.rgba[0] = (unsigned char)((highlightColor.z) * 255.0f);
-    hcolor.rgba[1] = (unsigned char)((highlightColor.y) * 255.0f);
-    hcolor.rgba[2] = (unsigned char)((highlightColor.x) * 255.0f);
-    hcolor.rgba[3] = (unsigned char)((highlightColor.w) * 255.0f);
+    CRGBAFloat mcolor(meshColor.x, meshColor.y, meshColor.z, meshColor.w);
+    CRGBAFloat hcolor(highlightColor.x, highlightColor.y, highlightColor.z, highlightColor.w);
 
     static float scale = 1.0f;
+    
     ImGui::InputFloat("Scale", &scale);
 
     if (ImGui::Button("Update##Appearance", { -FLT_MIN, 0 }))
@@ -6712,8 +6697,8 @@ void FableMenu::DrawAppearanceCollapse(CThing* thing)
         if (ga)
         {
             ga->SetAlpha(alpha);
-            ga->SetColor(&mcolor.color, ga);
-            ga->SetAsHighlighted(5, 0, &hcolor.color, 1, 1, MESH_EFFECT_PRIORITY_SHIELD_SPELL_SPECIAL_OVERRIDE, ga);
+            ga->SetColor(&mcolor.GetUINTColor(), ga);
+            ga->SetAsHighlighted(5, 0, &hcolor.GetUINTColor(), 1, 1, MESH_EFFECT_PRIORITY_SHIELD_SPELL_SPECIAL_OVERRIDE, ga);
             ga->SetScale(scale);
         }
     }
@@ -6722,6 +6707,37 @@ void FableMenu::DrawAppearanceCollapse(CThing* thing)
     {
         CTCGraphicAppearance* ga = thing->GetGraphicAppearance();
         ga->ClearHighlighted(ga);
+    }
+
+    if (!thing->HasTC(TCI_LIGHT))
+    {
+        return;
+    }
+
+    ImGui::SeparatorText("Light");
+    static float lightFlicker = 1.0f;
+    static bool lightEnabled = false;
+    static float innerRadius = 1.0f;
+    static float outerRadius = 10.0f;
+    static ImVec4 lightColor = { 1.0, 1.0, 1.0, 1.0 };
+
+    ImGui::InputFloat("Inner Radius", &innerRadius);
+    ImGui::InputFloat("Outer Radius", &outerRadius);
+
+    ImGui::ColorEdit3("Light Color", (float*)&lightColor);
+
+    CRGBAFloat lcolor = { lightColor.x, lightColor.y, lightColor.z, lightColor.w };
+
+    if (ImGui::Checkbox("Enable Light", &lightEnabled))
+    {
+        CTCLight* light = thing->GetLight();
+        if (light)
+        {
+            light->SetColour(&lcolor.GetUINTColor());
+            light->SetInnerRadius(innerRadius);
+            light->SetOuterRadius(outerRadius);
+            light->SetActive(lightEnabled);
+        }
     }
 }
 
@@ -7664,6 +7680,7 @@ void FableMenu::DrawMiscTab()
     }
 
 	ImGui::SeparatorText("Cheats");
+    ImGui::InputFloat("Price Multiplier", CTCAIScratchPad::TradingPriceMult);
 	ImGui::Checkbox("Infinite Health", &m_bGodMode);
 	ImGui::Checkbox("Infinite Will", &m_bInfiniteWill);
 	ImGui::Separator();

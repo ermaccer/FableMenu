@@ -84,6 +84,15 @@ CTCScriptedControl* CThing::GetSC()
     return *(CTCScriptedControl**)(v5 + 4);
 }
 
+CTCLight* CThing::GetLight()
+{
+    int v29 = 39;
+    int v5 = CallMethodAndReturn<int, 0x40F020, int, int*>((int)((int)this + 68), &v29);
+    if (v5 == *(int*)(this + 72) || *(int*)v5 > 39)
+        v5 = *(int*)(this + 72);
+    return *(CTCLight**)(v5 + 4);
+}
+
 CVector* CThing::GetPosition()
 {
     return CallMethodAndReturn<CVector*, 0x4C73D0, CThing*>(this);
