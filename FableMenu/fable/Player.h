@@ -65,7 +65,7 @@ public:
     bool m_bShowWorldThing;
     bool m_bZTargeting;
     char ___pad[0x5];
-    std::list<enum EPlayerMode> m_lPlayerModes;
+    std::list<enum EPlayerMode> m_listPlayerModes;
 
     void AddMode(EPlayerMode mode, bool set_mode_as_only_mode);
     bool HasMode(EPlayerMode mode);

@@ -6,6 +6,11 @@ CThingManager* CThing::GetCurrentThingManager()
     return *(CThingManager**)0x13B8A1C;
 }
 
+const CPlayer* CThing::PeekPlayer()
+{
+    return CallMethodAndReturn<const CPlayer*, 0x4C7A10, CThing*>(this);
+}
+
 CTCBase* CThing::GetTC(int id)
 {
     int v29 = id;

@@ -11,6 +11,11 @@ bool CTCCarrying::IsCarryingWeapon(CThing* creature)
 	return FASTCallAndReturn<bool, 0x6A1540, CThing*>(creature);
 }
 
+bool CTCCarrying::IsCarryingThing(int slot)
+{
+	return CallMethodAndReturn<bool, 0x6A10A0, int>(slot);
+}
+
 void CTCCarrying::AddThingInCarrySlot(CThing* creature, int slot, int set_up_weapon_mode)
 {
 	CallMethod<0x6A1F80, CTCCarrying*, CThing*, int, int>(this,creature,slot,set_up_weapon_mode);
@@ -39,4 +44,9 @@ CThing* CTCCarrying::GetThingInPrimarySlot()
 bool CTCCarrying::IsCarrySlotFree(int slot)
 {
 	return CallMethodAndReturn<bool, 0x6A1230, CTCCarrying*, int>(this, slot);
+}
+
+int CTCCarrying::GetCarrySlotActive()
+{
+	return CallMethodAndReturn<int, 0x705CC0, CTCCarrying*>(this);
 }

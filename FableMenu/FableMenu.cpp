@@ -5721,7 +5721,7 @@ const char* szHolySites[] =
     "ChapelEvilHSP",
     "FishermanHSP",
     "FrescoDomeHSP",
-    "GibbetWoodsHSP", 
+    "GibbetWoodsHSP",
     "GrannysHouseHSP",
     "GraveyardHSP",
     "GraveyardCircleHSP",
@@ -5787,28 +5787,28 @@ const char* szHolySites[] =
 
 void FableMenu::Init()
 {
-	sprintf(szFactionName, szFactions[0]);
+    sprintf(szFactionName, szFactions[0]);
 }
 
 void FableMenu::Draw()
 {
-	if (!m_bIsActive)
-		return;
+    if (!m_bIsActive)
+        return;
 
-	ImGui::GetIO().MouseDrawCursor = true;
+    ImGui::GetIO().MouseDrawCursor = true;
 
-	ImGui::Begin("FableMenu by ermaccer", &m_bIsActive, ImGuiWindowFlags_MenuBar);
-	{
+    ImGui::Begin("FableMenu by ermaccer", &m_bIsActive, ImGuiWindowFlags_MenuBar);
+    {
         ImGui::SetWindowSize({ 550, 400 }, ImGuiCond_Once);
-		if (ImGui::BeginMenuBar())
-		{
-			if (ImGui::BeginMenu("Settings"))
-			{
-				m_bSubmenuActive[SM_Settings] = true;
-				ImGui::EndMenu();
-			}
-			if (ImGui::BeginMenu("Help"))
-			{
+        if (ImGui::BeginMenuBar())
+        {
+            if (ImGui::BeginMenu("Settings"))
+            {
+                m_bSubmenuActive[SM_Settings] = true;
+                ImGui::EndMenu();
+            }
+            if (ImGui::BeginMenu("Help"))
+            {
                 if (ImGui::MenuItem("Creature List"))
                 {
                     m_bSubmenuActive[SM_Creature_List] = true;
@@ -5827,71 +5827,71 @@ void FableMenu::Draw()
                     ImGui::MenuItem("Date: " __DATE__);
                     ImGui::EndMenu();
                 }
-				ImGui::EndMenu();
-			}
-			ImGui::EndMenuBar();
-		}
+                ImGui::EndMenu();
+            }
+            ImGui::EndMenuBar();
+        }
 
-		if (CMainGameComponent::Get())
-		{
-			if (ImGui::BeginTabBar("##tabs"))
-			{
+        if (CMainGameComponent::Get())
+        {
+            if (ImGui::BeginTabBar("##tabs"))
+            {
                 if (ImGui::BeginTabItem("Hero"))
                 {
                     DrawHeroTab();
                     ImGui::EndTabItem();
                 }
-				if (ImGui::BeginTabItem("Player"))
-				{
-					DrawPlayerTab();
-					ImGui::EndTabItem();
-				}
-				if (ImGui::BeginTabItem("Creatures"))
-				{
-					DrawCreaturesTab();
-					ImGui::EndTabItem();
-				}
-				if (ImGui::BeginTabItem("Objects"))
-				{
+                if (ImGui::BeginTabItem("Player"))
+                {
+                    DrawPlayerTab();
+                    ImGui::EndTabItem();
+                }
+                if (ImGui::BeginTabItem("Creatures"))
+                {
+                    DrawCreaturesTab();
+                    ImGui::EndTabItem();
+                }
+                if (ImGui::BeginTabItem("Objects"))
+                {
                     DrawObjectsTab();
-					ImGui::EndTabItem();
-				}
-				if (ImGui::BeginTabItem("Camera"))
-				{
-					DrawCameraTab();
-					ImGui::EndTabItem();
-				}
-				if (ImGui::BeginTabItem("World"))
-				{
-					DrawWorldTab();
-					ImGui::EndTabItem();
-				}
-				if (ImGui::BeginTabItem("Quest"))
-				{
-					DrawQuestTab();
-					ImGui::EndTabItem();
-				}
-				if (ImGui::BeginTabItem("Misc."))
-				{
-					DrawMiscTab();
-					ImGui::EndTabItem();
-				}
-				ImGui::EndTabBar();
-			}
-		}
-		else
-			ImGui::TextWrapped("Not ready!");
-	}
-	ImGui::End();
+                    ImGui::EndTabItem();
+                }
+                if (ImGui::BeginTabItem("Camera"))
+                {
+                    DrawCameraTab();
+                    ImGui::EndTabItem();
+                }
+                if (ImGui::BeginTabItem("World"))
+                {
+                    DrawWorldTab();
+                    ImGui::EndTabItem();
+                }
+                if (ImGui::BeginTabItem("Quest"))
+                {
+                    DrawQuestTab();
+                    ImGui::EndTabItem();
+                }
+                if (ImGui::BeginTabItem("Misc."))
+                {
+                    DrawMiscTab();
+                    ImGui::EndTabItem();
+                }
+                ImGui::EndTabBar();
+            }
+        }
+        else
+            ImGui::TextWrapped("Not ready!");
+    }
+    ImGui::End();
 
-	if (m_bSubmenuActive[SM_Settings])
-		DrawSettings();
+    if (m_bSubmenuActive[SM_Settings])
+        DrawSettings();
 
     if (m_bSubmenuActive[SM_Particle_List])
         DrawParticleList();
 
-	if (m_bSubmenuActive[SM_Creature_List])
-		DrawCreatureList();
+    if (m_bSubmenuActive[SM_Creature_List])
+        DrawCreatureList();
 
     if (m_bSubmenuActive[SM_Object_List])
         DrawObjectList();
@@ -5899,34 +5899,34 @@ void FableMenu::Draw()
 
 void FableMenu::Process()
 {
-	if (m_bCustomCameraFOV)
-	{
-		Nop(0xA0BEE2, 3);
-	}
-	else
-	{
-		//89 41 2C 
-		Patch<char>(0xA0BEE2, 0x89);
-		Patch<char>(0xA0BEE2 + 1, 0x41);
-		Patch<char>(0xA0BEE2 + 2, 0x2C);
-	}
+    if (m_bCustomCameraFOV)
+    {
+        Nop(0xA0BEE2, 3);
+    }
+    else
+    {
+        //89 41 2C 
+        Patch<char>(0xA0BEE2, 0x89);
+        Patch<char>(0xA0BEE2 + 1, 0x41);
+        Patch<char>(0xA0BEE2 + 2, 0x2C);
+    }
 
-	if (ms_bChangeTime)
-	{
-		Nop(0x6BBA58, 3);
-	}
-	else
-	{
-		//D9 56 08 
-		Patch<char>(0x6BBA58, 0xD9);
-		Patch<char>(0x6BBA58 + 1, 0x56);
-		Patch<char>(0x6BBA58 + 2, 0x08);
-	}
+    if (ms_bChangeTime)
+    {
+        Nop(0x6BBA58, 3);
+    }
+    else
+    {
+        //D9 56 08 
+        Patch<char>(0x6BBA58, 0xD9);
+        Patch<char>(0x6BBA58 + 1, 0x56);
+        Patch<char>(0x6BBA58 + 2, 0x08);
+    }
 
-	if (m_bNoBodyGuardsLimit)
-		Patch<char>(0xE60689 + 2, 0xFF);
-	else
-		Patch<char>(0xE60689 + 2, 2);
+    if (m_bNoBodyGuardsLimit)
+        Patch<char>(0xE60689 + 2, 0xFF);
+    else
+        Patch<char>(0xE60689 + 2, 2);
 
     // Disable fadeout
     Patch(0x4A411E, { (unsigned char)(m_bForceLoadRegion ? 0x74 : 0x75) });
@@ -6025,7 +6025,7 @@ void FableMenu::DrawHeroTab()
                         }
                     }
                     ImGui::SameLine();
-                    if(ImGui::Button("Abilities To Max Level"))
+                    if (ImGui::Button("Abilities To Max Level"))
                     {
                         CTCInventoryAbilities* abilities = t->GetInventoryAbilities();
                         abilities->ForceAllAbilitesToMaxLevel();
@@ -6165,12 +6165,12 @@ void FableMenu::DrawPlayerTab()
     ImGui::Separator();
     if (ImGui::CollapsingHeader("Modes"))
     {
-        std::list<enum EPlayerMode> playerModes = plr->m_lPlayerModes;
+        std::list<enum EPlayerMode> playerModes = plr->m_listPlayerModes;
         int removeID = 0;
 
         for (EPlayerMode mode : playerModes)
         {
-            ImGui::Text(szPlayerModeNames[mode]);
+            ImGui::LabelText("", szPlayerModeNames[mode]);
             ImGui::SameLine();
             ImGui::PushID(removeID);
             if (ImGui::Button("Remove"))
@@ -6218,8 +6218,8 @@ void FableMenu::DrawPlayerTab()
     {
         DrawActionsCollapse(plr->GetCharacterThing());
     }
-    if(ImGui::CollapsingHeader("Player Swap"))
-    { 
+    if (ImGui::CollapsingHeader("Player Swap"))
+    {
         static bool manualInput;
         static bool uninitPlayerCharacter = true;
         static bool playerCharacterDefinitionError;
@@ -6267,7 +6267,7 @@ void FableMenu::DrawPlayerTab()
         {
             *FGlobals::GOverridePlayerStartPos = *plr->GetCharacterThing()->GetPosition();
         }
-        if (ImGui::Button("Respawn Hero", {-FLT_MIN, 0}))
+        if (ImGui::Button("Respawn Hero", { -FLT_MIN, 0 }))
         {
             if (!*FGlobals::GOverridePlayerStartPosFromConsole)
             {
@@ -6312,17 +6312,17 @@ void FableMenu::DrawCreaturesTab()
     CPlayer* plr = CMainGameComponent::Get()->GetPlayerManager()->GetMainPlayer();
     CThing* playerCharacter = plr->GetCharacterThing();
     CThingSearchTools* search = CMainGameComponent::Get()->GetWorld()->GetThingSearchTools();
-    std::list<CThing*> allCreatures = *search->PeekTypeList(1);
+    std::list<CThing*> regionCreatures = *search->PeekTypeList(1);
 
-    size_t creaturesInLocation = allCreatures.size();
-    ImGui::Text("Creatures In Location: %d", creaturesInLocation);
-    ImGui::Separator();
     static char creatureName[512] = { };
     static CVector creaturePosition = {};
     static int creatureId;
     static bool advanced;
     static bool playerFollower;
-    ImGui::InputFloat3("Spawn Position (X | Y | Z)", &creaturePosition.X);
+    ImGui::TextWrapped("Spawn Position (X | Y | Z)");
+    ImGui::PushItemWidth(-FLT_MIN);
+    ImGui::InputFloat3("", &creaturePosition.X);
+    ImGui::PopItemWidth();
 
     if (ImGui::Button("Get Player Position", { -FLT_MIN, 0 }))
     {
@@ -6414,14 +6414,18 @@ void FableMenu::DrawCreaturesTab()
         std::list<CThing*> creatureList;
         filteredCreatures.clear();
 
+        size_t creaturesInLocation = regionCreatures.size();
+        ImGui::Text("Creatures In Location: %d", creaturesInLocation);
+        ImGui::Separator();
+
         int i = 0;
         if (!displayCreatureFilterOptions || creatureType == -1)
         {
-            creatureList = allCreatures;
+            creatureList = regionCreatures;
         }
         else
         {
-            for (auto it = allCreatures.begin(); it != allCreatures.end(); ++it, ++i)
+            for (auto it = regionCreatures.begin(); it != regionCreatures.end(); ++it, ++i)
             {
                 CThing* a = *it;
                 switch (creatureType)
@@ -6468,8 +6472,6 @@ void FableMenu::DrawCreaturesTab()
             }
             creatureList = filteredCreatures;
         }
-        size_t creatureCount = creatureList.size();
-        creatureDataWindowsOpen.resize(creatureCount, false);
 
         ImGui::Checkbox("Creature Filter", &displayCreatureFilterOptions);
         if (displayCreatureFilterOptions)
@@ -6511,9 +6513,13 @@ void FableMenu::DrawCreaturesTab()
         }
         ImGui::Separator();
 
+        size_t creatureCount = creatureList.size();
+        creatureDataWindowsOpen.resize(creatureCount, false);
+
         if (creatureCount != 0)
         {
             int i = 0;
+
             for (CThing* creature : creatureList)
             {
                 CDefString* defName = creature->GetDefName();
@@ -6521,7 +6527,12 @@ void FableMenu::DrawCreaturesTab()
                 CDefString::GetString(&buffer, defName->m_nTablePos);
                 char* charDefName = buffer.GetStringData();
                 const char* thingName = (const char*)charDefName;
-                ImGui::TextColored({ 0.14f, 0.75f, 0.36f, 1.0f }, thingName);
+
+                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.15f, 0.75f, 0.35f, 1.0f));
+                ImGui::PushItemWidth(420.f);
+                ImGui::LabelText("", thingName);
+                ImGui::PopStyleColor();
+                ImGui::PopItemWidth();
                 ImGui::SameLine();
                 char* isOpen = &creatureDataWindowsOpen[i];
                 ImGui::PushID(i);
@@ -6554,13 +6565,13 @@ void FableMenu::DrawCreaturesTab()
 
         CTCVillage* village = nullptr;
 
-        for (CThing* creature : allCreatures)
+        for (CThing* creature : regionCreatures)
         {
             if (creature->HasTC(TCI_VILLAGE_MEMBER))
             {
                 CTCVillageMember* member = creature->GetVillageMember();
-                
-                if(member)
+
+                if (member)
                 {
                     village = member->GetPVillage();
                     break;
@@ -6640,7 +6651,7 @@ void FableMenu::DrawObjectsTab()
     else
         if (ImGui::Button("Create Object"))
             CreateThing(objectId, &position, 0, 0, 0, "newObj");
-
+    ImGui::Separator();
     if (ImGui::CollapsingHeader("Buildings"))
     {
         static std::vector<char> objectDataWindowsOpen;
@@ -6705,7 +6716,9 @@ void FableMenu::DrawObjectsTab()
                 CDefString::GetString(&buffer, defName->m_nTablePos);
                 char* charDefName = buffer.GetStringData();
                 const char* thingName = (const char*)charDefName;
-                ImGui::TextColored({ 0.141f, 0.749f, 0.365f, 1.0f }, thingName);
+                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.15f, 0.75f, 0.35f, 1.0f));
+                ImGui::LabelText("", thingName);
+                ImGui::PopStyleColor();
                 ImGui::SameLine();
                 char* isOpen = &objectDataWindowsOpen[i];
                 ImGui::PushID(i);
@@ -6735,12 +6748,11 @@ void FableMenu::DrawObjectsTab()
         size_t objectCount = allObjects.size();
         objectDataWindowsOpen.resize(objectCount, false);
         static ImGuiTextFilter filter;
-        ImGui::TextDisabled("Object list is available in Help menu.");
         ImGui::Text("Search");
         ImGui::PushItemWidth(-FLT_MIN);
         filter.Draw("##rolist");
         ImGui::PopItemWidth();
-        ImGui::BeginChild("##regionObjectsList", { 0, -ImGui::GetFrameHeightWithSpacing() + 150 }, true);
+        ImGui::BeginChild("##regionObjectsList", { 0, -ImGui::GetFrameHeightWithSpacing() + 200 }, true);
         if (objectCount != 0)
         {
             int i = 0;
@@ -6753,7 +6765,9 @@ void FableMenu::DrawObjectsTab()
                 const char* thingName = (const char*)charDefName;
                 if (filter.PassFilter(thingName))
                 {
-                    ImGui::TextColored({ 0.14f, 0.75f, 0.36f, 1.0f }, thingName);
+                    ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.15f, 0.75f, 0.35f, 1.0f));
+                    ImGui::LabelText("", thingName);
+                    ImGui::PopStyleColor();
                     ImGui::SameLine();
                     char* isOpen = &objectDataWindowsOpen[i];
                     ImGui::PushID(i);
@@ -6793,7 +6807,7 @@ void FableMenu::DrawAppearanceCollapse(CThing* thing)
     CRGBAFloat hcolor(highlightColor.x, highlightColor.y, highlightColor.z, highlightColor.w);
 
     static float scale = 1.0f;
-    
+
     ImGui::InputFloat("Scale", &scale);
 
     if (ImGui::Button("Update##Appearance", { -FLT_MIN, 0 }))
@@ -6848,7 +6862,7 @@ void FableMenu::DrawAppearanceCollapse(CThing* thing)
 
 void FableMenu::DrawActionsCollapse(CThing* thing)
 {
-    
+
     static int selectedAnimation;
     static bool stayOnLastFrame;
     static bool useMovement;
@@ -6914,7 +6928,7 @@ void FableMenu::DrawActionsCollapse(CThing* thing)
     }
     ImGui::SeparatorText("Carrying");
     static bool destroyDropped = true;
-    ImGui::Checkbox("Destroy dropped weapon", &destroyDropped);
+    ImGui::Checkbox("Destroy Dropped Weapon", &destroyDropped);
     if (ImGui::Button("Take Crate"))
     {
         FableMenu::TakeActionItem(character, (char*)"OBJECT_CRATE_SMALL_EXPLOSIVE_01_USABLE");
@@ -6922,9 +6936,9 @@ void FableMenu::DrawActionsCollapse(CThing* thing)
     ImGui::SameLine();
     if (ImGui::Button("Drop Carried"))
     {
-        // to make it work for swords
+        // Patch to make it work for swords
         Patch<char>(0x845D86 + 1, 0x84);
-        
+
         CCreatureAction_DropWeapon* drop = (CCreatureAction_DropWeapon*)GameMalloc(100);
         new CCreatureAction_DropWeapon(drop, character);
 
@@ -6932,11 +6946,14 @@ void FableMenu::DrawActionsCollapse(CThing* thing)
 
         CTCCarrying* carrying = character->GetCarrying();
         CThing* primarySlotThing = carrying->GetThingInPrimarySlot();
-        
-        if (destroyDropped && primarySlotThing->HasTC(TCI_INVENTORY_ITEM))
+
+        if (destroyDropped && primarySlotThing)
         {
-            CTCInventoryItem* item = primarySlotThing->GetInventoryItem();
-            item->RemoveFromInventory();
+            if (primarySlotThing->HasTC(TCI_INVENTORY_ITEM))
+            {
+                CTCInventoryItem* item = primarySlotThing->GetInventoryItem();
+                item->RemoveFromInventory();
+            }
         }
     }
 }
@@ -6945,7 +6962,7 @@ void FableMenu::DrawPhysicsCollapse(CThing* thing)
 {
     CTCPhysicsStandard* physics = thing->GetPhysicsStandard();
     ImGui::InputFloat3("Position", &physics->GetPosition()->X);
-    if(thing->HasTC(TCI_HERO_STATS))
+    if (thing->HasTC(TCI_HERO_STATS))
         ImGui::InputFloat3("Velocity", &physics->GetVelocity()->X);
     ImGui::Separator();
     ImGui::InputFloat3("Forward", &physics->GetRHSet()->Forward.X);
@@ -7407,94 +7424,93 @@ void FableMenu::DrawCreatureData(const char* windowTitle, CThing* creature, bool
 
 void FableMenu::DrawCameraTab()
 {
-	if (TheCamera)
-	{
-		ImGui::Checkbox("Set Camera Position", &m_bCustomCameraPos);
-		ImGui::InputFloat3("X | Y | Z", &camPos.X);
+    if (TheCamera)
+    {
+        ImGui::Checkbox("Set Camera Position", &m_bCustomCameraPos);
+        ImGui::InputFloat3("X | Y | Z", &camPos.X);
 
-		ImGui::Checkbox("Set FOV", &m_bCustomCameraFOV);
+        ImGui::Checkbox("Set FOV", &m_bCustomCameraFOV);
 
-		if (m_bCustomCameraFOV)
-			ImGui::InputFloat("FOV", &TheCamera->FOV);
-		ImGui::Separator();
-	}
+        if (m_bCustomCameraFOV)
+            ImGui::InputFloat("FOV", &TheCamera->FOV);
+        ImGui::Separator();
+    }
 
-	ImGui::Checkbox("Free Camera", &ms_bFreeCam);
-	if (ms_bFreeCam)
-	{
-		ImGui::Separator();
-		if (!m_bCustomCameraPos)
-			ImGui::TextColored(ImVec4(1.f, 0.3f, 0.3f, 1.f), "Check \"Set Camera Position\"!");
+    ImGui::Checkbox("Free Camera", &ms_bFreeCam);
+    if (ms_bFreeCam)
+    {
+        ImGui::Separator();
+        if (!m_bCustomCameraPos)
+            ImGui::TextColored(ImVec4(1.f, 0.3f, 0.3f, 1.f), "Check \"Set Camera Position\"!");
 
-		ImGui::Text("Free Camera Type");
-		ImGui::Separator();
-		ImGui::RadioButton("Custom (Recommended)", &m_nFreeCameraMode, FREE_CAMERA_CUSTOM);
-		ImGui::SameLine();
-		ShowHelpMarker("A custom free camera implementation, uses NUMPAD keys by default to move the camera. Mouse and key settings can be changed in the Settings menu.");
-		ImGui::RadioButton("Original", &m_nFreeCameraMode, FREE_CAMERA_ORIGINAL);
-		if (m_nFreeCameraMode == FREE_CAMERA_CUSTOM)
-		{
-			ImGui::Separator();
-			ImGui::InputFloat("Free Camera Speed", &m_fFreeCamSpeed);
-		}
+        ImGui::Text("Free Camera Type");
+        ImGui::Separator();
+        ImGui::RadioButton("Custom (Recommended)", &m_nFreeCameraMode, FREE_CAMERA_CUSTOM);
+        ImGui::SameLine();
+        ShowHelpMarker("A custom free camera implementation, uses NUMPAD keys by default to move the camera. Mouse and key settings can be changed in the Settings menu.");
+        ImGui::RadioButton("Original", &m_nFreeCameraMode, FREE_CAMERA_ORIGINAL);
+        if (m_nFreeCameraMode == FREE_CAMERA_CUSTOM)
+        {
+            ImGui::Separator();
+            ImGui::InputFloat("Free Camera Speed", &m_fFreeCamSpeed);
+        }
 
-		ImGui::Separator();
-	}
+        ImGui::Separator();
+    }
 
-	if (ImGui::Button("Teleport Player To Camera Location", {-FLT_MIN, 0 }))
-	{
-		CPlayer* plr = CMainGameComponent::Get()->GetPlayerManager()->GetMainPlayer();
-		if (plr)
-		{
-			CThing* t = plr->GetCharacterThing();
-			*t->GetPosition() = TheCamera->pos;
-		}
-	}
+    if (ImGui::Button("Teleport Player To Camera Location", { -FLT_MIN, 0 }))
+    {
+        CPlayer* plr = CMainGameComponent::Get()->GetPlayerManager()->GetMainPlayer();
+        if (plr)
+        {
+            CThing* t = plr->GetCharacterThing();
+            *t->GetPosition() = TheCamera->pos;
+        }
+    }
 
 }
 
 void FableMenu::DrawWorldTab()
 {
-	CPlayer* plr = CMainGameComponent::Get()->GetPlayerManager()->GetMainPlayer();
-	CWorld* wrld = CMainGameComponent::Get()->GetWorld();
-	if (wrld)
-	{
-		ImGui::SeparatorText("Settings");
+    CPlayer* plr = CMainGameComponent::Get()->GetPlayerManager()->GetMainPlayer();
+    CWorld* wrld = CMainGameComponent::Get()->GetWorld();
+    if (wrld)
+    {
+        ImGui::SeparatorText("Settings");
         bool* minimap = wrld->GetMinimap();
-		ImGui::Checkbox("Minimap", minimap);
-		if (plr)
-		{
-			bool& enemies = *(bool*)((int)plr + 0x21B);
-			ImGui::Checkbox("Kill Mode", &enemies);
-		}
+        ImGui::Checkbox("Minimap", minimap);
+        if (plr)
+        {
+            bool& enemies = *(bool*)((int)plr + 0x21B);
+            ImGui::Checkbox("Kill Mode", &enemies);
+        }
         ImGui::Checkbox("Enemy God Mode", NGlobalConsole::EnemyGodMode);
         static bool fishingAnywhere;
         if (ImGui::Checkbox("Fishing Anywhere", &fishingAnywhere))
         {
             Patch(0x7F0210, { (unsigned char)((BYTE)fishingAnywhere + 0x74) });
         }
-		ImGui::Separator();
-	}
-	if (wrld)
-	{
+        ImGui::Separator();
+    }
+    if (wrld)
+    {
         if (ImGui::CollapsingHeader("Time"))
-		{
-			int time = *(int*)((int)wrld + 28);
-			if (time)
-			{
-				float& timeStep = *(float*)((int)time + 16);
-				ImGui::SliderFloat("Time Step", &timeStep, 0.001f, 1.0f);
+        {
+            int time = *(int*)((int)wrld + 28);
+            if (time)
+            {
+                float& timeStep = *(float*)((int)time + 16);
+                ImGui::SliderFloat("Time Step", &timeStep, 0.001f, 1.0f);
 
-				ImGui::Checkbox("Set Time", &ms_bChangeTime);
-				if (ms_bChangeTime)
-				{
-					float& curTime = *(float*)((int)time + 8);
-					ImGui::SliderFloat("Time", &curTime, 0.0, 1.0f);
-				}
-
-			}
-		}
-	}
+                ImGui::Checkbox("Set Time", &ms_bChangeTime);
+                if (ms_bChangeTime)
+                {
+                    float& curTime = *(float*)((int)time + 8);
+                    ImGui::SliderFloat("Time", &curTime, 0.0, 1.0f);
+                }
+            }
+        }
+    }
     if (ImGui::CollapsingHeader("Region"))
     {
         static int hspID = 0;
@@ -7512,7 +7528,7 @@ void FableMenu::DrawWorldTab()
 
             ImGui::EndCombo();
         }
-        if (ImGui::Button("Teleport To Region", { -FLT_MIN, 0 }))
+        if (ImGui::Button("Teleport To Holy Site", { -FLT_MIN, 0 }))
         {
             CCharString hsp_name((char*)szHolySites[hspID]);
             wrld->TeleportHeroToHSP(&hsp_name);
@@ -7549,11 +7565,19 @@ void FableMenu::DrawWorldTab()
         static std::vector<CTCDParticleEmitter*> attachedCameraParticles;
         ImGui::Checkbox("Enable Particles", NGlobalConsole::EnableParticles);
         ImGui::InputText("Particle Name", particleName, sizeof(particleName));
+        if (attachParticleToCamera)
+        {
+            ImGui::BeginDisabled();
+        }
         ImGui::InputFloat3("Particle Position", &particlePosition.X);
         if (ImGui::Button("Get Player Position"))
         {
             CThing* playerCharacter = CMainGameComponent::Get()->GetPlayerManager()->GetMainPlayer()->GetCharacterThing();
             particlePosition = *playerCharacter->GetPosition();
+        }
+        if (attachParticleToCamera)
+        {
+            ImGui::EndDisabled();
         }
         ImGui::Checkbox("Attach To Camera", &attachParticleToCamera);
         if (ImGui::Button("Create Particle", { -FLT_MIN, 0 }))
@@ -7584,7 +7608,7 @@ void FableMenu::DrawWorldTab()
                 }
             }
         }
-        if (ImGui::Button("Clear Attachments", { 125, 25 }))
+        if (ImGui::Button("Clear Attachments", { 140, 25 }))
         {
             for (auto a : attachedCameraParticles)
             {
@@ -7733,8 +7757,7 @@ void FableMenu::DrawQuestTab()
                         continue;
                     }
                 }
-
-                ImGui::Text(szBuiltInQuests[i]);
+                ImGui::LabelText("", szBuiltInQuests[i]);
                 ImGui::SameLine();
                 ImGui::PushID(i);
                 if (ImGui::Button("Deactivate"))
@@ -7759,16 +7782,16 @@ void FableMenu::DrawQuestTab()
         }
     }
 
-	if (ImGui::CollapsingHeader("Tweaks"))
-	{
-		ImGui::Checkbox("No Bodyguards Limit", &m_bNoBodyGuardsLimit);
-		ImGui::SameLine(); ShowHelpMarker("Allows to hire all bodyguards. Default limit is 2.");
-	}
+    if (ImGui::CollapsingHeader("Tweaks"))
+    {
+        ImGui::Checkbox("No Bodyguards Limit", &m_bNoBodyGuardsLimit);
+        ImGui::SameLine(); ShowHelpMarker("Allows to hire all bodyguards. Default limit is 2.");
+    }
 }
 
 void FableMenu::DrawMiscTab()
 {
-	CWorld* wrld = CMainGameComponent::Get()->GetWorld();
+    CWorld* wrld = CMainGameComponent::Get()->GetWorld();
     ImGui::SeparatorText("Time");
 
     if (wrld)
@@ -7781,14 +7804,18 @@ void FableMenu::DrawMiscTab()
     }
     ImGui::Checkbox("Update AI", NGlobalConsole::EnableUpdateAI);
     ImGui::Checkbox("Update Objects", NGlobalConsole::EnableUpdateObjects);
-    
+    static bool creatureDecay = 1;
+    if(ImGui::Checkbox("Dead Creature Decay", &creatureDecay))
+    {
+        Patch<char>(0x8362EA + 1, creatureDecay + 0x84);
+    }
     ImGui::SeparatorText("Hero");
 
     ImGui::Checkbox("Hero God Mode", NGlobalConsole::HeroGodMode);
     ImGui::Checkbox("Enable Hero Sprint", NGlobalConsole::EnableHeroSprint);
     ImGui::Checkbox("Enable Hero Jump", NGlobalConsole::EnableHeroJump);
     ImGui::SameLine(); ShowHelpMarker("Jump action assigned to \"J\" button");
-    
+
     ImGui::SeparatorText("Display");
 
     ImGui::Checkbox("Display HUD", &GetHud()->m_bDisplay);
@@ -7810,218 +7837,215 @@ void FableMenu::DrawMiscTab()
         NProgressDisplay::InitialiseProgressDisplay(progressDisplay);
     }
 
-	ImGui::SeparatorText("Cheats");
-    ImGui::InputFloat("Price Multiplier", CTCAIScratchPad::TradingPriceMult);
-	ImGui::Checkbox("Infinite Health", &m_bGodMode);
-	ImGui::Checkbox("Infinite Will", &m_bInfiniteWill);
-	ImGui::Separator();
-    if (ImGui::CollapsingHeader("Console"))
-    {
-        if(ImGui::InputFloat("Primitive Fade Distance", NGlobalConsole::PrimitiveFadeDistance))
-        {
-            *NGlobalConsole::ForcePrimitiveFadeDistance = (NGlobalConsole::PrimitiveFadeDistance > 0);
-        }
-        ImGui::InputFloat("Override Multipliyer Speed", NGlobalConsole::ConsoleOverrideMultiplier);
-        ImGui::Checkbox("Debug Stress Test", NGlobalConsole::GCombatStressTestDebug);
-    }
+    ImGui::SeparatorText("Cheats");
+    ImGui::InputFloat("Trading Price Multiplier", CTCAIScratchPad::TradingPriceMult);
+    ImGui::Checkbox("Infinite Health", &m_bGodMode);
+    ImGui::Checkbox("Infinite Will", &m_bInfiniteWill);
 #ifdef _DEBUG
-	if (TheCamera)
-	{
-		ImGui::Text("Camera: 0x%X", TheCamera);
-	}
-	if (wrld)
-	{
-		ImGui::Text("World Pointer: 0x%X", wrld);
-		ImGui::Text("Game Component Pointer: 0x%X", CMainGameComponent::Get());
-		ImGui::Text("Weather Settings: 0x%X", WeatherSettings);
-	}
+    ImGui::SeparatorText("Debug");
 
-	CPlayer* plr = CMainGameComponent::Get()->GetPlayerManager()->GetMainPlayer();
-	if (plr)
-	{
-		CThing* t = plr->GetCharacterThing();
-		ImGui::Text("Player Stats: 0x%X", t->GetHeroStats());
-		ImGui::Text("Player Morph: 0x%X\n", t->GetHeroMorph());
-		ImGui::Text("Player Experience: 0x%X\n", t->GetHeroExperience());
-		ImGui::Text("Player Thing: 0x%X\n", t);
-		ImGui::Text("Player Physics: 0x%X\n", t->GetPhysicsStandard());
-		ImGui::Text("Player: 0x%X\n", plr);
-		ImGui::Text("Draw: 0x%X\n", t->GetGraphicAppearance());
-		ImGui::Text("Script Manager: 0x%X\n", wrld->GetScriptInfoManager());
-	}
+    if (ImGui::InputFloat("Primitive Fade Distance", NGlobalConsole::PrimitiveFadeDistance))
+    {
+        *NGlobalConsole::ForcePrimitiveFadeDistance = (NGlobalConsole::PrimitiveFadeDistance > 0);
+    }
+    ImGui::InputFloat("Override Multipliyer Speed", NGlobalConsole::ConsoleOverrideMultiplier);
+    ImGui::Checkbox("Debug Stress Test", NGlobalConsole::GCombatStressTestDebug);
+    if (TheCamera)
+    {
+        ImGui::Text("Camera: 0x%X", TheCamera);
+    }
+    if (wrld)
+    {
+        ImGui::Text("World Pointer: 0x%X", wrld);
+        ImGui::Text("Game Component Pointer: 0x%X", CMainGameComponent::Get());
+        ImGui::Text("Weather Settings: 0x%X", WeatherSettings);
+    }
+
+    CPlayer* plr = CMainGameComponent::Get()->GetPlayerManager()->GetMainPlayer();
+    if (plr)
+    {
+        CThing* t = plr->GetCharacterThing();
+        ImGui::Text("Player Stats: 0x%X", t->GetHeroStats());
+        ImGui::Text("Player Morph: 0x%X\n", t->GetHeroMorph());
+        ImGui::Text("Player Experience: 0x%X\n", t->GetHeroExperience());
+        ImGui::Text("Player Thing: 0x%X\n", t);
+        ImGui::Text("Player Physics: 0x%X\n", t->GetPhysicsStandard());
+        ImGui::Text("Player: 0x%X\n", plr);
+        ImGui::Text("Draw: 0x%X\n", t->GetGraphicAppearance());
+        ImGui::Text("Script Manager: 0x%X\n", wrld->GetScriptInfoManager());
+    }
 #endif
 }
 
 void FableMenu::DrawSettings()
 {
-	ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, { 0.5f, 0.5f });
-	ImGui::SetNextWindowPos({ ImGui::GetIO().DisplaySize.x / 2.0f, ImGui::GetIO().DisplaySize.y / 2.0f }, ImGuiCond_Once, { 0.5f, 0.5f });
-	ImGui::SetNextWindowSize({ 700,700 }, ImGuiCond_Once);
-	ImGui::Begin("Settings", &m_bSubmenuActive[SM_Settings]);
+    ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, { 0.5f, 0.5f });
+    ImGui::SetNextWindowPos({ ImGui::GetIO().DisplaySize.x / 2.0f, ImGui::GetIO().DisplaySize.y / 2.0f }, ImGuiCond_Once, { 0.5f, 0.5f });
+    ImGui::SetNextWindowSize({ 700,700 }, ImGuiCond_Once);
+    ImGui::Begin("Settings", &m_bSubmenuActive[SM_Settings]);
 
-	static int settingID = 0;
-	static const char* settingNames[] = {
-		"Menu",
-		"INI",
-		"Keys",
-		"Mouse"
-	};
+    static int settingID = 0;
+    static const char* settingNames[] = {
+        "Menu",
+        "INI",
+        "Keys",
+        "Mouse"
+    };
 
-	enum eSettings {
-		MENU,
-		INI,
-		KEYS,
-		MOUSE
-	};
+    enum eSettings {
+        MENU,
+        INI,
+        KEYS,
+        MOUSE
+    };
 
-	ImGui::BeginChild("##settings", { 12 * ImGui::GetFontSize(), 0 }, true);
+    ImGui::BeginChild("##settings", { 12 * ImGui::GetFontSize(), 0 }, true);
 
-	for (int n = 0; n < IM_ARRAYSIZE(settingNames); n++)
-	{
-		bool is_selected = (settingID == n);
-		if (ImGui::Selectable(settingNames[n], is_selected))
-			settingID = n;
-		if (is_selected)
-			ImGui::SetItemDefaultFocus();
-	}
+    for (int n = 0; n < IM_ARRAYSIZE(settingNames); n++)
+    {
+        bool is_selected = (settingID == n);
+        if (ImGui::Selectable(settingNames[n], is_selected))
+            settingID = n;
+        if (is_selected)
+            ImGui::SetItemDefaultFocus();
+    }
 
-	ImGui::EndChild();
+    ImGui::EndChild();
 
-	ImGui::SameLine();
-	ImGui::BeginChild("##content", { 0, -ImGui::GetFrameHeightWithSpacing() });
+    ImGui::SameLine();
+    ImGui::BeginChild("##content", { 0, -ImGui::GetFrameHeightWithSpacing() });
 
-	switch (settingID)
-	{
-	case MENU:
-		ImGui::TextWrapped("All user settings are saved to fablemenu_user.ini.");
-		ImGui::Text("Menu Scale");
-		ImGui::PushItemWidth(-FLT_MIN);
-		ImGui::InputFloat("", &SettingsMgr->fMenuScale);
-		ImGui::PopItemWidth();
-		break;
-	case INI:
-		ImGui::TextWrapped("These settings control FableMenu.ini options. Any changes require game restart to take effect.");
-		ImGui::LabelText("", "Core");
-		ImGui::Separator();
-		ImGui::Checkbox("Slowmotion Spell/Effect Affects Everything", &SettingsMgr->bSlowMotionEffectsEverything);
-		ImGui::Checkbox("Windowed Mode", &SettingsMgr->bUseBuiltInWindowedMode);
-		ImGui::Separator();
+    switch (settingID)
+    {
+    case MENU:
+        ImGui::TextWrapped("All user settings are saved to fablemenu_user.ini.");
+        ImGui::Text("Menu Scale");
+        ImGui::PushItemWidth(-FLT_MIN);
+        ImGui::InputFloat("", &SettingsMgr->fMenuScale);
+        ImGui::PopItemWidth();
+        break;
+    case INI:
+        ImGui::TextWrapped("These settings control FableMenu.ini options. Any changes require game restart to take effect.");
+        ImGui::LabelText("", "Core");
+        ImGui::Separator();
+        ImGui::Checkbox("Slowmotion Spell/Effect Affects Everything", &SettingsMgr->bSlowMotionEffectsEverything);
+        ImGui::Checkbox("Windowed Mode", &SettingsMgr->bUseBuiltInWindowedMode);
+        ImGui::Separator();
 
-		break;
-	case KEYS:
-		if (m_bPressingKey)
-			ImGui::TextColored(ImVec4(0.f, 1.f, 0.3f, 1.f), "Press a key!");
+        break;
+    case KEYS:
+        if (m_bPressingKey)
+            ImGui::TextColored(ImVec4(0.f, 1.f, 0.3f, 1.f), "Press a key!");
 
-		if (ImGui::Button("Reset Keys", { -FLT_MIN, 0 }))
-		{
-			SettingsMgr->ResetKeys();
-			Notifications->SetNotificationTime(2500);
-			Notifications->PushNotification("Keys reset! Remember to save.");
-		}
+        if (ImGui::Button("Reset Keys", { -FLT_MIN, 0 }))
+        {
+            SettingsMgr->ResetKeys();
+            Notifications->SetNotificationTime(2500);
+            Notifications->PushNotification("Keys reset! Remember to save.");
+        }
 
-		ImGui::Separator();
-		ImGui::LabelText("", "Core");
-		ImGui::Separator();
-		KeyBind(&SettingsMgr->iMenuOpenKey, "Open/Close Menu", "menu");
-		ImGui::Separator();
-		ImGui::LabelText("", "Camera");
-		ImGui::Separator();
+        ImGui::Separator();
+        ImGui::LabelText("", "Core");
+        ImGui::Separator();
+        KeyBind(&SettingsMgr->iMenuOpenKey, "Open/Close Menu", "menu");
+        ImGui::Separator();
+        ImGui::LabelText("", "Camera");
+        ImGui::Separator();
 
-		KeyBind(&SettingsMgr->iFreeCameraKeyForward, "Forward", "x_plus");
-		KeyBind(&SettingsMgr->iFreeCameraKeyBack, "Back", "x_minus");
-		KeyBind(&SettingsMgr->iFreeCameraKeyLeft, "Left", "y_plus");
-		KeyBind(&SettingsMgr->iFreeCameraKeyRight, "Right", "y_minus");
-		KeyBind(&SettingsMgr->iFreeCameraKeyUp, "Up", "z_plus");
-		KeyBind(&SettingsMgr->iFreeCameraKeyDown, "Down", "z_minus");
-		ImGui::Separator();
+        KeyBind(&SettingsMgr->iFreeCameraKeyForward, "Forward", "x_plus");
+        KeyBind(&SettingsMgr->iFreeCameraKeyBack, "Back", "x_minus");
+        KeyBind(&SettingsMgr->iFreeCameraKeyLeft, "Left", "y_plus");
+        KeyBind(&SettingsMgr->iFreeCameraKeyRight, "Right", "y_minus");
+        KeyBind(&SettingsMgr->iFreeCameraKeyUp, "Up", "z_plus");
+        KeyBind(&SettingsMgr->iFreeCameraKeyDown, "Down", "z_minus");
+        ImGui::Separator();
 
-		if (m_bPressingKey)
-		{
-			eVKKeyCode result = eKeyboardMan::GetLastKey();
+        if (m_bPressingKey)
+        {
+            eVKKeyCode result = eKeyboardMan::GetLastKey();
 
-			if (result >= VK_BACKSPACE && result < VK_KEY_NONE)
-			{
-				*m_pCurrentVarToChange = result;
-				m_bPressingKey = false;
-			}
+            if (result >= VK_BACKSPACE && result < VK_KEY_NONE)
+            {
+                *m_pCurrentVarToChange = result;
+                m_bPressingKey = false;
+            }
 
-		}
-		break;
-	case MOUSE:
-		ImGui::TextWrapped("All user settings are saved to fablemenu_user.ini.");
-		ImGui::Text("Sensitivity");
-		ImGui::PushItemWidth(-FLT_MIN);
-		ImGui::SliderFloat("", &SettingsMgr->mouse.sens, 0, 10.0f);
-		ImGui::PopItemWidth();
-		ImGui::Checkbox("Invert X", &SettingsMgr->mouse.invert_x);
-		ImGui::Checkbox("Invert Y", &SettingsMgr->mouse.invert_y);
-		break;
-	default:
-		break;
-	}
+        }
+        break;
+    case MOUSE:
+        ImGui::TextWrapped("All user settings are saved to fablemenu_user.ini.");
+        ImGui::Text("Sensitivity");
+        ImGui::PushItemWidth(-FLT_MIN);
+        ImGui::SliderFloat("", &SettingsMgr->mouse.sens, 0, 10.0f);
+        ImGui::PopItemWidth();
+        ImGui::Checkbox("Invert X", &SettingsMgr->mouse.invert_x);
+        ImGui::Checkbox("Invert Y", &SettingsMgr->mouse.invert_y);
+        break;
+    default:
+        break;
+    }
 
-	if (ImGui::Button("Save", { -FLT_MIN, 0 }))
-	{
-		Notifications->SetNotificationTime(2500);
-		Notifications->PushNotification("Settings saved to FableMenu.ini and fablemenu_user.ini!");
-		eDirectX9Hook::ms_bShouldReloadFonts = true;
-		SettingsMgr->SaveSettings();
-	}
+    if (ImGui::Button("Save", { -FLT_MIN, 0 }))
+    {
+        Notifications->SetNotificationTime(2500);
+        Notifications->PushNotification("Settings saved to FableMenu.ini and fablemenu_user.ini!");
+        eDirectX9Hook::ms_bShouldReloadFonts = true;
+        SettingsMgr->SaveSettings();
+    }
 
-	ImGui::EndChild();
-	ImGui::PopStyleVar();
+    ImGui::EndChild();
+    ImGui::PopStyleVar();
 
-	ImGui::End();
+    ImGui::End();
 }
 
 void FableMenu::DrawCreatureList()
 {
-	ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, { 0.5f, 0.5f });
-	ImGui::SetNextWindowPos({ ImGui::GetIO().DisplaySize.x / 2.0f, ImGui::GetIO().DisplaySize.y / 2.0f }, ImGuiCond_Once, { 0.5f, 0.5f });
-	ImGui::SetNextWindowSize({ 700,700 }, ImGuiCond_Once);
-	ImGui::Begin("Creature List", &m_bSubmenuActive[SM_Creature_List]);
+    ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, { 0.5f, 0.5f });
+    ImGui::SetNextWindowPos({ ImGui::GetIO().DisplaySize.x / 2.0f, ImGui::GetIO().DisplaySize.y / 2.0f }, ImGuiCond_Once, { 0.5f, 0.5f });
+    ImGui::SetNextWindowSize({ 700,700 }, ImGuiCond_Once);
+    ImGui::Begin("Creature List", &m_bSubmenuActive[SM_Creature_List]);
 
-	static ImGuiTextFilter filter;
-	ImGui::TextWrapped("Click on any entry to copy to clipboard.");
-	ImGui::Text("Search");
-	ImGui::PushItemWidth(-FLT_MIN);
-	filter.Draw("##wclist");
-	ImGui::PopItemWidth();
+    static ImGuiTextFilter filter;
+    ImGui::TextWrapped("Click on any entry to copy to clipboard.");
+    ImGui::Text("Search");
+    ImGui::PushItemWidth(-FLT_MIN);
+    filter.Draw("##wclist");
+    ImGui::PopItemWidth();
 
-	ImGui::BeginChild("##list", { 0, -ImGui::GetFrameHeightWithSpacing() }, true);
+    ImGui::BeginChild("##list", { 0, -ImGui::GetFrameHeightWithSpacing() }, true);
 
-	static int selectID = 0;
-	for (int n = 0; n < IM_ARRAYSIZE(szCreatureList); n++)
-	{
-		if (filter.PassFilter(szCreatureList[n]))
-		{
-			bool is_selected = (selectID == n);
-			if (ImGui::Selectable(szCreatureList[n], is_selected))
-			{
-				selectID = n;
+    static int selectID = 0;
+    for (int n = 0; n < IM_ARRAYSIZE(szCreatureList); n++)
+    {
+        if (filter.PassFilter(szCreatureList[n]))
+        {
+            bool is_selected = (selectID == n);
+            if (ImGui::Selectable(szCreatureList[n], is_selected))
+            {
+                selectID = n;
 
-				char name[256] = {};
-				sprintf(name, "%s", szCreatureList[selectID]);
-				const size_t len = strlen(name) + 1;
-				HGLOBAL hMem = GlobalAlloc(GMEM_MOVEABLE, len);
-				memcpy(GlobalLock(hMem), name, len);
-				GlobalUnlock(hMem);
-				OpenClipboard(NULL);
-				EmptyClipboard();
-				SetClipboardData(CF_TEXT, hMem);
-				CloseClipboard();
-				Notifications->SetNotificationTime(2500);
-				Notifications->PushNotification("Copied %s to clipboard!", name);
+                char name[256] = {};
+                sprintf(name, "%s", szCreatureList[selectID]);
+                const size_t len = strlen(name) + 1;
+                HGLOBAL hMem = GlobalAlloc(GMEM_MOVEABLE, len);
+                memcpy(GlobalLock(hMem), name, len);
+                GlobalUnlock(hMem);
+                OpenClipboard(NULL);
+                EmptyClipboard();
+                SetClipboardData(CF_TEXT, hMem);
+                CloseClipboard();
+                Notifications->SetNotificationTime(2500);
+                Notifications->PushNotification("Copied %s to clipboard!", name);
+            }
+        }
 
-			}
-		}
-		
-	}
+    }
 
-	ImGui::EndChild();
-	ImGui::PopStyleVar();
+    ImGui::EndChild();
+    ImGui::PopStyleVar();
 
-	ImGui::End();
+    ImGui::End();
 }
 
 void FableMenu::DrawObjectList()
@@ -8126,69 +8150,69 @@ void FableMenu::DrawParticleList()
 
 void FableMenu::DrawKeyBind(char* name, int* var)
 {
-	ImGui::SameLine();
+    ImGui::SameLine();
 
-	static char butName[256] = {};
-	sprintf(butName, "%s##key%s", eKeyboardMan::KeyToString(*var), name);
-	if (ImGui::Button(butName))
-	{
-		m_bPressingKey = true;
-		m_pCurrentVarToChange = var;
-	}
+    static char butName[256] = {};
+    sprintf(butName, "%s##key%s", eKeyboardMan::KeyToString(*var), name);
+    if (ImGui::Button(butName))
+    {
+        m_bPressingKey = true;
+        m_pCurrentVarToChange = var;
+    }
 }
 
 void FableMenu::KeyBind(int* var, char* bindName, char* name)
 {
-	ImGui::LabelText("", bindName);
-	DrawKeyBind(name, var);
+    ImGui::LabelText("", bindName);
+    DrawKeyBind(name, var);
 }
 
 void HookWorldUpdate()
 {
-	if (!InGame())
-		return;
+    if (!InGame())
+        return;
 
-	CWorld* wrld = CMainGameComponent::Get()->GetWorld();
-	if (wrld)
-	{
-		CPlayer* plr = CMainGameComponent::Get()->GetPlayerManager()->GetMainPlayer();
-		if (plr)
-		{
-			CThing* t = plr->GetCharacterThing();
+    CWorld* wrld = CMainGameComponent::Get()->GetWorld();
+    if (wrld)
+    {
+        CPlayer* plr = CMainGameComponent::Get()->GetPlayerManager()->GetMainPlayer();
+        if (plr)
+        {
+            CThing* t = plr->GetCharacterThing();
 
-			if (TheMenu->m_bIsActive && !TheMenu->m_bFrozeControls)
-			{
-				plr->DisableInput();
-				TheMenu->m_bFrozeControls = true;
-			}
-			else if (!TheMenu->m_bIsActive && TheMenu->m_bFrozeControls)
-			{
-				plr->EnableInput();
-				TheMenu->m_bFrozeControls = false;
-			}
+            if (TheMenu->m_bIsActive && !TheMenu->m_bFrozeControls)
+            {
+                plr->DisableInput();
+                TheMenu->m_bFrozeControls = true;
+            }
+            else if (!TheMenu->m_bIsActive && TheMenu->m_bFrozeControls)
+            {
+                plr->EnableInput();
+                TheMenu->m_bFrozeControls = false;
+            }
 
-			if (TheMenu->m_bGodMode)
-			{
-				CThing* t = plr->GetCharacterThing();
-				if (t)
-					t->m_fHealth = 1000.0f;
-			}
+            if (TheMenu->m_bGodMode)
+            {
+                CThing* t = plr->GetCharacterThing();
+                if (t)
+                    t->m_fHealth = 1000.0f;
+            }
 
-			if (TheMenu->m_bInfiniteWill)
-			{
-				if (t)
-				{
-					CTCHeroStats* stats = t->GetHeroStats();
-					stats->m_nStamina = 10000;
-				}
-				
-			}
+            if (TheMenu->m_bInfiniteWill)
+            {
+                if (t)
+                {
+                    CTCHeroStats* stats = t->GetHeroStats();
+                    stats->m_nStamina = 10000;
+                }
 
-			if (TheMenu->m_bCustomCameraPos && TheMenu->ms_bFreeCam && TheMenu->m_nFreeCameraMode == FREE_CAMERA_CUSTOM)
-				FreeCamera::Update();
-		}
+            }
 
-	}
+            if (TheMenu->m_bCustomCameraPos && TheMenu->ms_bFreeCam && TheMenu->m_nFreeCameraMode == FREE_CAMERA_CUSTOM)
+                FreeCamera::Update();
+        }
+
+    }
 }
 
 void FableMenu::ChangeMovementTypePatch(EMovementType moveType)
@@ -8223,25 +8247,25 @@ void FableMenu::TakeActionItem(CThing* creature, char* objectName)
 
 bool InGame()
 {
-	if (CMainGameComponent::Get())
-	{
-		if (CMainGameComponent::Get()->GetWorld())
-			return true;
-	}
-	return false;
+    if (CMainGameComponent::Get())
+    {
+        if (CMainGameComponent::Get()->GetWorld())
+            return true;
+    }
+    return false;
 }
 
 float GetDeltaTime()
 {
-	float delta = 1.0f / 60.0f;
+    float delta = 1.0f / 60.0f;
 
-	if (eDirectX9Hook::ms_bInit)
-		delta = 1.0f / ImGui::GetIO().Framerate;
+    if (eDirectX9Hook::ms_bInit)
+        delta = 1.0f / ImGui::GetIO().Framerate;
 
-	return delta;
+    return delta;
 }
 
 bool IsWindowFocused()
 {
-	return TheMenu->m_bIsFocused;
+    return TheMenu->m_bIsFocused;
 }

@@ -166,6 +166,7 @@ enum ECreatureProperty {
 class CTCLook;
 class CThingSearchTools;
 class CWorldMap;
+class CPlayer;
 class CThingManager {};
 
 class CThing {
@@ -174,7 +175,8 @@ public:
 	float m_fMaxHealth;
 	float m_fHealth;
 
-    CThingManager* GetCurrentThingManager();
+    static CThingManager* GetCurrentThingManager();
+    const CPlayer* PeekPlayer();
 	CTCBase* GetTC(int id);
 	CTCHeroExperience* GetHeroExperience();
 	CTCHero* GetHero();
