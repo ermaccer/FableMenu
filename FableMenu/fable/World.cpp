@@ -37,3 +37,13 @@ CGameScriptInterface* CWorld::GetGameScriptInterface()
 {
 	return *(CGameScriptInterface**)((int)this + 56);
 }
+
+void CWorld::TeleportHeroToHSP(CCharString* hsp_name)
+{
+	CallMethod<0x4A0940, CWorld*, CCharString*>(this, hsp_name);
+}
+
+void CWorld::AutoSave(int ignore_being_between_start_and_finish_screens)
+{
+	CallMethod<0x4A0AE0, CWorld*, int>(this, ignore_being_between_start_and_finish_screens);
+}

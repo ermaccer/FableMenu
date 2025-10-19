@@ -1,6 +1,10 @@
 #include "Thing.h"
 #include "..\core.h"
 
+CThingManager* CThing::GetCurrentThingManager()
+{
+    return *(CThingManager**)0x13B8A1C;
+}
 
 CTCBase* CThing::GetTC(int id)
 {
@@ -93,6 +97,15 @@ CTCLight* CThing::GetLight()
     return *(CTCLight**)(v5 + 4);
 }
 
+CTCInventoryAbilities* CThing::GetInventoryAbilities()
+{
+    int v29 = 111;
+    int v5 = CallMethodAndReturn<int, 0x40F020, int, int*>((int)((int)this + 68), &v29);
+    if (v5 == *(int*)(this + 72) || *(int*)v5 > 111)
+        v5 = *(int*)(this + 72);
+    return *(CTCInventoryAbilities**)(v5 + 4);
+}
+
 CVector* CThing::GetPosition()
 {
     return CallMethodAndReturn<CVector*, 0x4C73D0, CThing*>(this);
@@ -178,7 +191,7 @@ void CThing::LearnExpression(CCharString* expression_name, int quick_access_slot
 
 CWorldMap* CThing::GetWorldMap()
 {
-    return CallMethodAndReturn<CWorldMap*, 0x4C79D0, CThing*>(this);
+    return CallAndReturn<CWorldMap*, 0x4C79D0>();
 }
 
 CThingSearchTools* CThing::GetThingSearchTools()

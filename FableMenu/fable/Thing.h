@@ -31,6 +31,7 @@
 #include "ThingCreature/Door.h"
 #include "ThingCreature/InventoryItem.h"
 #include "ThingCreature/Light.h"
+#include "ThingCreature/InventoryAbilities.h"
 
 #include "CreatureActions/CreatureAction_PickUpGenericBox.h"
 #include "CreatureActions/CreatureAction_PickUpJugToFill.h"
@@ -162,18 +163,18 @@ enum ECreatureProperty {
     THING_CREATURE_PROPERTY_FIREFLY
 };
 
-class CTCHeroAttachableAppearanceModifiers;
+class CTCLook;
 class CThingSearchTools;
 class CWorldMap;
-class CTCLook;
+class CThingManager {};
 
 class CThing {
 public:
 	char pad[0xB0];
 	float m_fMaxHealth;
 	float m_fHealth;
-	// 184
 
+    CThingManager* GetCurrentThingManager();
 	CTCBase* GetTC(int id);
 	CTCHeroExperience* GetHeroExperience();
 	CTCHero* GetHero();
@@ -184,7 +185,7 @@ public:
     CTCBase* AddTC(CCharString* name, int voverride, int pparams_base);
     static int GetThingID(char* name);
     ECreatureType GetCreatureType();
-    CWorldMap* GetWorldMap();
+    static CWorldMap* GetWorldMap();
     CDefString* GetDefName();
     ECreatureProperty GetCreatureProperty();
     CThingSearchTools* GetThingSearchTools();
@@ -215,6 +216,7 @@ public:
     CTCDoor* GetDoor();
     CTCInventoryItem* GetInventoryItem();
     CTCLight* GetLight();
+    CTCInventoryAbilities* GetInventoryAbilities();
 
     void LockAllDoors(bool lock, bool avoid_hero);
     void Kill(bool perform);

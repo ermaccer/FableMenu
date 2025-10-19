@@ -1,4 +1,5 @@
 #include "FGlobals.h"
+#include "../core.h"
 
 bool* FGlobals::GDoNotCallStartAutoSaveProgress = (bool*)0x13B89D1;
 
@@ -27,3 +28,31 @@ bool* NGlobalConsole::EnableHeroThingCollision = (bool*)0x13756E9;
 bool* NGlobalConsole::HeroGodMode = (bool*)0x13B86C7;
 
 bool* NGlobalConsole::EnemyGodMode = (bool*)0x13B86C8;
+
+bool* NGlobalConsole::ForcePrimitiveFadeDistance = (bool*)0x13B86CA;
+
+float* NGlobalConsole::PrimitiveFadeDistance = (float*)0x1375710;
+
+bool* NGlobalConsole::GCombatStressTestDebug = (bool*)0x13B86D5;
+
+float* NGlobalConsole::ConsoleOverrideMultiplier = (float*)0x13BAF18;
+
+void NGlobalConsole::ConsoleTeleportToHSP(char* hsp)
+{
+	CCharString hsp_name(hsp);
+	CWorld* world = CMainGameComponent::Get()->GetWorld();
+
+	world->TeleportHeroToHSP(&hsp_name);
+}
+
+void NGlobalConsole::AutoSave()
+{
+	CMainGameComponent::Get()->GetWorld()->AutoSave(0);
+}
+
+void NGlobalConsole::ConsoleReloadCurrentRegion()
+{
+	CWorldMap* worldMap = CThing::GetWorldMap();
+	CallMethod<0x5025B0, CWorldMap*>(worldMap);
+}
+

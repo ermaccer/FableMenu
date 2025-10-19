@@ -21,5 +21,13 @@ struct NGlobalConsole
 	static bool* EnableParticles;
 	static bool* EnableHeroThingCollision;
 	static bool* HeroGodMode; 
-	static bool* EnemyGodMode; 
+	static bool* EnemyGodMode;
+	static bool* ForcePrimitiveFadeDistance;
+	static float* PrimitiveFadeDistance;
+	static bool* GCombatStressTestDebug;
+	static float* ConsoleOverrideMultiplier;
+
+	static void ConsoleTeleportToHSP(char* hsp);
+	static void AutoSave();
+	static void ConsoleReloadCurrentRegion();
 };

@@ -5686,6 +5686,104 @@ const char* szAttackStyleNames[] = {
     "SUMMONER_INITIAL_ATTACK_STYLE"
 };
 
+const char* szHolySites[] =
+{
+    "NW3BronzeDoorHSP",
+    "HobbeCave2HSP",
+    "EndGameSecondHSP",
+    "GuildArrivalHSP",
+    "GuildWoodsTeleportExitHSP",
+    "OrchardFarmEvilHSP",
+    "OrchardFarmGoodHSP",
+    "FocalSitesHSP",
+    "OakvaleHSP",
+    "ArenaInsideHSP",
+    "arenacellshsp",
+    "ArenaHSP",
+    "ArenaHOHHSP",
+    "BanditCampBossHSP",
+    "BanditCampResHSP",
+    "BanditCampHSP",
+    "BanditCampPath2HSP",
+    "BanditCampPathEntranceHSP",
+    "BarrowFieldsHSP",
+    "BordelloHSP",
+    "BowerstoneJailHSP",
+    "BowerstonePoshHSP",
+    "BowerstoneSlumsHSP",
+    "BowerstoneSlumsWarehousesHSP",
+    "TavernCellarHSP",
+    "starthsp",
+    "DarkwoodHSP",
+    "MinionCampHSP",
+    "DarkwoodTraderCampHSP",
+    "HookCoastGatewayHSP",
+    "ChapelEvilHSP",
+    "FishermanHSP",
+    "FrescoDomeHSP",
+    "GibbetWoodsHSP", 
+    "GrannysHouseHSP",
+    "GraveyardHSP",
+    "GraveyardCircleHSP",
+    "GraveyardPathHSP",
+    "GraveyardSecretPassage1HSP",
+    "GWTeleportHSP",
+    "Greatwood3HSP",
+    "GreatwoodBanditTollHSP",
+    "GreatwoodHSP",
+    "GreatwoodLakeHSP",
+    "GreyHallHSP",
+    "GuildWoodsHSP",
+    "HauntedHouseHSP",
+    "HauntedHouseCellarHSP",
+    "HeroDuelHSP",
+    "GuildHSP",
+    "TempIan01HSP",
+    "HookCoastHSP",
+    "KnotholeGladeHSP",
+    "KrakenChamberHSP",
+    "LookoutPointHSP",
+    "LostBayHSP",
+    "GreyBedroomHSP",
+    "NorthernWastesHSP",
+    "NorthernWastes2HSP",
+    "NorthernWastes3HSP",
+    "OakVale2HSP",
+    "MemorialGardenHSP",
+    "OrchardFarmHSP",
+    "PicnicAreaHSP",
+    "PrisonHSP",
+    "HeroTortureHSP",
+    "PrisonRaceStartHSP",
+    "PrisonPathHSP",
+    "PrisonSecretPassageHSP",
+    "PrisonSecretPassageExteriorHSP",
+    "PrisonTortureHSP",
+    "SnowspireHSP",
+    "NOVStartHSP",
+    "SingingStonesHSP",
+    "AmbushScamHSP",
+    "Witchwood3HSP",
+    "WitchWood2HSP",
+    "WitchwoodCavernHSP",
+    "DDBanditTollHSP",
+    "DDBordelloHSP",
+    "DDBarrowFieldsHSP",
+    "DD_BCP",
+    "DD_BF",
+    "DD_DWS",
+    "DD_GWBT",
+    "DD_GWC",
+    "DD_GH",
+    "DDKnotholeHSP",
+    "DDHauntedHouseHSP",
+    "DDLookoutPointHSP",
+    "DDNecropolisHSP",
+    "DesertedFarmHSP",
+    "DRAGONHSP",
+    "ExecutionTreeHSP",
+    "HangingTreeHSP"
+};
 
 void FableMenu::Init()
 {
@@ -5919,12 +6017,18 @@ void FableMenu::DrawHeroTab()
                     ImGui::InputInt("Will##exp", &exp->m_pExperience[EXPERIENCE_WILL], 0);
                     ImGui::InputInt("Skill##exp", &exp->m_pExperience[EXPERIENCE_SKILL], 0);
 
-                    if (ImGui::Button("Learn All Abilites", { -FLT_MIN, 0 }))
+                    if (ImGui::Button("Learn All Abilities"))
                     {
                         for (int i = 1; i < MAX_NUMBER_OF_HERO_ABILITIES; i++)
                         {
                             t->LearnAbility((EHeroAbility)i, 1, -1, 1);
                         }
+                    }
+                    ImGui::SameLine();
+                    if(ImGui::Button("Abilities To Max Level"))
+                    {
+                        CTCInventoryAbilities* abilities = t->GetInventoryAbilities();
+                        abilities->ForceAllAbilitesToMaxLevel();
                     }
                     if (ImGui::Button("Learn All Expressions", { -FLT_MIN, 0 }))
                     {
@@ -6494,6 +6598,7 @@ void FableMenu::DrawCreaturesTab()
             village->SetVillageLimbo(villageLimbo);
             //villageLimbo = !villageLimbo;
         }
+        ImGui::Separator();
         if (ImGui::Checkbox("Enable Guards", &toggleGuardVillagers))
         {
             village->EnableGuards(toggleGuardVillagers);
@@ -6977,7 +7082,6 @@ void FableMenu::DrawCreatureData(const char* windowTitle, CThing* creature, bool
             {
                 creature->ClearQueuedActions();
             }
-
             if (ImGui::CollapsingHeader("Behavior"))
             {
                 ImGui::SeparatorText("Brain");
@@ -7363,20 +7467,6 @@ void FableMenu::DrawWorldTab()
 			bool& enemies = *(bool*)((int)plr + 0x21B);
 			ImGui::Checkbox("Kill Mode", &enemies);
 		}
-		bool& quest_regions = *(bool*)(0x1375741);
-		ImGui::Checkbox("Quest Regions", &quest_regions);
-        static bool disableRegionBounds;
-        if (ImGui::Checkbox("Disable Region Bounds", &disableRegionBounds))
-        {
-            if (disableRegionBounds)
-            {
-                Patch(0x81F3F6, { 0xB0, 0x01 });
-            }
-            else
-            {
-                Patch(0x81F3F6, { 0x8A, 0x44 });
-            }
-        }
         ImGui::Checkbox("Enemy God Mode", NGlobalConsole::EnemyGodMode);
         static bool fishingAnywhere;
         if (ImGui::Checkbox("Fishing Anywhere", &fishingAnywhere))
@@ -7405,7 +7495,48 @@ void FableMenu::DrawWorldTab()
 			}
 		}
 	}
+    if (ImGui::CollapsingHeader("Region"))
+    {
+        static int hspID = 0;
+        ImGui::Text("Region Holy Sites");
+        if (ImGui::BeginCombo("##regionhsp", szHolySites[hspID]))
+        {
+            for (int n = 0; n < IM_ARRAYSIZE(szHolySites); n++)
+            {
+                bool is_selected = (hspID == n);
+                if (ImGui::Selectable(szHolySites[n], is_selected))
+                    hspID = n;
+                if (is_selected)
+                    ImGui::SetItemDefaultFocus();
+            }
 
+            ImGui::EndCombo();
+        }
+        if (ImGui::Button("Teleport To Region", { -FLT_MIN, 0 }))
+        {
+            CCharString hsp_name((char*)szHolySites[hspID]);
+            wrld->TeleportHeroToHSP(&hsp_name);
+        }
+        if (ImGui::Button("Reload Region", { -FLT_MIN, 0 }))
+        {
+            NGlobalConsole::ConsoleReloadCurrentRegion();
+        }
+        ImGui::Separator();
+        bool& quest_regions = *(bool*)(0x1375741);
+        ImGui::Checkbox("Quest Regions", &quest_regions);
+        static bool disableRegionBounds;
+        if (ImGui::Checkbox("Disable Region Bounds", &disableRegionBounds))
+        {
+            if (disableRegionBounds)
+            {
+                Patch(0x81F3F6, { 0xB0, 0x01 });
+            }
+            else
+            {
+                Patch(0x81F3F6, { 0x8A, 0x44 });
+            }
+        }
+    }
     if (ImGui::CollapsingHeader("Particles"))
     {
         ImGui::TextWrapped("Particle list is available in Help menu.");
@@ -7684,6 +7815,15 @@ void FableMenu::DrawMiscTab()
 	ImGui::Checkbox("Infinite Health", &m_bGodMode);
 	ImGui::Checkbox("Infinite Will", &m_bInfiniteWill);
 	ImGui::Separator();
+    if (ImGui::CollapsingHeader("Console"))
+    {
+        if(ImGui::InputFloat("Primitive Fade Distance", NGlobalConsole::PrimitiveFadeDistance))
+        {
+            *NGlobalConsole::ForcePrimitiveFadeDistance = (NGlobalConsole::PrimitiveFadeDistance > 0);
+        }
+        ImGui::InputFloat("Override Multipliyer Speed", NGlobalConsole::ConsoleOverrideMultiplier);
+        ImGui::Checkbox("Debug Stress Test", NGlobalConsole::GCombatStressTestDebug);
+    }
 #ifdef _DEBUG
 	if (TheCamera)
 	{
