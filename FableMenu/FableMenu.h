@@ -1,5 +1,6 @@
 #pragma once
 #include "Fable.h"
+#include <vector>
 
 
 #define FABLEMENU_VERSION "1.0"
@@ -80,6 +81,7 @@ public:
 
 	void DrawKeyBind(char* name, int* var);
 	void KeyBind(int* var, char* bindName, char* name);
+	void GameKeyBind(int* var, char* bindName, char* name, EGameAction action);
 
 	void ChangeMovementTypePatch(EMovementType moveType);
 
@@ -100,3 +102,5 @@ bool InGame();
 
 float GetDeltaTime();
 bool IsWindowFocused();
+char* GetLocalizedString(wchar_t* name);
+void CopyToClipboard(char* name);

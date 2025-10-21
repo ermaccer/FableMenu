@@ -17,3 +17,5 @@
 #include "fable/QuestManager.h"
 #include "fable/FGlobals.h"
 #include "fable/ProgressDisplay.h"
+#include "fable/UserProfileManager.h"
+#include "fable/GameInputProcess.h"

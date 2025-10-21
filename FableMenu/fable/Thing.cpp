@@ -111,6 +111,24 @@ CTCInventoryAbilities* CThing::GetInventoryAbilities()
     return *(CTCInventoryAbilities**)(v5 + 4);
 }
 
+CTCWeapon* CThing::GetWeapon()
+{
+    int v29 = 72;
+    int v5 = CallMethodAndReturn<int, 0x40F020, int, int*>((int)((int)this + 68), &v29);
+    if (v5 == *(int*)(this + 72) || *(int*)v5 > 72)
+        v5 = *(int*)(this + 72);
+    return *(CTCWeapon**)(v5 + 4);
+}
+
+CTCObjectAugmentations* CThing::GetObjectAugmentations()
+{
+    int v29 = 191;
+    int v5 = CallMethodAndReturn<int, 0x40F020, int, int*>((int)((int)this + 68), &v29);
+    if (v5 == *(int*)(this + 72) || *(int*)v5 > 191)
+        v5 = *(int*)(this + 72);
+    return *(CTCObjectAugmentations**)(v5 + 4);
+}
+
 CVector* CThing::GetPosition()
 {
     return CallMethodAndReturn<CVector*, 0x4C73D0, CThing*>(this);

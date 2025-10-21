@@ -30,3 +30,8 @@ bool CTCQuestCard::IsRouteToAppearOnMinimap()
 {
 	return CallMethodAndReturn<bool, 0x7022F0, CTCQuestCard*>(this);
 }
+
+CWideString* CTCQuestCard::GetQuestName(CWideString* result)
+{
+	return CallMethodAndReturn<CWideString*, 0x702310, CTCQuestCard*, CWideString*>(this, result);
+}

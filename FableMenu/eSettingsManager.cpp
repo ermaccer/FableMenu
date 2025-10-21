@@ -41,9 +41,11 @@ void eSettingsManager::Init()
 	if (iFreeCameraKeyDown == 0xFF)
 		iFreeCameraKeyDown = ini.ReadInteger("Settings", "iFreeCameraKeyDown", 0);
 
+	iHeroJumpKey = user.ReadInteger("Settings", "iHeroJumpKey", 0xFF);
+	if (iHeroJumpKey == 0xFF)
+		iHeroJumpKey = ini.ReadInteger("Settings", "iHeroJumpKey", 0);
 
 	fMenuScale = user.ReadFloat("MenuSettings", "fMenuScale", 1.0f);
-
 
 	if (fMenuScale < 1.0f)
 		fMenuScale = 1.0f;
@@ -67,6 +69,7 @@ void eSettingsManager::SaveSettings()
 	user.WriteInteger("Settings", "iFreeCameraKeyRight", iFreeCameraKeyRight);
 	user.WriteInteger("Settings", "iFreeCameraKeyUp", iFreeCameraKeyUp);
 	user.WriteInteger("Settings", "iFreeCameraKeyDown", iFreeCameraKeyDown);
+	user.WriteInteger("Settings", "iHeroJumpKey", iHeroJumpKey);
 	user.WriteFloat("Mouse", "Sensitivity", mouse.sens);
 	user.WriteBoolean("Mouse", "InvertY", mouse.invert_y);
 	user.WriteBoolean("Mouse", "InvertX", mouse.invert_x);

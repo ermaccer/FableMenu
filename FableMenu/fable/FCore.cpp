@@ -57,14 +57,25 @@ CWideString::CWideString(wchar_t* string)
 	str = string;
 }
 
+wchar_t* CWideString::GetWideStringData()
+{
+	return (wchar_t*)**(uintptr_t**)(this);
+}
+
 char* CCharString::GetStringData()
 {
 	return (char*)**(uintptr_t**)(this);
 }
 
+CWideString::CWideString()
+{
+	unk = 0;
+	str = nullptr;
+}
+
 CDefString::CDefString()
 {
-	this->m_nTablePos = 0;
+	m_nTablePos = 0;
 }
 
 CCharString* CDefString::GetString(CCharString* a2, int a3)

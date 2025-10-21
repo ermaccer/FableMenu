@@ -5813,7 +5813,7 @@ void FableMenu::Draw()
 
     ImGui::Begin("FableMenu by ermaccer", &m_bIsActive, ImGuiWindowFlags_MenuBar);
     {
-        ImGui::SetWindowSize({ 550, 400 }, ImGuiCond_Once);
+        ImGui::SetWindowSize({ 550, 450 }, ImGuiCond_Once);
         if (ImGui::BeginMenuBar())
         {
             if (ImGui::BeginMenu("Settings"))
@@ -5941,6 +5941,16 @@ void FableMenu::Process()
         Patch<char>(0xE60689 + 2, 0xFF);
     else
         Patch<char>(0xE60689 + 2, 2);
+    
+    if (m_bForceLoadRegion)
+    {
+        *(int*)NProgressDisplay::PProgressDisplay = 0;
+    }
+    else if (!*(int*)NProgressDisplay::PProgressDisplay)
+    {
+        CAProgressDisplay* progressDisplay = (CAProgressDisplay*)GameMalloc(179);
+        NProgressDisplay::InitialiseProgressDisplay(progressDisplay);
+    }
 
     // Disable fadeout
     Patch(0x4A411E, { (unsigned char)(m_bForceLoadRegion ? 0x74 : 0x75) });
@@ -5961,6 +5971,7 @@ void FableMenu::DrawHeroTab()
         CTCHero* hero = t->GetHero();
         CTCHaste* haste = t->GetHaste();
         CTCPhysicsStandard* physics = t->GetPhysicsStandard();
+        CTCCarrying* carrying = t->GetCarrying();
         if (stats)
         {
             if (ImGui::CollapsingHeader("Data"))
@@ -6083,6 +6094,85 @@ void FableMenu::DrawHeroTab()
                     morph->m_bUpdate = true;
             }
         }
+        if (carrying)
+        {
+            CThing* thingPrimarySlot = carrying->GetThingInPrimarySlot();
+
+            if (ImGui::CollapsingHeader("Weapon"))
+            {
+                if (thingPrimarySlot)
+                {
+                    ImGui::SeparatorText("Augmentations");
+
+                    CTCObjectAugmentations* augObject = thingPrimarySlot->GetObjectAugmentations();
+                    int numberOfSlots = augObject->GetNumberOfSlots();
+                    static int selectedAug = 0;
+                    const char* augmentationDefs[] = {
+                        "OBJECT_SHARPENING_AUGMENTATION",
+                        "OBJECT_PIERCING_AUGMENTATION",
+                        "OBJECT_SILVER_AUGMENTATION",
+                        "OBJECT_FLAME_AUGMENTATION",
+                        "OBJECT_LIGHTNING_AUGMENTATION",
+                        "OBJECT_EXPERIENCE_AUGMENTATION",
+                        "OBJECT_HEALTH_AUGMENTATION",
+                        "OBJECT_MANA_AUGMENTATION"
+                    };
+
+                    ImGui::Text("Damage Multiplier: %f", augObject->GetDamageMultiplier());
+                    ImGui::Text("Expirience Multiplier: %f", augObject->GetExperienceMultiplier());
+
+                    ImGui::BeginChild("Augmention Slots", { 0, (-ImGui::GetFrameHeightWithSpacing() + 70) * numberOfSlots }, true);
+                    for (int i = 0; i < numberOfSlots; i++)
+                    {
+                        CWideString name;
+                        augObject->GetAugmentationNameInSlot(&name, i);
+                        
+                        ImGui::LabelText("", "%s", GetLocalizedString(name.GetWideStringData()));
+
+                        ImGui::SameLine();
+                        ImGui::PushID(i);
+                        if (ImGui::Button("Set"))
+                        {
+                            CCharString augDefName((char*)augmentationDefs[selectedAug]);
+                            int augIndex = CGameDefinitionManager::GetDefinitionManager()->GetDefGlobalIndexFromName(&augDefName);
+                            augObject->AttachAugmentationToSlot(augIndex, i);
+                        }
+                        ImGui::SameLine();
+                        if (ImGui::Button("Clear"))
+                        {
+                            augObject->RemoveAugmentationFromSlot(i);
+                        }
+                        ImGui::PopID();
+                    }
+                    ImGui::EndChild();
+                    ImGui::LabelText("", "Augmentation Name");
+                    ImGui::PushItemWidth(-FLT_MIN);
+                    if (ImGui::BeginCombo("##augmentation", augmentationDefs[selectedAug]))
+                    {
+                        for (int n = 0; n < IM_ARRAYSIZE(augmentationDefs); n++)
+                        {
+                            bool is_selected = (selectedAug == n);
+                            if (ImGui::Selectable(augmentationDefs[n], is_selected))
+                                selectedAug = n;
+                            if (is_selected)
+                                ImGui::SetItemDefaultFocus();
+                        }
+
+                        ImGui::EndCombo();
+                    }
+                    ImGui::PopItemWidth();
+
+                    if (ImGui::Button("Add New Slot", { -FLT_MIN, 0 }))
+                    {
+                        augObject->AddNewSlot();
+                    }
+                }
+                else
+                {
+                    ImGui::Text("No selected weapon");
+                }
+            }
+        }
         if (haste)
         {
             if (ImGui::CollapsingHeader("Haste"))
@@ -6177,6 +6267,7 @@ void FableMenu::DrawPlayerTab()
     ImGui::Text("Current Mode: %d", plr->GetCurrentMode());
     ImGui::SetWindowFontScale(1.0f);
     ImGui::Separator();
+
     if (ImGui::CollapsingHeader("Modes"))
     {
         std::list<enum EPlayerMode> playerModes = plr->m_listPlayerModes;
@@ -6185,14 +6276,18 @@ void FableMenu::DrawPlayerTab()
         for (EPlayerMode mode : playerModes)
         {
             ImGui::LabelText("", szPlayerModeNames[mode]);
-            ImGui::SameLine();
-            ImGui::PushID(removeID);
-            if (ImGui::Button("Remove"))
+           
+            if (playerModes.size() > 1)
             {
-                plr->RemoveMode(mode);
+                ImGui::SameLine();
+                ImGui::PushID(removeID);
+                if (ImGui::Button("Remove"))
+                {
+                    plr->RemoveMode(mode);
+                }
+                ImGui::PopID();
+                removeID++;
             }
-            ImGui::PopID();
-            removeID++;
         }
 
         static int modeID = 0;
@@ -6232,7 +6327,7 @@ void FableMenu::DrawPlayerTab()
     {
         DrawActionsCollapse(plr->GetCharacterThing());
     }
-    if (ImGui::CollapsingHeader("Player Swap"))
+    if (ImGui::CollapsingHeader("Character Swap"))
     {
         static bool manualInput;
         static bool uninitPlayerCharacter = true;
@@ -7002,6 +7097,7 @@ void FableMenu::DrawActionsCollapse(CThing* thing)
 
 void FableMenu::DrawPhysicsCollapse(CThing* thing)
 {
+    ImGui::SeparatorText("X, Y, Z");
     CTCPhysicsStandard* physics = thing->GetPhysicsStandard();
     ImGui::InputFloat3("Position", &physics->GetPosition()->X);
     if (thing->HasTC(TCI_HERO_STATS))
@@ -7520,7 +7616,7 @@ void FableMenu::DrawWorldTab()
         }
         ImGui::Checkbox("Enemy God Mode", NGlobalConsole::EnemyGodMode);
         static bool fishingAnywhere;
-        if (ImGui::Checkbox("Fishing Anywhere", &fishingAnywhere))
+        if (ImGui::Checkbox("Land Fishing", &fishingAnywhere))
         {
             Patch(0x7F0210, { (unsigned char)((BYTE)fishingAnywhere + 0x74) });
         }
@@ -7548,8 +7644,12 @@ void FableMenu::DrawWorldTab()
     if (ImGui::CollapsingHeader("Region"))
     {
         static int hspID = 0;
-        ImGui::Text("Region Holy Sites");
-        if (ImGui::BeginCombo("##regionhsp", szHolySites[hspID]))
+        if (m_bForceLoadRegion)
+        {
+            ImGui::BeginDisabled();
+        }
+        ImGui::Text("Hero Spawn Points");
+        if (ImGui::BeginCombo("##hsp", szHolySites[hspID]))
         {
             for (int n = 0; n < IM_ARRAYSIZE(szHolySites); n++)
             {
@@ -7562,10 +7662,14 @@ void FableMenu::DrawWorldTab()
 
             ImGui::EndCombo();
         }
-        if (ImGui::Button("Teleport To Holy Site", { -FLT_MIN, 0 }))
+        if (ImGui::Button("Teleport", { -FLT_MIN, 0 }))
         {
             CCharString hsp_name((char*)szHolySites[hspID]);
             wrld->TeleportHeroToHSP(&hsp_name);
+        }
+        if (m_bForceLoadRegion)
+        {
+            ImGui::EndDisabled();
         }
         if (ImGui::Button("Reload Region", { -FLT_MIN, 0 }))
         {
@@ -7586,6 +7690,7 @@ void FableMenu::DrawWorldTab()
                 Patch(0x81F3F6, { 0x8A, 0x44 });
             }
         }
+        ImGui::Checkbox("Force load region", &m_bForceLoadRegion);
     }
     if (ImGui::CollapsingHeader("Particles"))
     {
@@ -7604,8 +7709,7 @@ void FableMenu::DrawWorldTab()
             particlePosition = *playerCharacter->GetPosition();
         }
         ImGui::Checkbox("Attach To Camera", &attachParticleToCamera);
-        ImGui::SameLine();
-        ShowWarnMarker("Use ONLY for static particles");
+        ImGui::SameLine(); ShowWarnMarker("Use only for static particles");
         if (ImGui::Button("Create Particle", { -FLT_MIN, 0 }))
         {
             CCharString ccstrParticle(particleName);
@@ -7682,7 +7786,7 @@ void FableMenu::DrawQuestTab()
 
         if (!writeName)
         {
-            if (ImGui::BeginCombo("##faclist", scriptName))
+            if (ImGui::BeginCombo("#qststatus", scriptName))
             {
                 for (int n = 0; n < IM_ARRAYSIZE(szBuiltInQuests); n++)
                 {
@@ -7748,39 +7852,73 @@ void FableMenu::DrawQuestTab()
 
     if (ImGui::CollapsingHeader("Active Quests"))
     {
-        static bool coreQuest = 0;
-        static bool optionalQuest = 0;
+        static bool coreQuest = false;
+        static bool optionalQuests = false;
+        static bool scriptQuests = false;
+        static bool localizedQuests = false;
+        int activeQuests = 0;
 
-        ImGui::Checkbox("Core Quest", &coreQuest);
+        ImGui::Checkbox("Core Quests", &coreQuest);
         ImGui::SameLine();
-        ImGui::Checkbox("Optinal Quest", &optionalQuest);
+        ImGui::Checkbox("Optinal Quests", &optionalQuests);
+        ImGui::SameLine();
+        ImGui::Checkbox("Scripts", &scriptQuests);
+        ImGui::SameLine();
+        ImGui::Checkbox("Localize Names", &localizedQuests);
         ImGui::Separator();
 
         for (int i = 0; i < IM_ARRAYSIZE(szBuiltInQuests); i++)
         {
             CCharString quest_name((char*)szBuiltInQuests[i]);
+            const char* localizedName = "NONAME_QUEST";
 
             if (q->IsQuestActive(&quest_name))
             {
-                CThing* cardThing = q->GetActiveQuestCardFromScriptName(&quest_name);
+                activeQuests++;
 
-                if (coreQuest || optionalQuest)
+                CThing* cardThing = q->GetActiveQuestCardFromScriptName(&quest_name);
+                bool isScript = !cardThing;
+
+                if (isScript && !scriptQuests)
                 {
-                    if (!cardThing)
+                    continue;
+                }
+
+                if (!isScript)
+                {
+                    CTCQuestCard* card = cardThing->GetQuestCard();
+
+                    if (localizedQuests)
                     {
-                        continue;
+                        CWideString name;
+                        card->GetQuestName(&name);
+                        localizedName = GetLocalizedString(name.GetWideStringData());
                     }
 
-                    CTCQuestCard* card = cardThing->GetQuestCard();
-                    bool isCore = (coreQuest && card->IsRouteToAppearOnMinimap());
-                    bool isOptional = (optionalQuest && card->IsOptional());
-
-                    if (!isCore && !isOptional)
+                    if (coreQuest || optionalQuests)
                     {
-                        continue;
+                        bool isCore = (coreQuest && card->IsRouteToAppearOnMinimap());
+                        bool isOptional = (optionalQuests && card->IsOptional());
+
+                        if (!isCore && !isOptional)
+                        {
+                            continue;
+                        }
                     }
                 }
-                ImGui::LabelText("", szBuiltInQuests[i]);
+                if (localizedQuests && !isScript)
+                {
+                    if (strcmp(localizedName, "NONAME_QUEST") == 0)
+                    {
+                        continue;
+                    }
+
+                    ImGui::LabelText("", localizedName);
+                }
+                else
+                {
+                    ImGui::LabelText("", szBuiltInQuests[i]);
+                }
                 ImGui::SameLine();
                 ImGui::PushID(i);
                 if (ImGui::Button("Deactivate"))
@@ -7793,16 +7931,29 @@ void FableMenu::DrawQuestTab()
                     ImGui::SameLine();
                     if (ImGui::Button("Complete"))
                     {
+                        if (cardThing->GetQuestCard()->IsRouteToAppearOnMinimap())
+                        {
+                            TheMenu->m_bIsActive = false;
+                        }
+
                         q->SetQuestAsCompleted(&quest_name, 0, 0, 0);
                     }
                 }
                 ImGui::PopID();
             }
         }
-        if (ImGui::Button("Deactivate All", { -FLT_MIN, 0 }))
+#ifdef _DEBUG
+        if (activeQuests > 0)
         {
-            q->DeactivateAllQuests();
+            if (ImGui::Button("Deactivate All", { -FLT_MIN, 0 }))
+            {
+                q->DeactivateAllQuests();
+                Notifications->SetNotificationTime(2500);
+                Notifications->PushNotification("All quests deactivated! (%d)", activeQuests);
+                activeQuests = 0;
+            }
         }
+#endif
     }
 
     if (ImGui::CollapsingHeader("Tweaks"))
@@ -7837,7 +7988,9 @@ void FableMenu::DrawMiscTab()
     ImGui::Checkbox("Hero God Mode", NGlobalConsole::HeroGodMode);
     ImGui::Checkbox("Enable Hero Sprint", NGlobalConsole::EnableHeroSprint);
     ImGui::Checkbox("Enable Hero Jump", NGlobalConsole::EnableHeroJump);
-    ImGui::SameLine(); ShowHelpMarker("Jump action assigned to \"J\" button");
+    char jumpDesc[256];
+    sprintf(jumpDesc, "Jump action assigned to \"%s\" button. Jump key and others can be changed in settings menu.", eKeyboardMan::KeyToString(SettingsMgr->iHeroJumpKey));
+    ImGui::SameLine(); ShowHelpMarker(jumpDesc);
 
     ImGui::SeparatorText("Display");
 
@@ -7848,17 +8001,6 @@ void FableMenu::DrawMiscTab()
         Patch(0x4A073B, { (BYTE)*FGlobals::GDoNotCallStartAutoSaveProgress });
     }
     ImGui::Checkbox("Hide Load Game State", FGlobals::GDisplaySavingGameState);
-    ImGui::Checkbox("Force load region", &m_bForceLoadRegion);
-
-    if (m_bForceLoadRegion)
-    {
-        *(int*)NProgressDisplay::PProgressDisplay = 0;
-    }
-    else if (!*(int*)NProgressDisplay::PProgressDisplay)
-    {
-        CAProgressDisplay* progressDisplay = (CAProgressDisplay*)GameMalloc(179);
-        NProgressDisplay::InitialiseProgressDisplay(progressDisplay);
-    }
 
     ImGui::SeparatorText("Cheats");
     ImGui::InputFloat("Trading Price Multiplier", CTCAIScratchPad::TradingPriceMult);
@@ -7981,6 +8123,9 @@ void FableMenu::DrawSettings()
         KeyBind(&SettingsMgr->iFreeCameraKeyRight, "Right", "y_minus");
         KeyBind(&SettingsMgr->iFreeCameraKeyUp, "Up", "z_plus");
         KeyBind(&SettingsMgr->iFreeCameraKeyDown, "Down", "z_minus");
+        
+        ImGui::SeparatorText("Game Action");
+        GameKeyBind(&SettingsMgr->iHeroJumpKey, "Jump", "jump_action", GAME_ACTION_JUMP);
         ImGui::Separator();
 
         if (m_bPressingKey)
@@ -8050,16 +8195,7 @@ void FableMenu::DrawCreatureList()
 
                 char name[256] = {};
                 sprintf(name, "%s", szCreatureList[selectID]);
-                const size_t len = strlen(name) + 1;
-                HGLOBAL hMem = GlobalAlloc(GMEM_MOVEABLE, len);
-                memcpy(GlobalLock(hMem), name, len);
-                GlobalUnlock(hMem);
-                OpenClipboard(NULL);
-                EmptyClipboard();
-                SetClipboardData(CF_TEXT, hMem);
-                CloseClipboard();
-                Notifications->SetNotificationTime(2500);
-                Notifications->PushNotification("Copied %s to clipboard!", name);
+                CopyToClipboard(name);
             }
         }
 
@@ -8099,16 +8235,7 @@ void FableMenu::DrawObjectList()
 
                 char name[256] = {};
                 sprintf(name, "%s", szObjectsList[selectID]);
-                const size_t len = strlen(name) + 1;
-                HGLOBAL hMem = GlobalAlloc(GMEM_MOVEABLE, len);
-                memcpy(GlobalLock(hMem), name, len);
-                GlobalUnlock(hMem);
-                OpenClipboard(NULL);
-                EmptyClipboard();
-                SetClipboardData(CF_TEXT, hMem);
-                CloseClipboard();
-                Notifications->SetNotificationTime(2500);
-                Notifications->PushNotification("Copied %s to clipboard!", name);
+                CopyToClipboard(name);
 
             }
         }
@@ -8149,17 +8276,7 @@ void FableMenu::DrawParticleList()
 
                 char name[256] = {};
                 sprintf(name, "%s", szParticleList[selectID]);
-                const size_t len = strlen(name) + 1;
-                HGLOBAL hMem = GlobalAlloc(GMEM_MOVEABLE, len);
-                memcpy(GlobalLock(hMem), name, len);
-                GlobalUnlock(hMem);
-                OpenClipboard(NULL);
-                EmptyClipboard();
-                SetClipboardData(CF_TEXT, hMem);
-                CloseClipboard();
-                Notifications->SetNotificationTime(2500);
-                Notifications->PushNotification("Copied %s to clipboard!", name);
-
+                CopyToClipboard(name);
             }
         }
 
@@ -8182,6 +8299,30 @@ void FableMenu::DrawKeyBind(char* name, int* var)
         m_bPressingKey = true;
         m_pCurrentVarToChange = var;
     }
+}
+
+void FableMenu::GameKeyBind(int* var, char* bindName, char* name, EGameAction action)
+{
+    CUserProfileManager* profile = CUserProfileManager::Get();
+    CActionInputControl input;
+    profile->GetAssignedInputForAction(action, !*FGlobals::GUsePassiveAggressiveMode, &input);
+
+    if (gameKeyCodes[input.KeyboardKey] != *var)
+    {
+        EInputKey key = eKeyboardMan::GetInputFromVKKeyCode(*var);
+        
+        if (key)
+        {
+            profile->SetAssignedInputKeyboard(action, key, !*FGlobals::GUsePassiveAggressiveMode);
+        }
+    }
+    else
+    {
+        *var = gameKeyCodes[input.KeyboardKey];
+    }
+
+    ImGui::LabelText("", bindName);
+    DrawKeyBind(name, var);
 }
 
 void FableMenu::KeyBind(int* var, char* bindName, char* name)
@@ -8311,4 +8452,28 @@ float GetDeltaTime()
 bool IsWindowFocused()
 {
     return TheMenu->m_bIsFocused;
+}
+
+char* GetLocalizedString(wchar_t* name)
+{
+    char utf8Buff[256] = {};
+    int size = WideCharToMultiByte(CP_UTF8, 0, name, -1, NULL, 0, NULL, NULL);
+
+    WideCharToMultiByte(CP_UTF8, 0, name, -1, utf8Buff, size, NULL, NULL);
+
+    return utf8Buff;
+}
+
+void CopyToClipboard(char* name)
+{
+    const size_t len = strlen(name) + 1;
+    HGLOBAL hMem = GlobalAlloc(GMEM_MOVEABLE, len);
+    memcpy(GlobalLock(hMem), name, len);
+    GlobalUnlock(hMem);
+    OpenClipboard(NULL);
+    EmptyClipboard();
+    SetClipboardData(CF_TEXT, hMem);
+    CloseClipboard();
+    Notifications->SetNotificationTime(2500);
+    Notifications->PushNotification("Copied %s to clipboard!", name);
 }

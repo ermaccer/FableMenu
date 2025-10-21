@@ -30,6 +30,9 @@ public:
 	int iFreeCameraKeyUp;
 	int iFreeCameraKeyDown;
 
+	// game action keys
+	int iHeroJumpKey;
+
 
 	eMouseSettings mouse;
 	float fMenuScale;

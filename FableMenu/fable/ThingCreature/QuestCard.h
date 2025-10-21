@@ -11,4 +11,5 @@ public:
 	bool IsRouteToAppearOnMinimap();
 
 	bool IsActivable();
+	CWideString* GetQuestName(CWideString* result);
 };

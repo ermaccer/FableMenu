@@ -172,11 +172,14 @@
     <ClInclude Include="fable\CreatureActions\ActionPlayAnimation.h" />
     <ClInclude Include="fable\CreatureActions\CreatureAction_PickUpGenericBox.h" />
     <ClInclude Include="fable\CreatureActions\CreatureAction_PickUpJugToFill.h" />
+    <ClInclude Include="fable\GameInputProcess.h" />
     <ClInclude Include="fable\ProgressDisplay.h" />
     <ClInclude Include="fable\ThingCreature\Door.h" />
     <ClInclude Include="fable\ThingCreature\InventoryAbilities.h" />
     <ClInclude Include="fable\ThingCreature\InventoryItem.h" />
     <ClInclude Include="fable\ThingCreature\Light.h" />
+    <ClInclude Include="fable\ThingCreature\ObjectAugmentations.h" />
+    <ClInclude Include="fable\ThingCreature\Weapon.h" />
     <ClInclude Include="fable\ThingSearchTools.h" />
     <ClInclude Include="fable\EngineWeather.h" />
     <ClInclude Include="fable\FCore.h" />
@@ -220,6 +223,7 @@
     <ClInclude Include="fable\ThingCreature\Village.h" />
     <ClInclude Include="fable\ThingCreature\VillageMember.h" />
     <ClInclude Include="fable\ThingCreature\Wife.h" />
+    <ClInclude Include="fable\UserProfileManager.h" />
     <ClInclude Include="fable\World.h" />
     <ClInclude Include="font.h" />
     <ClInclude Include="framework.h" />
@@ -260,11 +264,14 @@
     <ClCompile Include="fable\CreatureActions\ActionPlayAnimation.cpp" />
     <ClCompile Include="fable\CreatureActions\CreatureAction_PickUpGenericBox.cpp" />
     <ClCompile Include="fable\CreatureActions\CreatureAction_PickUpJugToFill.cpp" />
+    <ClCompile Include="fable\GameInputProcess.cpp" />
     <ClCompile Include="fable\ProgressDisplay.cpp" />
     <ClCompile Include="fable\ThingCreature\Door.cpp" />
     <ClCompile Include="fable\ThingCreature\InventoryAbilities.cpp" />
     <ClCompile Include="fable\ThingCreature\InventoryItem.cpp" />
     <ClCompile Include="fable\ThingCreature\Light.cpp" />
+    <ClCompile Include="fable\ThingCreature\ObjectAugmentations.cpp" />
+    <ClCompile Include="fable\ThingCreature\Weapon.cpp" />
     <ClCompile Include="fable\ThingSearchTools.cpp" />
     <ClCompile Include="fable\EngineWeather.cpp" />
     <ClCompile Include="fable\FCore.cpp" />
@@ -307,6 +314,7 @@
     <ClCompile Include="fable\ThingCreature\Village.cpp" />
     <ClCompile Include="fable\ThingCreature\VillageMember.cpp" />
     <ClCompile Include="fable\ThingCreature\Wife.cpp" />
+    <ClCompile Include="fable\UserProfileManager.cpp" />
     <ClCompile Include="fable\World.cpp" />
     <ClCompile Include="helper\eKeyboardMan.cpp" />
     <ClCompile Include="helper\eMouse.cpp" />

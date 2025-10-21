@@ -32,6 +32,8 @@
 #include "ThingCreature/InventoryItem.h"
 #include "ThingCreature/Light.h"
 #include "ThingCreature/InventoryAbilities.h"
+#include "ThingCreature/Weapon.h"
+#include "ThingCreature/ObjectAugmentations.h"
 
 #include "CreatureActions/CreatureAction_PickUpGenericBox.h"
 #include "CreatureActions/CreatureAction_PickUpJugToFill.h"
@@ -219,6 +221,8 @@ public:
     CTCInventoryItem* GetInventoryItem();
     CTCLight* GetLight();
     CTCInventoryAbilities* GetInventoryAbilities();
+    CTCObjectAugmentations* GetObjectAugmentations();
+    CTCWeapon* GetWeapon();
 
     void LockAllDoors(bool lock, bool avoid_hero);
     void Kill(bool perform);

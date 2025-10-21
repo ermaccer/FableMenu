@@ -126,18 +126,23 @@ public:
 
 class CWideString
 {
+public:
 	int unk;
 	wchar_t* str;
 	CWideString(wchar_t* string);
+	CWideString();
+	
+	wchar_t* GetWideStringData();
 };
 
 class CCharString {
 public:
 	int unk;
 	char* str;
-	char* GetStringData();
 	CCharString(char* _str);
 	CCharString();
+
+	char* GetStringData();
 };
 
 class CDefString {

@@ -45,14 +45,13 @@ void NGlobalConsole::ConsoleTeleportToHSP(char* hsp)
 	world->TeleportHeroToHSP(&hsp_name);
 }
 
-void NGlobalConsole::AutoSave()
-{
-	CMainGameComponent::Get()->GetWorld()->AutoSave(0);
-}
-
 void NGlobalConsole::ConsoleReloadCurrentRegion()
 {
 	CWorldMap* worldMap = CThing::GetWorldMap();
 	CallMethod<0x5025B0, CWorldMap*>(worldMap);
 }
 
+void NGlobalConsole::AutoSave()
+{
+	CMainGameComponent::Get()->GetWorld()->AutoSave(0);
+}

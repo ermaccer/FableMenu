@@ -297,6 +297,18 @@
     <ClInclude Include="fable\ThingCreature\InventoryAbilities.h">
       <Filter>Header Files\fable\ThingCreature</Filter>
     </ClInclude>
+    <ClInclude Include="fable\UserProfileManager.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\GameInputProcess.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingCreature\Weapon.h">
+      <Filter>Header Files\fable\ThingCreature</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingCreature\ObjectAugmentations.h">
+      <Filter>Header Files\fable\ThingCreature</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -528,6 +540,18 @@
       <Filter>Header Files\fable\ThingCreature</Filter>
     </ClCompile>
     <ClCompile Include="fable\ThingCreature\InventoryAbilities.cpp">
+      <Filter>Header Files\fable\ThingCreature</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\UserProfileManager.cpp">
+      <Filter>Header Files\fable</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\GameInputProcess.cpp">
+      <Filter>Header Files\fable</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingCreature\Weapon.cpp">
+      <Filter>Header Files\fable\ThingCreature</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingCreature\ObjectAugmentations.cpp">
       <Filter>Header Files\fable\ThingCreature</Filter>
     </ClCompile>
   </ItemGroup>
