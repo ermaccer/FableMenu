@@ -21,6 +21,8 @@ bool FableMenu::ms_bDisableHUD = false;
 bool FableMenu::m_bCustomCameraFOV = false;
 bool FableMenu::ms_bChangeTime = false;
 float FableMenu::m_fTime = 0.0f;
+std::vector<CThing*> FableMenu::m_createdParticles;
+std::vector<CThing*> FableMenu::m_attachedCameraParticles;
 
 static void ShowHelpMarker(const char* desc)
 {
@@ -36,6 +38,18 @@ static void ShowHelpMarker(const char* desc)
 
 }
 
+static void ShowWarnMarker(const char* desc)
+{
+    ImGui::TextColored({ 1,0,0,1 }, "(!)");
+    if (ImGui::IsItemHovered())
+    {
+        ImGui::BeginTooltip();
+        ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+        ImGui::TextUnformatted(desc);
+        ImGui::PopTextWrapPos();
+        ImGui::EndTooltip();
+    }
+}
 const char* szFactions[] = {
     "NULLDEF_FACTION",
     "FACTION_HERO",
@@ -6748,6 +6762,34 @@ void FableMenu::DrawObjectsTab()
         size_t objectCount = allObjects.size();
         objectDataWindowsOpen.resize(objectCount, false);
         static ImGuiTextFilter filter;
+        static bool canTakeStockItems;
+        if (ImGui::Checkbox("Can Take Stock Items", &canTakeStockItems))
+        {
+            std::list<CThing*> stockItems;
+            for (CThing* object : allObjects)
+            {
+                if (object->HasTC(TCI_STOCK_ITEM))
+                    stockItems.push_back(object);
+            }
+            if (canTakeStockItems)
+            {
+                for (CThing* stockItem : stockItems)
+                {
+                    CCharString onActionUse((char*)"CTCActionUsePutInInventory");
+                    stockItem->AddTC(&onActionUse, 0, 0);
+                }
+                Patch<char>(0x773538, 0x75);
+            }
+            else
+            {
+                for (CThing* stockItem : stockItems)
+                {
+                    if (stockItem->HasTC(TCI_ON_ACTION_USE))
+                        stockItem->RemoveTC(TCI_ON_ACTION_USE);
+                }
+                Patch<char>(0x773538, 0x74);
+            }
+        }
         ImGui::Text("Search");
         ImGui::PushItemWidth(-FLT_MIN);
         filter.Draw("##rolist");
@@ -7005,15 +7047,7 @@ void FableMenu::DrawObjectData(const char* windowTitle, CThing* object, bool* is
             ImGui::SameLine();
             if (isBuyableHouse)
             {
-                ImGui::TextColored({ 1,0,0,1 }, "(!)");
-                if (ImGui::IsItemHovered())
-                {
-                    ImGui::BeginTooltip();
-                    ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
-                    ImGui::TextUnformatted("After using this function, there is a risk that your game may crash.\nTo avoid this, try teleporting all the NPCs in the house to yourself.");
-                    ImGui::PopTextWrapPos();
-                    ImGui::EndTooltip();
-                }
+                ShowWarnMarker("After using this function, there is a risk that your game may crash.\nTo avoid this, try teleporting all the NPCs in the house to yourself.");
             }
             if (ImGui::Button("Teleport To Player Position"))
             {
@@ -7561,25 +7595,17 @@ void FableMenu::DrawWorldTab()
         static bool isTemporaryParticle;
         static bool attachParticleToCamera;
         static bool particleNameError;
-        static std::vector<CThing*> spawnedParticlesThing;
-        static std::vector<CTCDParticleEmitter*> attachedCameraParticles;
         ImGui::Checkbox("Enable Particles", NGlobalConsole::EnableParticles);
         ImGui::InputText("Particle Name", particleName, sizeof(particleName));
-        if (attachParticleToCamera)
-        {
-            ImGui::BeginDisabled();
-        }
         ImGui::InputFloat3("Particle Position", &particlePosition.X);
         if (ImGui::Button("Get Player Position"))
         {
             CThing* playerCharacter = CMainGameComponent::Get()->GetPlayerManager()->GetMainPlayer()->GetCharacterThing();
             particlePosition = *playerCharacter->GetPosition();
         }
-        if (attachParticleToCamera)
-        {
-            ImGui::EndDisabled();
-        }
         ImGui::Checkbox("Attach To Camera", &attachParticleToCamera);
+        ImGui::SameLine();
+        ShowWarnMarker("Use ONLY for static particles");
         if (ImGui::Button("Create Particle", { -FLT_MIN, 0 }))
         {
             CCharString ccstrParticle(particleName);
@@ -7596,41 +7622,38 @@ void FableMenu::DrawWorldTab()
                     particleNameError = false;
                 }
                 CThing* particleThing = CTCDParticleEmitter::Create(partId, &particlePosition, false);
-                spawnedParticlesThing.push_back(particleThing);
+                m_createdParticles.push_back(particleThing);
                 if (particleThing)
                 {
                     if (attachParticleToCamera)
                     {
                         CTCDParticleEmitter* particleEmitter = particleThing->GetParticleEmitter();
-                        attachedCameraParticles.push_back(particleEmitter);
-                        particleEmitter->AttachToCamera(8, 0.0);
+                        if (*(int*)particleEmitter + 0x34 != 0)
+                        {
+                            particleEmitter->AttachToCamera(8, 0.0);
+                            m_attachedCameraParticles.push_back(particleThing);
+                        }
                     }
                 }
             }
         }
-        if (ImGui::Button("Clear Attachments", { 140, 25 }))
+        if (ImGui::Button("Clear Attachments", { 125, 25 }))
         {
-            for (auto a : attachedCameraParticles)
+            for (auto cameraParticle : m_attachedCameraParticles)
             {
-                a->ClearAttachments();
+                cameraParticle->GetParticleEmitter()->ClearAttachments();
             }
-            attachedCameraParticles.clear();
+            m_attachedCameraParticles.clear();
         }
         ImGui::SameLine();
         if (ImGui::Button("Destroy All Created Particles", { 200, 25 }))
         {
-            for (auto thing : spawnedParticlesThing)
+            for (auto thing : m_createdParticles)
             {
-                if (thing)
-                    thing->Kill(false);
+                thing->Kill(false);
             }
-            spawnedParticlesThing.clear();
-            for (auto emitter : attachedCameraParticles)
-            {
-                if (emitter)
-                    emitter->ClearAttachments();
-            }
-            attachedCameraParticles.clear();
+            m_createdParticles.clear();
+            m_attachedCameraParticles.clear();
         }
         if (particleNameError)
         {
@@ -8175,6 +8198,11 @@ void HookWorldUpdate()
     CWorld* wrld = CMainGameComponent::Get()->GetWorld();
     if (wrld)
     {
+        if (wrld->isLoadRegion())
+        {
+            FableMenu::m_attachedCameraParticles.clear();
+            FableMenu::m_createdParticles.clear();
+        }
         CPlayer* plr = CMainGameComponent::Get()->GetPlayerManager()->GetMainPlayer();
         if (plr)
         {
@@ -8212,6 +8240,21 @@ void HookWorldUpdate()
                 FreeCamera::Update();
         }
 
+    }
+}
+
+void HookMainGameComponent()
+{
+    if (!InGame())
+        return;
+    CWorld* wrld = CMainGameComponent::Get()->GetWorld();
+    if (wrld)
+    {
+        if (wrld->isLoadSave())
+        {
+            FableMenu::m_createdParticles.clear();
+            FableMenu::m_attachedCameraParticles.clear();
+        }
     }
 }
 

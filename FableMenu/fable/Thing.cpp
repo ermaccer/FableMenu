@@ -215,14 +215,14 @@ CTCBase* CThing::AddTC(CCharString* name, int voverride, int pparams_base)
     return CallMethodAndReturn<CTCBase*, 0x4C9D60, CThing*, CCharString*, int, int>(this, name, voverride, pparams_base);
 }
 
+void CThing::RemoveTC(ETCInterfaceType type)
+{
+    CallMethod<0x4C9840, CThing*, ETCInterfaceType>(this, type);
+}
+
 bool CThing::HasTC(int interface_type)
 {
     return CallMethodAndReturn<bool, 0x4118C0, CThing*, int>(this, interface_type);
-}
-
-void CThing::RemoveTC(ETCInterfaceType id)
-{
-    CallMethod<0x4C9840, CThing*, int>(this, id);
 }
 
 CTCDParticleEmitter* CThing::GetParticleEmitter()

@@ -7,6 +7,8 @@
 
 class CWorld {
 public:
+	bool isLoadRegion();
+	bool isLoadSave();
 	bool* GetMinimap();
 	void SetMinimap(bool status);
 	void TeleportHeroToHSP(CCharString* hsp_name);

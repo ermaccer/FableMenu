@@ -83,6 +83,8 @@ public:
 
 	void ChangeMovementTypePatch(EMovementType moveType);
 
+	static std::vector<CThing*> m_createdParticles;
+	static std::vector<CThing*> m_attachedCameraParticles;
 	static bool m_bCustomCameraPos;
 	static bool ms_bFreeCam;
 	static bool ms_bDisableHUD;
@@ -92,6 +94,7 @@ public:
 };
 
 extern FableMenu* TheMenu;
+void HookMainGameComponent();
 void HookWorldUpdate();
 bool InGame();
 

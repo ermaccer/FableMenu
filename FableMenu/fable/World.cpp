@@ -13,6 +13,16 @@ bool* CWorld::GetMinimap()
 	return (bool*)(this + 221);
 }
 
+bool CWorld::isLoadRegion()
+{
+	return *(bool*)((char*)this + 0x104);
+}
+
+bool CWorld::isLoadSave()
+{
+	return *(bool*)((char*)this + 0xF8);
+}
+
 CPlayer* CWorld::GetPlayer(int id)
 {
 	return CallMethodAndReturn<CPlayer*, 0x4498C0, CWorld*, int>(this, id);
