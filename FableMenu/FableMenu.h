@@ -63,6 +63,7 @@ public:
 	void DrawCreaturesTab();
 	void DrawAppearanceCollapse(CThing* creature);
 	void DrawActionsCollapse(CThing* creature);
+	void DrawAnimationsCollapse(CThing* creature);
 	void DrawObjectData(const char* objectName, CThing* creature, bool* isOpen);
 	void DrawObjectsTab();
 	void DrawCameraTab();
@@ -92,6 +93,7 @@ public:
 	static bool ms_bDisableHUD;
 	static bool m_bCustomCameraFOV;
 	static bool ms_bChangeTime;
+	static bool ms_bDisableCreateParticle;
 	static float m_fTime;
 };
 

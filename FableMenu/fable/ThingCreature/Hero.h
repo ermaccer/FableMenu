@@ -53,7 +53,8 @@ public:
     bool m_bCanUseWill;
     bool m_bWeaponsUsable;
     EHeroTitle m_eTitle;
-
+    char pad[0x30];
+    CThing* attachedParticle;
     void SetTitle(int title_def_index);
 };
 

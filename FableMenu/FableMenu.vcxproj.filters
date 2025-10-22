@@ -309,6 +309,12 @@
     <ClInclude Include="fable\ThingCreature\ObjectAugmentations.h">
       <Filter>Header Files\fable\ThingCreature</Filter>
     </ClInclude>
+    <ClInclude Include="fable\ThingCreature\HeroReceiveItems.h">
+      <Filter>Header Files\fable\ThingCreature</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\CreatureActions\CCreatureAction_AddRealObjectToInventory.h">
+      <Filter>Header Files\fable\CreatureActions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -553,6 +559,12 @@
     </ClCompile>
     <ClCompile Include="fable\ThingCreature\ObjectAugmentations.cpp">
       <Filter>Header Files\fable\ThingCreature</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingCreature\HeroReceiveItems.cpp">
+      <Filter>Header Files\fable\ThingCreature</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\CreatureActions\CCreatureAction_AddRealObjectToInventory.cpp">
+      <Filter>Header Files\fable\CreatureActions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

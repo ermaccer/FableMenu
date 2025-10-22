@@ -20,6 +20,7 @@ bool FableMenu::m_bCustomCameraPos = false;
 bool FableMenu::ms_bDisableHUD = false;
 bool FableMenu::m_bCustomCameraFOV = false;
 bool FableMenu::ms_bChangeTime = false;
+bool FableMenu::ms_bDisableCreateParticle = false;
 float FableMenu::m_fTime = 0.0f;
 std::vector<CThing*> FableMenu::m_createdParticles;
 std::vector<CThing*> FableMenu::m_attachedCameraParticles;
@@ -6997,9 +6998,10 @@ void FableMenu::DrawAppearanceCollapse(CThing* thing)
     }
 }
 
-void FableMenu::DrawActionsCollapse(CThing* thing)
+void DrawAnimationCollapse(CThing* thing)
 {
-
+    static char animInputName[256] = {};
+    static bool useInput;
     static int selectedAnimation;
     static bool stayOnLastFrame;
     static bool useMovement;
@@ -7011,41 +7013,49 @@ void FableMenu::DrawActionsCollapse(CThing* thing)
     static int numLoops;
     static int animPriority;
 
-    CThing* character = CMainGameComponent::Get()->GetPlayerManager()->GetMainPlayer()->GetCharacterThing();
-
     ImGui::SeparatorText("Animations");
-    if (ImGui::BeginCombo("##Animations", szCreatureAnimations[selectedAnimation]))
+    if (!useInput)
     {
-        size_t arraySize = sizeof(szCreatureAnimations) / sizeof(szCreatureAnimations[0]);
-
-        for (int i = 0; i < arraySize; i++)
+        if (ImGui::BeginCombo("##Animations", szCreatureAnimations[selectedAnimation]))
         {
-            bool isSelected = (selectedAnimation == i);
+            size_t arraySize = sizeof(szCreatureAnimations) / sizeof(szCreatureAnimations[0]);
 
-            if (ImGui::Selectable(szCreatureAnimations[i], isSelected))
+            for (int i = 0; i < arraySize; i++)
             {
-                selectedAnimation = i;
+                bool isSelected = (selectedAnimation == i);
 
-                if (isSelected)
+                if (ImGui::Selectable(szCreatureAnimations[i], isSelected))
                 {
-                    ImGui::SetItemDefaultFocus();
+                    selectedAnimation = i;
+
+                    if (isSelected)
+                    {
+                        ImGui::SetItemDefaultFocus();
+                    }
                 }
             }
+            ImGui::EndCombo();
         }
-        ImGui::EndCombo();
+    }
+    else
+    {
+        ImGui::InputText("##anim", animInputName, sizeof(animInputName));
     }
     ImGui::SameLine();
     ImGui::Text("Animation Name");
+    ImGui::Checkbox("Use Input", &useInput);
+    ImGui::SameLine();
     ImGui::Checkbox("Looping", &looping);
     if (looping)
     {
         ImGui::InputInt("Number Loops", &numLoops);
     }
     ImGui::Checkbox("Use Physics", &usePhysics);
+    ImGui::SameLine();
     ImGui::Checkbox("Use Movement", &useMovement);
     ImGui::Checkbox("Allow Looking", &allowLooking);
-    ImGui::Checkbox("Stay In Last Frame", &stayOnLastFrame);
     ImGui::SameLine();
+    ImGui::Checkbox("Stay In Last Frame", &stayOnLastFrame);
     ImGui::Checkbox("Add As Qeued Action", &addAsQeuedAction);
     ImGui::SameLine();
     ImGui::Checkbox("Wait For Anim To Finish", &waitForAnimToFinish);
@@ -7053,22 +7063,32 @@ void FableMenu::DrawActionsCollapse(CThing* thing)
 
     if (ImGui::Button("Play Animation"))
     {
-        CTCScriptedControl* scriptControl = character->GetScriptedControl();
+        CTCScriptedControl* scriptControl = thing->GetScriptedControl();
         CTCScriptedControl::CActionBase* animation = (CTCScriptedControl::CActionBase*)GameMalloc(180);
-        CCharString animName((char*)szCreatureAnimations[selectedAnimation]);
-        new CActionPlayAnimation(animation, &animName, stayOnLastFrame, looping, numLoops, useMovement, animPriority, addAsQeuedAction, waitForAnimToFinish, usePhysics, false, allowLooking);
+        char* animationName = nullptr;
+        if (!useInput)
+            animationName = (char*)szCreatureAnimations[selectedAnimation];
+        else
+            animationName = animInputName;
+        CCharString name(animationName);
+        new CActionPlayAnimation(animation, &name, stayOnLastFrame, looping, numLoops, useMovement, animPriority, addAsQeuedAction, waitForAnimToFinish, usePhysics, false, allowLooking);
         scriptControl->AddAction(animation);
     }
+}
+
+void FableMenu::DrawActionsCollapse(CThing* thing)
+{
+    DrawAnimationCollapse(thing);
     if (ImGui::Button("Finish Current Action"))
     {
-        character->FinishCurrentAction();
+        thing->FinishCurrentAction();
     }
     ImGui::SeparatorText("Carrying");
     static bool destroyDropped = true;
     ImGui::Checkbox("Destroy Dropped Weapon", &destroyDropped);
     if (ImGui::Button("Take Crate"))
     {
-        FableMenu::TakeActionItem(character, (char*)"OBJECT_CRATE_SMALL_EXPLOSIVE_01_USABLE");
+        FableMenu::TakeActionItem(thing, (char*)"OBJECT_CRATE_SMALL_EXPLOSIVE_01_USABLE");
     }
     ImGui::SameLine();
     if (ImGui::Button("Drop Carried"))
@@ -7077,11 +7097,11 @@ void FableMenu::DrawActionsCollapse(CThing* thing)
         Patch<char>(0x845D86 + 1, 0x84);
 
         CCreatureAction_DropWeapon* drop = (CCreatureAction_DropWeapon*)GameMalloc(100);
-        new CCreatureAction_DropWeapon(drop, character);
+        new CCreatureAction_DropWeapon(drop, thing);
 
-        character->SetCurrentAction((CTCBase*)drop);
+        thing->SetCurrentAction((CTCBase*)drop);
 
-        CTCCarrying* carrying = character->GetCarrying();
+        CTCCarrying* carrying = thing->GetCarrying();
         CThing* primarySlotThing = carrying->GetThingInPrimarySlot();
 
         if (destroyDropped && primarySlotThing)
@@ -7136,14 +7156,31 @@ void FableMenu::DrawObjectData(const char* windowTitle, CThing* object, bool* is
         if (ImGui::Begin(windowTitle, isOpen));
         {
             ImGui::SeparatorText("Object Thing");
-            if (ImGui::Button("Destroy"))
+            if (ImGui::Button("Show"))
             {
-                object->Kill(0);
+                object->SetInLimbo(0);
             }
             ImGui::SameLine();
+            ImGui::Text("/");
+            ImGui::SameLine();
+            if (ImGui::Button("Hide"))
+            {
+                object->SetInLimbo(1);
+            }
             if (isBuyableHouse)
             {
-                ShowWarnMarker("After using this function, there is a risk that your game may crash.\nTo avoid this, try teleporting all the NPCs in the house to yourself.");
+                ImGui::SameLine();
+                ShowWarnMarker("There is a risk of game crash after using this feature on buildings.");
+            }
+            if (object->HasTC(TCI_STOCK_ITEM) || object->HasTC(TCI_HERO_RECEIVE_ITEMS))
+            {
+                if (ImGui::Button("Add To Inventory"))
+                {
+                    CThing* playerCharacter = CMainGameComponent::Get()->GetPlayerManager()->GetMainPlayer()->GetCharacterThing();
+                    CCreatureAction_AddRealObjectToInventory* addToInventory = (CCreatureAction_AddRealObjectToInventory*)GameMalloc(180);
+                    CCreatureAction_AddRealObjectToInventory::CCreatureAction_AddRealObjectToInventory(addToInventory, playerCharacter, object);
+                    playerCharacter->SetCurrentAction((CTCBase*)addToInventory);
+                }
             }
             if (ImGui::Button("Teleport To Player Position"))
             {
@@ -7207,7 +7244,15 @@ void FableMenu::DrawCreatureData(const char* windowTitle, CThing* creature, bool
         {
             ImGui::SeparatorText("Character Thing");
             ImGui::InputFloat("Health", &creature->m_fHealth);
-
+            if (ImGui::Button("Show"))
+            {
+                creature->SetInLimbo(0);
+            }
+            ImGui::SameLine();
+            if (ImGui::Button("Hide"))
+            {
+                creature->SetInLimbo(1);
+            }
             if (ImGui::Button("Kill"))
             {
                 creature->Kill(true);
@@ -7399,6 +7444,10 @@ void FableMenu::DrawCreatureData(const char* windowTitle, CThing* creature, bool
                 ImGui::BeginDisabled();
             }
 
+            if (ImGui::CollapsingHeader("Animations"))
+            {
+                DrawAnimationCollapse(creature);
+            }
             if (ImGui::CollapsingHeader("Carrying"))
             {
                 static int selectedCarrySlot;
@@ -7710,6 +7759,8 @@ void FableMenu::DrawWorldTab()
         }
         ImGui::Checkbox("Attach To Camera", &attachParticleToCamera);
         ImGui::SameLine(); ShowWarnMarker("Use only for static particles");
+        if(ms_bDisableCreateParticle)
+            ImGui::BeginDisabled();
         if (ImGui::Button("Create Particle", { -FLT_MIN, 0 }))
         {
             CCharString ccstrParticle(particleName);
@@ -7741,6 +7792,8 @@ void FableMenu::DrawWorldTab()
                 }
             }
         }
+        if (ms_bDisableCreateParticle)
+            ImGui::EndDisabled();
         if (ImGui::Button("Clear Attachments", { 125, 25 }))
         {
             for (auto cameraParticle : m_attachedCameraParticles)
@@ -7979,6 +8032,7 @@ void FableMenu::DrawMiscTab()
     ImGui::Checkbox("Update AI", NGlobalConsole::EnableUpdateAI);
     ImGui::Checkbox("Update Objects", NGlobalConsole::EnableUpdateObjects);
     static bool creatureDecay = 1;
+    static bool enableShortMelee;
     if(ImGui::Checkbox("Dead Creature Decay", &creatureDecay))
     {
         Patch<char>(0x8362EA + 1, creatureDecay + 0x84);
@@ -7986,11 +8040,27 @@ void FableMenu::DrawMiscTab()
     ImGui::SeparatorText("Hero");
 
     ImGui::Checkbox("Hero God Mode", NGlobalConsole::HeroGodMode);
-    ImGui::Checkbox("Enable Hero Sprint", NGlobalConsole::EnableHeroSprint);
     ImGui::Checkbox("Enable Hero Jump", NGlobalConsole::EnableHeroJump);
     char jumpDesc[256];
     sprintf(jumpDesc, "Jump action assigned to \"%s\" button. Jump key and others can be changed in settings menu.", eKeyboardMan::KeyToString(SettingsMgr->iHeroJumpKey));
     ImGui::SameLine(); ShowHelpMarker(jumpDesc);
+    ImGui::Checkbox("Enable Hero Sprint", NGlobalConsole::EnableHeroSprint);
+    if (ImGui::Checkbox("Enable Hero Short Melee", &enableShortMelee))
+    {
+        const char* meleeType = nullptr;
+        if (enableShortMelee)
+        {
+            meleeType = "STRIKE_SHORT_FRONT";
+        }
+        else
+        {
+            meleeType = "STRIKE_MEDIUM_FRONT";
+        }
+        for (int i = 0; i <= strlen(meleeType); i++)
+        {
+            Patch<char>(0x12778B0 + i, meleeType[i]);
+        }
+    }
 
     ImGui::SeparatorText("Display");
 
@@ -8393,9 +8463,12 @@ void HookMainGameComponent()
     {
         if (wrld->isLoadSave())
         {
+            FableMenu::ms_bDisableCreateParticle = true;
             FableMenu::m_createdParticles.clear();
             FableMenu::m_attachedCameraParticles.clear();
         }
+        else if(FableMenu::ms_bDisableCreateParticle)
+            FableMenu::ms_bDisableCreateParticle = false;
     }
 }
 

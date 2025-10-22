@@ -120,6 +120,16 @@ CTCWeapon* CThing::GetWeapon()
     return *(CTCWeapon**)(v5 + 4);
 }
 
+
+CTCHeroReceiveItems* CThing::GetHeroReceiveItems()
+{
+    int v29 = 203;
+    int v5 = CallMethodAndReturn<int, 0x40F020, int, int*>((int)((int)this + 68), &v29);
+    if (v5 == *(int*)(this + 72) || *(int*)v5 > 203)
+        v5 = *(int*)(this + 72);
+    return *(CTCHeroReceiveItems**)(v5 + 4);
+}
+
 CTCObjectAugmentations* CThing::GetObjectAugmentations()
 {
     int v29 = 191;
@@ -185,6 +195,11 @@ void CThing::LockAllDoors(bool lock, bool avoid_hero)
 void CThing::Kill(bool perform)
 {
     CallMethod<0x4C9B80, CThing*, bool>(this, perform);
+}
+
+void CThing::SetInLimbo(bool on)
+{
+    CallMethod<0x4C8CF0, CThing*, int>(this, on);
 }
 
 bool CThing::SetCurrentAction(CTCBase* action)

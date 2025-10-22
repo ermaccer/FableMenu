@@ -166,6 +166,7 @@
     <ClInclude Include="eNotifManager.h" />
     <ClInclude Include="eSettingsManager.h" />
     <ClInclude Include="fable\BulletTime.h" />
+    <ClInclude Include="fable\CreatureActions\CCreatureAction_AddRealObjectToInventory.h" />
     <ClInclude Include="fable\CreatureActions\CreatureAction_DropWeapon.h" />
     <ClInclude Include="fable\GameDefinitionManager.h" />
     <ClInclude Include="fable\Creature.h" />
@@ -175,6 +176,7 @@
     <ClInclude Include="fable\GameInputProcess.h" />
     <ClInclude Include="fable\ProgressDisplay.h" />
     <ClInclude Include="fable\ThingCreature\Door.h" />
+    <ClInclude Include="fable\ThingCreature\HeroReceiveItems.h" />
     <ClInclude Include="fable\ThingCreature\InventoryAbilities.h" />
     <ClInclude Include="fable\ThingCreature\InventoryItem.h" />
     <ClInclude Include="fable\ThingCreature\Light.h" />
@@ -258,6 +260,7 @@
     <ClCompile Include="eDirectX9Hook.cpp" />
     <ClCompile Include="eNotifManager.cpp" />
     <ClCompile Include="eSettingsManager.cpp" />
+    <ClCompile Include="fable\CreatureActions\CCreatureAction_AddRealObjectToInventory.cpp" />
     <ClCompile Include="fable\CreatureActions\CreatureAction_DropWeapon.cpp" />
     <ClCompile Include="fable\GameDefinitionManager.cpp" />
     <ClCompile Include="fable\Creature.cpp" />
@@ -267,6 +270,7 @@
     <ClCompile Include="fable\GameInputProcess.cpp" />
     <ClCompile Include="fable\ProgressDisplay.cpp" />
     <ClCompile Include="fable\ThingCreature\Door.cpp" />
+    <ClCompile Include="fable\ThingCreature\HeroReceiveItems.cpp" />
     <ClCompile Include="fable\ThingCreature\InventoryAbilities.cpp" />
     <ClCompile Include="fable\ThingCreature\InventoryItem.cpp" />
     <ClCompile Include="fable\ThingCreature\Light.cpp" />

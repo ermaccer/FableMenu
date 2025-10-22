@@ -34,11 +34,13 @@
 #include "ThingCreature/InventoryAbilities.h"
 #include "ThingCreature/Weapon.h"
 #include "ThingCreature/ObjectAugmentations.h"
+#include "ThingCreature/HeroReceiveItems.h"
 
 #include "CreatureActions/CreatureAction_PickUpGenericBox.h"
 #include "CreatureActions/CreatureAction_PickUpJugToFill.h"
 #include "CreatureActions/ActionPlayAnimation.h"
 #include "CreatureActions/CreatureAction_DropWeapon.h"
+#include "CreatureActions/CCreatureAction_AddRealObjectToInventory.h"
 
 enum eMovementTypes {
 	ST_SLOW_WALK,
@@ -222,10 +224,12 @@ public:
     CTCLight* GetLight();
     CTCInventoryAbilities* GetInventoryAbilities();
     CTCObjectAugmentations* GetObjectAugmentations();
+    CTCHeroReceiveItems* GetHeroReceiveItems();
     CTCWeapon* GetWeapon();
 
     void LockAllDoors(bool lock, bool avoid_hero);
     void Kill(bool perform);
+    void SetInLimbo(bool on);
     bool IsChild();
     void SetNewBrain(int brain_def);
     bool HasTC(int interface_type);
