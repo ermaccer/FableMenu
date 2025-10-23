@@ -35,3 +35,8 @@ CWideString* CTCQuestCard::GetQuestName(CWideString* result)
 {
 	return CallMethodAndReturn<CWideString*, 0x702310, CTCQuestCard*, CWideString*>(this, result);
 }
+
+CCharString* CTCQuestCard::GetTeleporterRegionName(CCharString* result)
+{
+	return CallMethodAndReturn<CCharString*, 0x7021F0, CTCQuestCard*, CCharString*>(this, result);
+}

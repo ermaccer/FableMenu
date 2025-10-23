@@ -31,11 +31,13 @@ bool* NGlobalConsole::EnemyGodMode = (bool*)0x13B86C8;
 
 bool* NGlobalConsole::ForcePrimitiveFadeDistance = (bool*)0x13B86CA;
 
-float* NGlobalConsole::PrimitiveFadeDistance = (float*)0x1375710;
+int* NGlobalConsole::PrimitiveFadeDistance = (int*)0x1375710;
 
 bool* NGlobalConsole::GCombatStressTestDebug = (bool*)0x13B86D5;
 
 float* NGlobalConsole::ConsoleOverrideMultiplier = (float*)0x13BAF18;
+
+bool* NGlobalConsole::GEnableRegionLockingSaveSystem = (bool*)0x1375741;
 
 void NGlobalConsole::ConsoleTeleportToHSP(char* hsp)
 {

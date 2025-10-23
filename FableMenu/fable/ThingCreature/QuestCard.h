@@ -12,4 +12,5 @@ public:
 
 	bool IsActivable();
 	CWideString* GetQuestName(CWideString* result);
+	CCharString* GetTeleporterRegionName(CCharString* result);
 };

@@ -23,9 +23,10 @@ struct NGlobalConsole
 	static bool* HeroGodMode; 
 	static bool* EnemyGodMode;
 	static bool* ForcePrimitiveFadeDistance;
-	static float* PrimitiveFadeDistance;
+	static int* PrimitiveFadeDistance;
 	static bool* GCombatStressTestDebug;
 	static float* ConsoleOverrideMultiplier;
+	static bool* GEnableRegionLockingSaveSystem;
 
 	static void ConsoleTeleportToHSP(char* hsp);
 	static void AutoSave();
