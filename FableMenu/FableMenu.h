@@ -104,5 +104,5 @@ bool InGame();
 
 float GetDeltaTime();
 bool IsWindowFocused();
-char* GetLocalizedString(wchar_t* name);
+char* GetUTF8String(wchar_t* name);
 void CopyToClipboard(char* name);

@@ -6054,7 +6054,7 @@ void FableMenu::DrawHeroTab()
                     {
                         CTCInventoryAbilities* abilities = (CTCInventoryAbilities*)t->GetTC(TCI_HERO_ABILITIES);
 
-                        if(abilities)
+                        if (abilities)
                             abilities->ForceAllAbilitesToMaxLevel();
                     }
                     if (ImGui::Button("Learn All Expressions", { -FLT_MIN, 0 }))
@@ -6100,7 +6100,7 @@ void FableMenu::DrawHeroTab()
             if (ImGui::CollapsingHeader("Weapon"))
             {
                 CThing* thingPrimarySlot = carrying->GetThingInPrimarySlot();
-                
+
                 if (thingPrimarySlot && thingPrimarySlot->HasTC(TCI_WEAPON))
                 {
                     ImGui::SeparatorText("Augmentations");
@@ -6122,28 +6122,47 @@ void FableMenu::DrawHeroTab()
                     ImGui::Text("Damage Multiplier: %f", augObject->GetDamageMultiplier());
                     ImGui::Text("Expirience Multiplier: %f", augObject->GetExperienceMultiplier());
 
-                    ImGui::BeginChild("Augmention Slots", { 0, (-ImGui::GetFrameHeightWithSpacing() + 60) * numberOfSlots }, true);
-                    for (int i = 0; i < numberOfSlots; i++)
+                    float childHeight = 0;
+
+                    if (numberOfSlots > 0)
                     {
-                        CWideString name;
-                        augObject->GetAugmentationNameInSlot(&name, i);
+                        childHeight = (ImGui::GetFrameHeightWithSpacing() * numberOfSlots) + 5;
+                    }
+                    else
+                    {
+                        childHeight = ImGui::GetTextLineHeightWithSpacing() + ImGui::GetStyle().WindowPadding.y * 2;
+                    }
 
-                        ImGui::LabelText("", "%s", GetLocalizedString(name.GetWideStringData()));
+                    ImGui::BeginChild("Augmention Slots", { 0, childHeight }, true);
 
-                        ImGui::SameLine();
-                        ImGui::PushID(i);
-                        if (ImGui::Button("Set"))
+                    if (numberOfSlots == 0)
+                    {
+                        ImGui::LabelText("", "No slots available");
+                    }
+                    else
+                    {
+                        for (int i = 0; i < numberOfSlots; i++)
                         {
-                            CCharString augDefName((char*)augmentationDefs[selectedAug]);
-                            int augIndex = CGameDefinitionManager::GetDefinitionManager()->GetDefGlobalIndexFromName(&augDefName);
-                            augObject->AttachAugmentationToSlot(augIndex, i);
+                            CWideString name;
+                            augObject->GetAugmentationNameInSlot(&name, i);
+
+                            ImGui::LabelText("", "%s", GetUTF8String(name.GetWideStringData()));
+
+                            ImGui::SameLine();
+                            ImGui::PushID(i);
+                            if (ImGui::Button("Set"))
+                            {
+                                CCharString augDefName((char*)augmentationDefs[selectedAug]);
+                                int augIndex = CGameDefinitionManager::GetDefinitionManager()->GetDefGlobalIndexFromName(&augDefName);
+                                augObject->AttachAugmentationToSlot(augIndex, i);
+                            }
+                            ImGui::SameLine();
+                            if (ImGui::Button("Clear"))
+                            {
+                                augObject->RemoveAugmentationFromSlot(i);
+                            }
+                            ImGui::PopID();
                         }
-                        ImGui::SameLine();
-                        if (ImGui::Button("Clear"))
-                        {
-                            augObject->RemoveAugmentationFromSlot(i);
-                        }
-                        ImGui::PopID();
                     }
                     ImGui::EndChild();
                     ImGui::LabelText("", "Augmentation Name");
@@ -6424,6 +6443,7 @@ void FableMenu::DrawCreaturesTab()
     static int creatureId;
     static bool advanced;
     static bool playerFollower;
+    ImGui::SeparatorText("Create Entity");
     ImGui::TextWrapped("Spawn Position (X | Y | Z)");
     ImGui::PushItemWidth(-FLT_MIN);
     ImGui::InputFloat3("", &creaturePosition.X);
@@ -6450,7 +6470,7 @@ void FableMenu::DrawCreaturesTab()
 
     ImGui::InputInt("Creature ID", &creatureId);
 
-    if (creatureId <= 0)
+    if (!creatureId)
         ImGui::TextColored({ 1,0,0,1 }, "Error: Invalid creature ID");
     else
     {
@@ -6729,6 +6749,7 @@ void FableMenu::DrawObjectsTab()
     static int objectId = 0;
     static char objectName[512] = { };
     CPlayer* player = CMainGameComponent::Get()->GetPlayerManager()->GetMainPlayer();
+    ImGui::SeparatorText("Create Object");
     ImGui::TextWrapped("Spawn Position (X | Y | Z)");
     ImGui::PushItemWidth(-FLT_MIN);
     ImGui::InputFloat3("", &position.X);
@@ -7678,7 +7699,7 @@ void FableMenu::DrawWorldTab()
                 if (ms_bChangeTime)
                 {
                     float& curTime = *(float*)((int)time + 8);
-                    ImGui::SliderFloat("Time#set", &curTime, 0.0, 1.0f);
+                    ImGui::SliderFloat("Time##set", &curTime, 0.0, 1.0f);
                 }
             }
         }
@@ -7686,27 +7707,37 @@ void FableMenu::DrawWorldTab()
     if (ImGui::CollapsingHeader("Region"))
     {
         static int hspID = 0;
+        static char hspName[256] = {};
+        static bool manualInput = false;
         if (m_bForceLoadRegion)
         {
             ImGui::BeginDisabled();
         }
-        ImGui::Text("Hero Spawn Points");
-        if (ImGui::BeginCombo("##hsp", szHolySites[hspID]))
+        ImGui::Text("Hero Spawn Point");
+        if(!manualInput)
         {
-            for (int n = 0; n < IM_ARRAYSIZE(szHolySites); n++)
+            if (ImGui::BeginCombo("##hsplist", szHolySites[hspID]))
             {
-                bool is_selected = (hspID == n);
-                if (ImGui::Selectable(szHolySites[n], is_selected))
-                    hspID = n;
-                if (is_selected)
-                    ImGui::SetItemDefaultFocus();
-            }
+                for (int n = 0; n < IM_ARRAYSIZE(szHolySites); n++)
+                {
+                    bool is_selected = (hspID == n);
+                    if (ImGui::Selectable(szHolySites[n], is_selected))
+                        hspID = n;
+                    if (is_selected)
+                        ImGui::SetItemDefaultFocus();
+                }
 
-            ImGui::EndCombo();
+                ImGui::EndCombo();
+            }
         }
+        else
+        {
+            ImGui::InputText("##hspname", hspName, sizeof(hspName));
+        }
+        ImGui::Checkbox("Manual Input", &manualInput);
         if (ImGui::Button("Teleport", { -FLT_MIN, 0 }))
         {
-            CCharString hsp_name((char*)szHolySites[hspID]);
+            CCharString hsp_name(manualInput ? hspName : (char*)szHolySites[hspID]);
             wrld->TeleportHeroToHSP(&hsp_name);
         }
         if (m_bForceLoadRegion)
@@ -7939,7 +7970,7 @@ void FableMenu::DrawQuestTab()
                     {
                         CWideString name;
                         card->GetQuestName(&name);
-                        localizedName = GetLocalizedString(name.GetWideStringData());
+                        localizedName = GetUTF8String(name.GetWideStringData());
                     }
 
                     if (coreQuest || optionalQuests)
@@ -8021,10 +8052,12 @@ void FableMenu::DrawMiscTab()
             ImGui::Checkbox("Slowmotion", &time->m_bActive);
         }
     }
+
     ImGui::Checkbox("Update AI", NGlobalConsole::EnableUpdateAI);
     ImGui::Checkbox("Update Objects", NGlobalConsole::EnableUpdateObjects);
+
     static bool creatureDecay = 1;
-    static bool enableShortMelee;
+    static bool enableShortMelee = 0;
     if (ImGui::Checkbox("Dead Creature Decay", &creatureDecay))
     {
         Patch<char>(0x8362EA + 1, creatureDecay + 0x84);
@@ -8039,15 +8072,13 @@ void FableMenu::DrawMiscTab()
     ImGui::Checkbox("Enable Hero Sprint", NGlobalConsole::EnableHeroSprint);
     if (ImGui::Checkbox("Enable Hero Short Melee", &enableShortMelee))
     {
-        const char* meleeType = nullptr;
+        const char* meleeType = "STRIKE_MEDIUM_FRONT";
+
         if (enableShortMelee)
         {
             meleeType = "STRIKE_SHORT_FRONT";
         }
-        else
-        {
-            meleeType = "STRIKE_MEDIUM_FRONT";
-        }
+
         for (int i = 0; i <= strlen(meleeType); i++)
         {
             Patch<char>(0x12778B0 + i, meleeType[i]);
@@ -8406,6 +8437,11 @@ void HookWorldUpdate()
         {
             FableMenu::m_attachedCameraParticles.clear();
             FableMenu::m_createdParticles.clear();
+            
+            CBulletTimeManager* time = wrld->GetBulletTime();
+
+            if(time->m_bActive)
+                time->m_bActive = 0;
         }
         CPlayer* plr = CMainGameComponent::Get()->GetPlayerManager()->GetMainPlayer();
         if (plr)
@@ -8520,7 +8556,7 @@ bool IsWindowFocused()
     return TheMenu->m_bIsFocused;
 }
 
-char* GetLocalizedString(wchar_t* name)
+char* GetUTF8String(wchar_t* name)
 {
     char utf8Buff[256] = {};
     int size = WideCharToMultiByte(CP_UTF8, 0, name, -1, NULL, 0, NULL, NULL);
