@@ -7185,11 +7185,6 @@ void FableMenu::DrawObjectData(const char* windowTitle, CThing* object, bool* is
             {
                 object->SetInLimbo(1);
             }
-            if (buyableHouse)
-            {
-                ImGui::SameLine();
-                ShowWarnMarker("There is a risk of game crash after using this feature on buildings.");
-            }
             if (object->HasTC(TCI_STOCK_ITEM) || object->HasTC(TCI_HERO_RECEIVE_ITEMS))
             {
                 if (ImGui::Button("Add To Inventory"))
@@ -7207,7 +7202,8 @@ void FableMenu::DrawObjectData(const char* windowTitle, CThing* object, bool* is
                 objectPhysics->SetPosition(playerCharacter->GetPosition());
                 objectPhysics->EnablePhysics(0);
             }
-
+            ImGui::SameLine();
+            ShowWarnMarker("There is a risk of game crash after using this feature on buildings.");
             if (buyableHouse)
             {
                 ImGui::SeparatorText("Houses Features");
