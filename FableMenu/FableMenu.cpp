@@ -6989,7 +6989,6 @@ void FableMenu::DrawAppearanceCollapse(CThing* thing)
     { 
         ImGui::SeparatorText("Light");
         static float lightFlicker = 1.0f;
-        static bool lightEnabled = false;
         static float innerRadius = 1.0f;
         static float outerRadius = 10.0f;
         static ImVec4 lightColor = { 1.0, 1.0, 1.0, 1.0 };
@@ -7001,13 +7000,13 @@ void FableMenu::DrawAppearanceCollapse(CThing* thing)
 
         CRGBAFloat lcolor = { lightColor.x, lightColor.y, lightColor.z, lightColor.w };
 
-        if (ImGui::Checkbox("Enable Light", &lightEnabled))
+        if (ImGui::Checkbox("Enable Light", &light->m_bActive))
         {
             light->SetOverridden(1);
             light->SetColour(&lcolor.GetUINTColor());
             light->SetInnerRadius(innerRadius);
             light->SetOuterRadius(outerRadius);
-            light->SetActive(lightEnabled);
+            light->SetActive(light->m_bActive);
         }
     }
 }
