@@ -44,7 +44,6 @@ void ImGuiInputWatcher()
 }
 
 
-
 void Init()
 {
 	SettingsMgr->Init();
@@ -57,6 +56,7 @@ void Init()
 
 	Notifications->Init();
 	TheMenu->Init();
+	InjectHook(0x4162E3, HookMainGameComponent);
 	InjectHook(0x4A5DFB, HookWorldUpdate);
 	InjectHook(0x69B7F4, &CGameCameraManager::Update);
 	InjectHook(0x69EAEE, HUD::Display);

@@ -1,7 +1,7 @@
 #include "eMouse.h"
 #include <Windows.h>
 #include <iostream>
-#include "../../eDirectX9Hook.h"
+#include "../eDirectX9Hook.h"
 #include "../fablemenu.h"
 #include "../eSettingsManager.h"
 

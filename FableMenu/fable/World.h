@@ -3,14 +3,20 @@
 #include "BulletTime.h"
 #include "Script.h"
 #include "ScriptInterface.h"
+#include "ThingSearchTools.h"
 
 class CWorld {
 public:
-	char pad[221];
-	bool m_bMinimap;
+	bool isLoadRegion();
+	bool isLoadSave();
+	bool* GetMinimap();
 	void SetMinimap(bool status);
+	void TeleportHeroToHSP(CCharString* hsp_name);
+	void AutoSave(int ignore_being_between_start_and_finish_screens);
 	CPlayer* GetPlayer(int id);
+
 	CBulletTimeManager* GetBulletTime();
+	CThingSearchTools* GetThingSearchTools();
 	CScriptInfoManager* GetScriptInfoManager();
 	CGameScriptInterface* GetGameScriptInterface();
 

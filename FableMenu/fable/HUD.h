@@ -4,7 +4,6 @@ namespace HUD {
 	bool __fastcall Display(int ptr);
 }
 
-
 class CHUD {
 public:
 	char pad[0x290];
