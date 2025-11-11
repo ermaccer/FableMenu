@@ -1,40 +1,41 @@
 #pragma once
 #include "FCore.h"
 
-#include "ThingCreature/Base.h"
-#include "ThingCreature/HeroStats.h"
-#include "ThingCreature/ModeManager.h"
-#include "ThingCreature/PhysicsBase.h"
-#include "ThingCreature/ParticleEmitter.h"
-#include "ThingCreature/Hero.h"
-#include "ThingCreature/HeroMorph.h"
-#include "ThingCreature/Combat.h"
-#include "ThingCreature/Wife.h"
-#include "ThingCreature/Followed.h"
-#include "ThingCreature/RegionFollower.h"
-#include "ThingCreature/CreatureAI.h"
-#include "ThingCreature/AIScratchPad.h"
-#include "ThingCreature/HeroOpinionLog.h"
-#include "ThingCreature/Village.h"
-#include "ThingCreature/VillageMember.h"
-#include "ThingCreature/ActionUse.h"
-#include "ThingCreature/GraphicAppearance.h"
-#include "ThingCreature/InventoryClothing.h"
-#include "ThingCreature/Carrying.h"
-#include "ThingCreature/Enemy.h"
-#include "ThingCreature/QuestCard.h"
-#include "ThingCreature/ScriptedControl.h"
-#include "ThingCreature/Haste.h"
-#include "ThingCreature/ThingOwner.h"
-#include "ThingCreature/OwnedEntity.h"
-#include "ThingCreature/BuyableHouse.h"
-#include "ThingCreature/Door.h"
-#include "ThingCreature/InventoryItem.h"
-#include "ThingCreature/Light.h"
-#include "ThingCreature/InventoryAbilities.h"
-#include "ThingCreature/Weapon.h"
-#include "ThingCreature/ObjectAugmentations.h"
-#include "ThingCreature/HeroReceiveItems.h"
+#include "ThingComponents/Base.h"
+#include "ThingComponents/HeroStats.h"
+#include "ThingComponents/ModeManager.h"
+#include "ThingComponents/PhysicsBase.h"
+#include "ThingComponents/ParticleEmitter.h"
+#include "ThingComponents/Hero.h"
+#include "ThingComponents/HeroMorph.h"
+#include "ThingComponents/Combat.h"
+#include "ThingComponents/Wife.h"
+#include "ThingComponents/Followed.h"
+#include "ThingComponents/RegionFollower.h"
+#include "ThingComponents/CreatureAI.h"
+#include "ThingComponents/AIScratchPad.h"
+#include "ThingComponents/HeroOpinionLog.h"
+#include "ThingComponents/Village.h"
+#include "ThingComponents/VillageMember.h"
+#include "ThingComponents/ActionUse.h"
+#include "ThingComponents/GraphicAppearance.h"
+#include "ThingComponents/InventoryClothing.h"
+#include "ThingComponents/Carrying.h"
+#include "ThingComponents/Enemy.h"
+#include "ThingComponents/QuestCard.h"
+#include "ThingComponents/ScriptedControl.h"
+#include "ThingComponents/Haste.h"
+#include "ThingComponents/ThingOwner.h"
+#include "ThingComponents/OwnedEntity.h"
+#include "ThingComponents/BuyableHouse.h"
+#include "ThingComponents/Door.h"
+#include "ThingComponents/InventoryItem.h"
+#include "ThingComponents/Light.h"
+#include "ThingComponents/InventoryAbilities.h"
+#include "ThingComponents/InventoryBase.h"
+#include "ThingComponents/Weapon.h"
+#include "ThingComponents/ObjectAugmentations.h"
+#include "ThingComponents/HeroReceiveItems.h"
 
 #include "CreatureActions/CreatureAction_PickUpGenericBox.h"
 #include "CreatureActions/CreatureAction_PickUpJugToFill.h"
@@ -182,8 +183,8 @@ public:
     static CThingManager* GetCurrentThingManager();
     const CPlayer* PeekPlayer();
 	CTCBase* GetTC(ETCInterfaceType id);
-	CVector* GetPosition();
     CTCBase* AddTC(CCharString* name, int voverride, int pparams_base);
+	CVector* GetPosition();
     static int GetThingID(char* name);
     ECreatureType GetCreatureType();
     static CWorldMap* GetWorldMap();
@@ -194,6 +195,7 @@ public:
 
     void LockAllDoors(bool lock, bool avoid_hero);
     void Kill(bool perform);
+    bool isThingAlive();
     void SetInLimbo(bool on);
     bool IsChild();
     void SetNewBrain(int brain_def);
@@ -203,6 +205,8 @@ public:
     void ClearQueuedActions();
     void FinishCurrentAction();
     bool SetCurrentAction(CTCBase* action);
+    bool IsFreeToPerformAction(CTCBase* action);
+    bool HasPrecedingAction();
     void LearnAbility(EHeroAbility ability, bool learn, int quick_access_slot, bool silent);
     void LearnExpression(CCharString* expression_name, int quick_access_slot, bool silent);
 };

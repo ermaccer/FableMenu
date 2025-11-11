@@ -1,5 +1,5 @@
 #include "../FCore.h"
-#include "../ThingCreature/ScriptedControl.h"
+#include "../ThingComponents/ScriptedControl.h"
 
 class CThing;
 

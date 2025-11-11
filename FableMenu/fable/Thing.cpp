@@ -80,6 +80,11 @@ void CThing::Kill(bool perform)
     CallMethod<0x4C9B80, CThing*, bool>(this, perform);
 }
 
+bool CThing::isThingAlive()
+{
+    return CallMethodAndReturn<bool, 0x4CC340, CThing*>(this);
+}
+
 void CThing::SetInLimbo(bool on)
 {
     CallMethod<0x4C8CF0, CThing*, int>(this, on);
@@ -88,6 +93,16 @@ void CThing::SetInLimbo(bool on)
 bool CThing::SetCurrentAction(CTCBase* action)
 {
     return CallMethodAndReturn<bool, 0x6644F0, CThing*, CTCBase*>(this, action);
+}
+
+bool CThing::IsFreeToPerformAction(CTCBase* action)
+{
+    return CallMethodAndReturn<bool, 0x662210, CThing*,CTCBase*>(this, action);
+}
+
+bool CThing::HasPrecedingAction()
+{
+    return CallMethodAndReturn<bool, 0x692EC0, CThing*>(this);
 }
 
 bool CThing::IsChild()

@@ -31,9 +31,9 @@ void CTCDParticleEmitter::KillParticle()
 	CallMethod<0xAEE8C0, CTCDParticleEmitter*>(this);
 }
 
-void CTCDParticleEmitter::AttachToThing(CThing* thing, CCharString attach_flags, CCharString* pos_name, int pos_index, float height_offset)
+void CTCDParticleEmitter::AttachToThing(CThing* thing, int attach_flags, CCharString* pos_name, int* pos_index, float height_offset)
 {
-	CallMethod<0x535290, CTCDParticleEmitter*, CThing*, CCharString, CCharString*, int, float>(this, thing, attach_flags, pos_name, pos_index, height_offset);
+	CallMethod<0x6E0BE0, CTCDParticleEmitter*, CThing*, int, CCharString*, int*, float>(this, thing, attach_flags, pos_name, pos_index, height_offset);
 }
 
 void CTCDParticleEmitter::SetAlwaysUpdate(bool always_update)
