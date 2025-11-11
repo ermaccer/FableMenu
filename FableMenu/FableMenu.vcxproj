@@ -92,10 +92,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="core.h" />
-    <ClInclude Include="eDirectInput8Hook.h" />
-    <ClInclude Include="eDirectX9Hook.h" />
-    <ClInclude Include="eNotifManager.h" />
-    <ClInclude Include="eSettingsManager.h" />
     <ClInclude Include="fable\BulletTime.h" />
     <ClInclude Include="fable\CreatureActions\CCreatureAction_AddRealObjectToInventory.h" />
     <ClInclude Include="fable\CreatureActions\CreatureAction_DropWeapon.h" />
@@ -158,19 +154,22 @@
     <ClInclude Include="fable\ThingCreature\Wife.h" />
     <ClInclude Include="fable\UserProfileManager.h" />
     <ClInclude Include="fable\World.h" />
-    <ClInclude Include="font.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="gui\dx9hook.h" />
+    <ClInclude Include="gui\font.h" />
+    <ClInclude Include="gui\gui_impl_dx9.h" />
+    <ClInclude Include="gui\imgui\imconfig.h" />
+    <ClInclude Include="gui\imgui\imgui.h" />
+    <ClInclude Include="gui\imgui\imgui_impl_dx9.h" />
+    <ClInclude Include="gui\imgui\imgui_impl_win32.h" />
+    <ClInclude Include="gui\imgui\imgui_internal.h" />
+    <ClInclude Include="gui\imgui\imstb_rectpack.h" />
+    <ClInclude Include="gui\imgui\imstb_textedit.h" />
+    <ClInclude Include="gui\imgui\imstb_truetype.h" />
+    <ClInclude Include="gui\log.h" />
+    <ClInclude Include="gui\notifications.h" />
     <ClInclude Include="helper\eKeyboardMan.h" />
     <ClInclude Include="helper\eMouse.h" />
-    <ClInclude Include="imgui\imconfig.h" />
-    <ClInclude Include="imgui\imgui.h" />
-    <ClInclude Include="imgui\imgui_impl_dx9.h" />
-    <ClInclude Include="imgui\imgui_impl_win32.h" />
-    <ClInclude Include="imgui\imgui_internal.h" />
-    <ClInclude Include="imgui\imstb_rectpack.h" />
-    <ClInclude Include="imgui\imstb_textedit.h" />
-    <ClInclude Include="imgui\imstb_truetype.h" />
-    <ClInclude Include="IniReader.h" />
     <ClInclude Include="minhook\src\buffer.h" />
     <ClInclude Include="minhook\src\hde\hde32.h" />
     <ClInclude Include="minhook\src\hde\hde64.h" />
@@ -180,17 +179,15 @@
     <ClInclude Include="minhook\src\trampoline.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Fable.h" />
-    <ClInclude Include="FableMenu.h" />
     <ClInclude Include="plugin\FreeCamera.h" />
+    <ClInclude Include="plugin\Menu.h" />
+    <ClInclude Include="plugin\Settings.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="utils\IniReader.h" />
     <ClInclude Include="utils\MemoryMgr.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="eDirectInput8Hook.cpp" />
-    <ClCompile Include="eDirectX9Hook.cpp" />
-    <ClCompile Include="eNotifManager.cpp" />
-    <ClCompile Include="eSettingsManager.cpp" />
     <ClCompile Include="fable\CreatureActions\CCreatureAction_AddRealObjectToInventory.cpp" />
     <ClCompile Include="fable\CreatureActions\CreatureAction_DropWeapon.cpp" />
     <ClCompile Include="fable\GameDefinitionManager.cpp" />
@@ -251,16 +248,19 @@
     <ClCompile Include="fable\ThingCreature\Wife.cpp" />
     <ClCompile Include="fable\UserProfileManager.cpp" />
     <ClCompile Include="fable\World.cpp" />
+    <ClCompile Include="gui\dx9hook.cpp" />
+    <ClCompile Include="gui\gui_impl_dx9.cpp" />
+    <ClCompile Include="gui\imgui\imgui.cpp" />
+    <ClCompile Include="gui\imgui\imgui_demo.cpp" />
+    <ClCompile Include="gui\imgui\imgui_draw.cpp" />
+    <ClCompile Include="gui\imgui\imgui_impl_dx9.cpp" />
+    <ClCompile Include="gui\imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="gui\imgui\imgui_tables.cpp" />
+    <ClCompile Include="gui\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="gui\log.cpp" />
+    <ClCompile Include="gui\notifications.cpp" />
     <ClCompile Include="helper\eKeyboardMan.cpp" />
     <ClCompile Include="helper\eMouse.cpp" />
-    <ClCompile Include="imgui\imgui.cpp" />
-    <ClCompile Include="imgui\imgui_demo.cpp" />
-    <ClCompile Include="imgui\imgui_draw.cpp" />
-    <ClCompile Include="imgui\imgui_impl_dx9.cpp" />
-    <ClCompile Include="imgui\imgui_impl_win32.cpp" />
-    <ClCompile Include="imgui\imgui_tables.cpp" />
-    <ClCompile Include="imgui\imgui_widgets.cpp" />
-    <ClCompile Include="IniReader.cpp" />
     <ClCompile Include="minhook\src\buffer.c" />
     <ClCompile Include="minhook\src\hde\hde32.c" />
     <ClCompile Include="minhook\src\hde\hde64.c" />
@@ -270,8 +270,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="FableMenu.cpp" />
+    <ClCompile Include="plugin\Database.cpp" />
     <ClCompile Include="plugin\FreeCamera.cpp" />
+    <ClCompile Include="plugin\Menu.cpp" />
+    <ClCompile Include="plugin\Settings.cpp" />
+    <ClCompile Include="utils\IniReader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FableMenu.rc" />

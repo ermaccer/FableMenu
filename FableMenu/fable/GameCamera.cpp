@@ -1,5 +1,5 @@
 #include "GameCamera.h"
-#include "..\FableMenu.h"
+#include "..\plugin\Menu.h"
 #include "..\core.h"
 
 CCamera* TheCamera = nullptr;

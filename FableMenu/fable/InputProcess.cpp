@@ -1,5 +1,5 @@
 #include "InputProcess.h"
-#include "..\FableMenu.h"
+#include "..\plugin\Menu.h"
 DirectInputState* DI_keyState = nullptr;
 static CInputProcessControlFreeCamera freeCam;
 

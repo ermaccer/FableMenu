@@ -1,8 +1,6 @@
 #pragma once
 #include <Windows.h>
 
-// as usual, pluginmh/mugenhook
-
 struct eMouseSettings {
 	float sens;
 	bool invert_y;
@@ -12,7 +10,7 @@ struct eMouseSettings {
 
 class eSettingsManager {
 public:
-	void Init();
+	eSettingsManager();
 
 	int iMenuOpenKey = VK_OEM_3;
 	int iOverwriteConstantFPS = 15;

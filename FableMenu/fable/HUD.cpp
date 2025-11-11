@@ -1,5 +1,5 @@
 #include "HUD.h"
-#include "..\FableMenu.h"
+#include "..\plugin\Menu.h"
 
 bool __fastcall HUD::Display(int ptr)
 {

@@ -1,9 +1,10 @@
 #include "eMouse.h"
 #include <Windows.h>
 #include <iostream>
-#include "../eDirectX9Hook.h"
-#include "../fablemenu.h"
-#include "../eSettingsManager.h"
+#include "../gui/gui_impl_dx9.h"
+#include "../plugin/Menu.h"
+#include "../plugin/Settings.h"
+
 
 eMouse eMouse::mouse;
 
@@ -56,12 +57,13 @@ int eMouse::GetDeltaY()
 {
 	return SettingsMgr->mouse.invert_y ? mouse.deltaY : -mouse.deltaY;
 }
+
 void eMouse::LockMouse()
 {
-	if (eDirectX9Hook::ms_hWindow)
+	if (GUIImplementationDX9::ms_hWindow)
 	{
 		RECT rect;
-		GetWindowRect(eDirectX9Hook::ms_hWindow, &rect);
+		GetWindowRect(GUIImplementationDX9::ms_hWindow, &rect);
 
 		SetCursorPos(rect.right / 2, rect.bottom / 2);
 	}

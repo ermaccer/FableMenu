@@ -1,10 +1,11 @@
 #include "FreeCamera.h"
 #include "..\Fable.h"
 #include "..\helper\eMouse.h"
+#include "..\gui\gui_impl_dx9.h"
 #include <math.h>
 #include <Windows.h>
-#include "..\eSettingsManager.h"
-#include "..\FableMenu.h"
+#include "Settings.h"
+#include "Menu.h"
 
 static float round_angle(float angle)
 {
@@ -62,18 +63,20 @@ void FreeCamera::UpdateMovement()
 	CVector strafe = matrix.right;
 	CVector up = matrix.up;
 
+	float delta = GUIImplementationDX9::GetDeltaTime();
+
 	if (GetAsyncKeyState(SettingsMgr->iFreeCameraKeyForward))
-		TheMenu->camPos += fwd * TheMenu->m_fFreeCamSpeed * GetDeltaTime() * 1;
+		TheMenu->camPos += fwd * TheMenu->m_fFreeCamSpeed * delta * 1;
 	if (GetAsyncKeyState(SettingsMgr->iFreeCameraKeyBack))
-		TheMenu->camPos += fwd * TheMenu->m_fFreeCamSpeed * GetDeltaTime() * -1;
+		TheMenu->camPos += fwd * TheMenu->m_fFreeCamSpeed * delta * -1;
 
 	if (GetAsyncKeyState(SettingsMgr->iFreeCameraKeyLeft))
-		TheMenu->camPos += strafe * TheMenu->m_fFreeCamSpeed * GetDeltaTime() * -1;
+		TheMenu->camPos += strafe * TheMenu->m_fFreeCamSpeed * delta * -1;
 	if (GetAsyncKeyState(SettingsMgr->iFreeCameraKeyRight))
-		TheMenu->camPos += strafe * TheMenu->m_fFreeCamSpeed * GetDeltaTime() * 1;
+		TheMenu->camPos += strafe * TheMenu->m_fFreeCamSpeed * delta * 1;
 
 	if (GetAsyncKeyState(SettingsMgr->iFreeCameraKeyUp))
-		TheMenu->camPos += up * TheMenu->m_fFreeCamSpeed * GetDeltaTime() * 1;
+		TheMenu->camPos += up * TheMenu->m_fFreeCamSpeed * delta * 1;
 	if (GetAsyncKeyState(SettingsMgr->iFreeCameraKeyDown))
-		TheMenu->camPos += up * TheMenu->m_fFreeCamSpeed * GetDeltaTime() * -1;
+		TheMenu->camPos += up * TheMenu->m_fFreeCamSpeed * delta * -1;
 }

@@ -1,9 +1,9 @@
-#include "eSettingsManager.h"
-#include "IniReader.h"
+#include "Settings.h"
+#include "../utils/IniReader.h"
 
 eSettingsManager* SettingsMgr = new eSettingsManager;
 
-void eSettingsManager::Init()
+eSettingsManager::eSettingsManager()
 {
 	CIniReader ini("");
 	CIniReader user("fablemenu_user.ini");
@@ -54,7 +54,6 @@ void eSettingsManager::Init()
 	mouse.sens = user.ReadFloat("Mouse", "Sensitivity", 2.0f);
 	mouse.invert_y = user.ReadBoolean("Mouse", "InvertY", true);
 	mouse.invert_x = user.ReadBoolean("Mouse", "InvertX", false);
-
 }
 
 void eSettingsManager::SaveSettings()

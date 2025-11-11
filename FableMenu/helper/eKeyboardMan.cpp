@@ -42,7 +42,7 @@ const char* eKeyboardMan::KeyToString(int code)
 		return utf8Buff;
 	}
 	else
-		return "Unknown/Not set";
+		return "Unknown";
 }
 
 EInputKey eKeyboardMan::GetInputFromVKKeyCode(int code)

@@ -3,7 +3,7 @@
 class CIniReader
 {
 public:
- CIniReader(char* szFileName, bool path = false); 
+ CIniReader(char* szFileName); 
  int ReadInteger(char* szSection, char* szKey, int iDefaultValue);
  float ReadFloat(char* szSection, char* szKey, float fltDefaultValue);
  bool ReadBoolean(char* szSection, char* szKey, bool bolDefaultValue);

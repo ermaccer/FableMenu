@@ -1,9 +1,10 @@
-#include "eNotifManager.h"
+#include "notifications.h"
 #include <iostream>
 #include <Windows.h>
 #include "imgui\imgui.h"
-#include "eDirectX9Hook.h"
-#include "FableMenu.h"
+#include "gui_impl_dx9.h"
+#include "dx9hook.h"
+#include "..\plugin\Settings.h"
 
 eNotificationManager* Notifications = new eNotificationManager();
 
@@ -20,9 +21,13 @@ void eNotificationManager::Update()
 
 void eNotificationManager::UpdateAlpha()
 {
-	float delta = GetDeltaTime();
+	float delta = 1.0f / 60.0f;
 
-	float alphaSpeed = 0.8f;
+	if (GUIImplementationDX9::ms_bInit)
+		delta = 1.0f / ImGui::GetIO().Framerate;
+
+
+	float alphaSpeed = 0.3f;
 
 	m_fNotifAlpha = max(m_fNotifAlpha - delta * alphaSpeed, 0.0f);
 
@@ -52,11 +57,15 @@ void eNotificationManager::SetNotificationTime(int time)
 	m_fNotifAlpha = time / 1000.0f;
 }
 
-void eNotificationManager::PushNotification(const char * format, ...)
+void eNotificationManager::PushNotification(const char* format, ...)
 {
 	va_list args;
 	va_start(args, format);
 	vsprintf(szMessageBuffer, format, args);
 	va_end(args);
 	m_bIsNotificationActive = true;
+	//if (SettingsMgr->bEnableConsoleWindow)
+	//{
+	//	printf("Notification | %s\n", szMessageBuffer);
+	//}
 }
