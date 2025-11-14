@@ -1,11 +1,12 @@
 #pragma once
-#include <list>
+#include "../FCore.h"
+
 class CThing;
 
 class CTCFollowed {
 public:
 	char pad[0x18];
-	std::list<CThing*>* aiFollowers;
+	std::list<CThing*>* m_lAiFollowers;
 	CTCFollowed* Alloc(CThing* thing);
 	void AddFollower(CThing* follower,bool is_ai_follower);
 	void RemoveFollower(CThing* follower);

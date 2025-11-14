@@ -2,7 +2,6 @@
 #include "../FCore.h"
 
 class CThing;
-class CTCBase;
 
 enum EAppearanceMeshEffectPriority
 {

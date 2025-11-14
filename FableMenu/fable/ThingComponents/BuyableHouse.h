@@ -1,6 +1,5 @@
 #pragma once
-
-class CTCHeroStats;
+#include "HeroStats.h"
 
 class CTCBuyableHouse {
 public:

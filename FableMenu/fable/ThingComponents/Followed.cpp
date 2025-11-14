@@ -1,7 +1,6 @@
 #include "../../core.h"
 #include "Followed.h"
 
-
 CTCFollowed* CTCFollowed::Alloc(CThing* thing)
 {
 	return CallMethodAndReturn<CTCFollowed*, 0x4D5245, CThing*>(thing);

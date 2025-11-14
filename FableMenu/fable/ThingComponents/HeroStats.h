@@ -1,6 +1,6 @@
 #pragma once
 #include "Base.h"
-#include <vector>
+#include "../FCore.h"
 
 enum EHeroTrainingStatus
 {

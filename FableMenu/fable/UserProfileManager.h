@@ -1,8 +1,7 @@
 #pragma once
 #include "GameInputProcess.h"
 
-class CUserProfileManager
-{
+class CUserProfileManager {
 public:
 	static CUserProfileManager* Get();
 	void SetAssignedInputKeyboard(EGameAction action, EInputKey key, bool passive);

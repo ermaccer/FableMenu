@@ -13,4 +13,8 @@ public:
 	float m_fFat;
 	float m_fUnk;
 	bool  m_bKid;
+
+	void AddTatoo(int tatoo_def_index);
+	bool HasAnyTatoos();
+	void RemoveAllTatoos();
 };

@@ -1,5 +1,5 @@
-#include "../../core.h"
 #include "Enemy.h"
+#include "../../core.h"
 
 void CTCEnemy::RemoveEnemyThing(CThing* creature)
 {

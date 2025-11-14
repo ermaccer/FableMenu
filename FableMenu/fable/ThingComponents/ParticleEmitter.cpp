@@ -50,4 +50,3 @@ CParticleEmitterDatabase* CParticleEmitterDatabase::Get()
 {
 	return CallAndReturn<CParticleEmitterDatabase*, 0xAEAAE0>();
 }
-

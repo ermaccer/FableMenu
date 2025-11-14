@@ -2,8 +2,6 @@
 
 class CEngineWeatherSettings {
 public:
-	CEngineWeatherSettings();
-
 	void SetRain(float power);
 };
 

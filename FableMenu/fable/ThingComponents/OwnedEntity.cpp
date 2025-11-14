@@ -1,7 +1,6 @@
 #include "OwnedEntity.h"
 #include "../../core.h"
 
-
 int CTCOwnedEntity::GetPOwner()
 {
 	return *(int*)((char*)this + 0xD);

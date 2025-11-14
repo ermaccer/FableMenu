@@ -1,8 +1,7 @@
 #pragma once
 #include "../FCore.h"
 
-class CTCQuestCard
-{
+class CTCQuestCard {
 public:
 	bool IsCore();
 	bool IsExclusive();

@@ -11,6 +11,11 @@ const CPlayer* CThing::PeekPlayer()
     return CallMethodAndReturn<const CPlayer*, 0x4C7A10, CThing*>(this);
 }
 
+CTCBase* CThing::AddTC(CCharString* name, int voverride, int pparams_base)
+{
+    return CallMethodAndReturn<CTCBase*, 0x4C9D60, CThing*, CCharString*, int, int>(this, name, voverride, pparams_base);
+}
+
 CTCBase* CThing::GetTC(ETCInterfaceType id)
 {
     if (!HasTC(id)) return nullptr;
@@ -20,6 +25,16 @@ CTCBase* CThing::GetTC(ETCInterfaceType id)
     if (v5 == *(int*)(this + 72) || *(int*)v5 > id)
         v5 = *(int*)(this + 72);
     return *(CTCBase**)(v5 + 4);
+}
+
+bool CThing::HasTC(ETCInterfaceType id)
+{
+    return CallMethodAndReturn<bool, 0x4118C0, CThing*, ETCInterfaceType>(this, id);
+}
+
+void CThing::RemoveTC(ETCInterfaceType id)
+{
+    CallMethod<0x4C9840, CThing*, ETCInterfaceType>(this, id);
 }
 
 CVector* CThing::GetPosition()
@@ -141,21 +156,6 @@ CDefString* CThing::GetDefName()
     return CallMethodAndReturn<CDefString*, 0x4C7CC0, CThing*, CDefString*>(this, &def);
 }
 
-CTCBase* CThing::AddTC(CCharString* name, int voverride, int pparams_base)
-{
-    return CallMethodAndReturn<CTCBase*, 0x4C9D60, CThing*, CCharString*, int, int>(this, name, voverride, pparams_base);
-}
-
-void CThing::RemoveTC(ETCInterfaceType id)
-{
-    CallMethod<0x4C9840, CThing*, ETCInterfaceType>(this, id);
-}
-
-bool CThing::HasTC(ETCInterfaceType id)
-{
-    return CallMethodAndReturn<bool, 0x4118C0, CThing*, ETCInterfaceType>(this, id);
-}
-
 void CThing::ClearQueuedActions()
 {
     CallMethod<0x663600, CThing*>(this);
@@ -176,9 +176,4 @@ int CThing::GetThingID(char* name)
         id = CallMethodAndReturn<int, 0x9AD410, int, CCharString*>(manager, &str);
     }
     return id;
-}
-
-void CTCLook::GetHeadLocation(CVector* out)
-{
-    CallMethod<0x751B30, CTCLook*, CVector*>(this, out);
 }

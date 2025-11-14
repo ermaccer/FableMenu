@@ -1,7 +1,7 @@
 #pragma once
+#include "Village.h"
 
 class CThing;
-class CTCVillage;
 
 class CTCVillageMember {
 public:

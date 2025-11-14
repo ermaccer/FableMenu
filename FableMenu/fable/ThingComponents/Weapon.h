@@ -1,7 +1,8 @@
 #pragma once
 
-class CTCWeapon
-{
+class CTCWeapon {
 public:
-
+	float GetDamage();
+	bool IsMeleeWeapon();
+	bool IsProjectileWeapon();
 };

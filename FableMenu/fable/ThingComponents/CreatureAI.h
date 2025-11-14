@@ -15,7 +15,6 @@ struct CreatureAI
 	bool unk[2];
 	int homeBuilding;
 	int workBuilding;
-
 };
 
 class CAIBrain {

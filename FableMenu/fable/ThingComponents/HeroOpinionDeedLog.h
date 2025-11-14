@@ -2,7 +2,7 @@
 
 class CThing;
 
-class CTCHeroOpinionLog {
+class CTCHeroOpinionDeedLog {
 public:
 
 };

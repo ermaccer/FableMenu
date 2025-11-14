@@ -114,10 +114,6 @@ public:
 	void	 KeyBind(int* var, char* bindName, char* name);
 	void	 GameKeyBind(int* var, char* bindName, char* name, EGameAction action);
 
-	void	 ChangeMovementTypePatch(EMovementType moveType);
-
-	static std::vector<CThing*> m_createdParticles;
-	static std::vector<CThing*> m_attachedParticles;
 	static bool m_bCustomCameraPos;
 	static bool ms_bFreeCam;
 	static bool ms_bDisableHUD;
@@ -125,10 +121,13 @@ public:
 	static bool ms_bChangeTime;
 	static bool ms_bDisableCreateParticle;
 	static float m_fTime;
+	static std::vector<CThing*> m_vCreatedParticles;
+	static std::vector<CThing*> m_vAttachedParticles;
+	static bool ms_bSlowmotion;
 };
 
 extern FableMenu* TheMenu;
-void HookMainGameComponent();
+void HookRegularUpdate();
 void HookWorldUpdate();
 bool InGame();
 
