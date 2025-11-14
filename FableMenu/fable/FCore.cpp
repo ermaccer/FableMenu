@@ -75,7 +75,7 @@ CWideString::CWideString()
 
 CDefString::CDefString()
 {
-	m_nTablePos = 0;
+	tablePos = 0;
 }
 
 CCharString* CDefString::GetString(CCharString* a2, int a3)

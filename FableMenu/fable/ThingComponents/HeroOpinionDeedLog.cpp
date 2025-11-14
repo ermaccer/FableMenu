@@ -1,0 +1,1 @@
+#include "HeroOpinionDeedLog.h"

@@ -1,6 +1,6 @@
 #pragma once
 #include "../FCore.h"
-#include "../ThingCreature/ScriptedControl.h"
+#include "../ThingComponents/ScriptedControl.h"
 
 class CActionPlayAnimation : public CTCScriptedControl::CActionBase {
 public:

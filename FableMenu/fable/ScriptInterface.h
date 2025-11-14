@@ -3,5 +3,5 @@
 
 class CGameScriptInterface {
 public:
-
+	
 };

@@ -107,7 +107,7 @@ void GUIImplementationDX9::ImGui_ReloadFont()
 	ImGuiStyle* style = &ImGui::GetStyle();
 	ImGuiIO io = ImGui::GetIO();
 	io.Fonts->Clear();
-	io.Fonts->AddFontFromMemoryCompressedTTF(Font_compressed_data, Font_compressed_size, fontSize * fMenuScale);
+	io.Fonts->AddFontFromMemoryCompressedTTF(Font_compressed_data, Font_compressed_size, fontSize * fMenuScale, NULL, io.Fonts->GetGlyphRangesCyrillic());
 	io.Fonts->Build();
 
 	ImGui_ImplDX9_InvalidateDeviceObjects();
@@ -218,6 +218,7 @@ void GUIImplementationDX9::GUI_Process()
 
 	Notifications->Draw();
 	TheMenu->Draw();
+	TheMenu->Process();
 }
 
 void GUIImplementationDX9::OnBeforeReset(LPDIRECT3DDEVICE9 pDevice, D3DPRESENT_PARAMETERS* pPresentationParameters)

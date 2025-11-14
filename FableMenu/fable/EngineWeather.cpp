@@ -3,11 +3,6 @@
 
 CEngineWeatherSettings* WeatherSettings;
 
-CEngineWeatherSettings::CEngineWeatherSettings()
-{
-
-}
-
 void CEngineWeatherSettings::SetRain(float power)
 {
 	CallMethod<0xB51EA0, CEngineWeatherSettings*, float>(this, power);
