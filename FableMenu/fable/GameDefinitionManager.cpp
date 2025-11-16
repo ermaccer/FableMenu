@@ -11,9 +11,9 @@ int CGameDefinitionManager::GetDefGlobalIndexFromName(CCharString* name)
 	return CallMethodAndReturn<int, 0x9AD410, CGameDefinitionManager*, CCharString*>(this, name);
 }
 
-CCharString* CGameDefinitionManager::GetDefNameFromGlobalIndex(CCharString* result, int def_index)
+CDefString* CGameDefinitionManager::GetDefNameFromGlobalIndex(CDefString* result, int def_index)
 {
-	return CallMethodAndReturn<CCharString*, 0x9ACCC0, CGameDefinitionManager*, CCharString*, int>(this, result, def_index);
+	return CallMethodAndReturn<CDefString*, 0x9ACCC0, CGameDefinitionManager*, CDefString*, int>(this, result, def_index);
 }
 
 int* CGameDefinitionManager::GetBrainDef(CCharString* def_name, int* result)

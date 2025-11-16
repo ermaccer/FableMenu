@@ -51,11 +51,11 @@ enum eMovementTypes {
 	TOTAL_MOVEMENT_TYPES
 };
 
-class CTCLook;
+class CTCRegionDisplay;
 class CThingSearchTools;
 class CWorldMap;
 class CPlayer;
-class CThingManager {};
+class CThingManager;
 
 class CThing {
 public:
@@ -97,3 +97,8 @@ int GetThingID(char* name);
 
 CThing* __fastcall CreateThing(int id, CVector* pos, int plr, int unk, int unk2, char* name);
 CThing* __fastcall CreateCreature(int id, CVector* pos, int plr);
+
+
+class CThingManager {
+
+};

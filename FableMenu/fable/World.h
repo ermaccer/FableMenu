@@ -18,7 +18,7 @@ public:
 	CBulletTimeManager* GetBulletTime();
 	CThingSearchTools* GetThingSearchTools();
 	CScriptInfoManager* GetScriptInfoManager();
-	CGameScriptInterface* GetGameScriptInterface();
+	CGameScriptInterface* GetScriptInterface();
 
 	static int& ms_curFrame;
 };

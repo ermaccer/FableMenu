@@ -211,9 +211,9 @@
     <ClCompile Include="fable\Player.cpp" />
     <ClCompile Include="fable\PlayerManager.cpp" />
     <ClCompile Include="fable\Pointer.cpp" />
-    <ClCompile Include="fable\ProgressDisplay.cpp" />
     <ClCompile Include="fable\QuestManager.cpp" />
     <ClCompile Include="fable\Script.cpp" />
+    <ClCompile Include="fable\ScriptInterface.cpp" />
     <ClCompile Include="fable\Thing.cpp" />
     <ClCompile Include="fable\ThingComponents\ActionUse.cpp" />
     <ClCompile Include="fable\ThingComponents\AIScratchPad.cpp" />

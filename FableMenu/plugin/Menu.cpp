@@ -76,7 +76,7 @@ void FableMenu::Draw()
 
     ImGui::Begin("FableMenu by ermaccer, beqwit & unveler", &m_bIsActive, ImGuiWindowFlags_MenuBar);
     {
-        ImGui::SetWindowSize({ 550, 450 }, ImGuiCond_Once);
+        ImGui::SetWindowSize({ 600, 500 }, ImGuiCond_Once);
         if (ImGui::BeginMenuBar())
         {
             if (ImGui::BeginMenu("Settings"))
@@ -255,12 +255,10 @@ void FableMenu::DrawHeroTab()
                     ImGui::Separator();
 
                     ImGui::InputInt("Renown", &stats->m_nRenownTotal);
-
                     if (ImGui::SliderInt("Renown Level", &stats->m_nRenownLevel, 1, stats->m_nRenownMaxLevel))
                     {
                         stats->CheckForNewExpressions();
                     }
-
                     ImGui::InputInt("Renown Points In Level", &stats->m_nRenownPointsInLevel);
                     ImGui::InputInt("Morality", &stats->m_nMorality);
 
@@ -549,8 +547,8 @@ void FableMenu::DrawHeroTab()
             {
                 DrawPhysicsCollapse(t);
                 bool isGravityEnabled = physics->IsGravityEnabled();
-                if (ImGui::Checkbox("Enable Gravity", &isGravityEnabled)) 
-                { physics->EnableGravity(isGravityEnabled); }
+                if (ImGui::Checkbox("Enable Gravity", &isGravityEnabled))
+                    physics->EnableGravity(isGravityEnabled);
                 ImGui::Checkbox("Enable Player Collision", &NGlobalConsole::EnableHeroThingCollision);
             }
         }
@@ -575,6 +573,7 @@ void FableMenu::DrawPlayerTab()
         std::list<enum EPlayerMode> playerModes = plr->m_lPlayerModes;
         int removeID = 0;
 
+        ImGui::BeginChild("#mlist", { 0, -ImGui::GetFrameHeightWithSpacing() - 200}, true);
         for (EPlayerMode mode : playerModes)
         {
             ImGui::LabelText("", szPlayerModeNames[mode]);
@@ -591,7 +590,7 @@ void FableMenu::DrawPlayerTab()
                 removeID++;
             }
         }
-
+		ImGui::EndChild();
         static int modeID = 0;
 
         if (ImGui::BeginCombo("Mode Name", szPlayerModeNames[modeID]))
@@ -629,7 +628,7 @@ void FableMenu::DrawPlayerTab()
     {
         DrawActionsCollapse(plr->GetCharacterThing());
     }
-    if (ImGui::CollapsingHeader("Character Swap"))
+    if (ImGui::CollapsingHeader("Character"))
     {
         static bool manualInput = false;
         static bool uninitPlayerCharacter = true;
@@ -670,7 +669,7 @@ void FableMenu::DrawPlayerTab()
             ImGui::InputText("Character Definition", selectedPlayerDefManually, sizeof(selectedPlayerDefManually));
         }
 
-        ImGui::Checkbox("Manual Input##mode", &manualInput);
+        ImGui::Checkbox("Manual Input##plrmode", &manualInput);
         ImGui::SameLine(); ShowWarnMarker("Defintion has to be compatible with the hero.");
         ImGui::SameLine();
         ImGui::Checkbox("Uninit Character", &uninitPlayerCharacter);
@@ -835,7 +834,7 @@ void FableMenu::DrawCreaturesTab()
         static std::list<CThing*> filteredCreatures;
         static std::vector<char> creatureDataWindowsOpen;
         static bool displayCreatureFilterOptions;
-        static int filteredType = 0;
+        static int filteredType = -1;
 
         std::list<CThing*> creatureList;
         filteredCreatures.clear();
@@ -871,22 +870,18 @@ void FableMenu::DrawCreaturesTab()
                         filteredCreatures.push_back(t);
                     break;
                 case 4:
-                    if (t->HasTC(TCI_GUARD))
-                        filteredCreatures.push_back(t);
-                    break;
-                case 5:
                     if (t->HasTC(TCI_BANDIT))
                         filteredCreatures.push_back(t);
                     break;
-                case 6:
-                    if (t->HasTC(TCI_VILLAGE_MEMBER))
+                case 5:
+                    if (t->HasTC(TCI_GUARD))
                         filteredCreatures.push_back(t);
                     break;
-                case 7:
+                case 6:
                     if (t->HasTC(TCI_SHOP_KEEPER))
                         filteredCreatures.push_back(t);
                     break;
-                case 8:
+                case 7:
                     if (t->HasTC(TCI_HERO))
                         filteredCreatures.push_back(t);
                     break;
@@ -909,13 +904,16 @@ void FableMenu::DrawCreaturesTab()
             ImGui::SameLine();
             ImGui::RadioButton("Elderly", &filteredType, 3);
             ImGui::SameLine();
-            ImGui::RadioButton("Guards", &filteredType, 4);
-            ImGui::RadioButton("Bandits", &filteredType, 5);
+            ImGui::RadioButton("Bandits", &filteredType, 4);
+            ImGui::RadioButton("Guards", &filteredType, 5);
             ImGui::SameLine();
-            ImGui::RadioButton("Traders", &filteredType, 7);
+            ImGui::RadioButton("Traders", &filteredType, 6);
             ImGui::SameLine();
-            ImGui::RadioButton("Heroes", &filteredType, 8);
+            ImGui::RadioButton("Heroes", &filteredType, 7);
         }
+
+        size_t creatureNumber = creatureList.size();
+        creatureDataWindowsOpen.resize(creatureNumber, false);
 
         if (ImGui::Button("Kill All"))
         {
@@ -924,9 +922,7 @@ void FableMenu::DrawCreaturesTab()
                 creature->Kill(true);
             }
         }
-
         ImGui::SameLine();
-
         if (ImGui::Button("Teleport All"))
         {
             for (auto creature : creatureList)
@@ -935,15 +931,11 @@ void FableMenu::DrawCreaturesTab()
                 physics->SetPosition(playerCharacter->GetPosition());
             }
         }
-        ImGui::Separator();
-
-        size_t creatureCount = creatureList.size();
-        creatureDataWindowsOpen.resize(creatureCount, false);
-
-        if (creatureCount != 0)
+        
+        if (creatureNumber != 0)
         {
             int i = 0;
-
+            ImGui::BeginChild("##regionCreatureList", { 0, 0 }, true);
             for (CThing* creature : creatureList)
             {
                 CDefString* defName = creature->GetDefName();
@@ -975,30 +967,27 @@ void FableMenu::DrawCreaturesTab()
                 }
                 i++;
             }
+            ImGui::EndChild();
         }
         else
         {
-            ImGui::TextColored(ImVec4(1.f, 0.3f, 0.3f, 1.f), "No creatures to display");
+			ImGui::Separator();
+            ImGui::TextColored({ 1.f, 0.3f, 0.3f, 1.f }, "No creatures to display");
         }
     }
-    if (ImGui::CollapsingHeader("Village"))
+    if (ImGui::CollapsingHeader("Village Data"))
     {
-        ImGui::Separator();
-        ImGui::Text("Village Members");
-        ImGui::Separator();
-
         CTCVillage* village = CMainGameComponent::Get()->GetPlayerManager()->GetMainPlayer()->GetPNearestTCVillage();
-
-        if (!village)
-        {
-            ImGui::TextColored(ImVec4(1.f, 0.3f, 0.3f, 1.f), "No Village");
-            return;
-        }
 
         static char villagerDef[256];
         static bool disableVillager = true;
         static bool toggleGuardVillagers = true;
-        static bool villageLimbo = true;
+
+        if (!village)
+        {
+            ImGui::TextColored({ 1.f, 0.3f, 0.3f, 1.f }, "No Village");
+            return;
+        }
 
         ImGui::InputText("Villager Definition", villagerDef, sizeof(villagerDef));
 
@@ -1010,20 +999,19 @@ void FableMenu::DrawCreaturesTab()
             disableVillager = !disableVillager;
         }
         ImGui::SameLine(); ShowHelpMarker("Disables creature by definition, works only for village member.");
+        ImGui::Separator();
+        if (ImGui::Checkbox("Enable Guards", &toggleGuardVillagers))
+        {
+            village->EnableGuards(toggleGuardVillagers);
+        }
         if (ImGui::Button("Clear Crimes", { -FLT_MIN, 0 }))
         {
             village->ClearCrimes();
         }
         if (ImGui::Button("Village Limbo", { -FLT_MIN, 0 }))
         {
-            village->SetVillageLimbo(villageLimbo);
+            village->SetVillageLimbo(1);
         }
-        ImGui::Separator();
-        if (ImGui::Checkbox("Enable Guards", &toggleGuardVillagers))
-        {
-            village->EnableGuards(toggleGuardVillagers);
-        }
-        ImGui::Text("Gay Villagers: %d", village->GetNumberOfGayVillagers());
     }
 }
 
@@ -1080,6 +1068,7 @@ void FableMenu::DrawObjectsTab()
                 shopsCount++;
         }
         ImGui::Text("Shops In Region: %d", shopsCount);
+        ImGui::Separator();
         if (ImGui::Button("Unlock All Doors"))
         {
             std::list<CThing*> allObjects = *searchTools->PeekTypeList(5);
@@ -1092,6 +1081,7 @@ void FableMenu::DrawObjectsTab()
                 }
             }
         }
+		ImGui::SameLine();
         if (ImGui::Button("Evict All Residents"))
         {
             for (auto building : regionBuildings)
@@ -1116,10 +1106,10 @@ void FableMenu::DrawObjectsTab()
                 }
             }
         }
-        ImGui::Separator();
         if (buildingCount != 0)
         {
             int i = 0;
+			ImGui::BeginChild("##regionBuildingList", { 0, 0 }, true);
             for (CThing* object : regionBuildings)
             {
                 CDefString* defName = object->GetDefName();
@@ -1148,6 +1138,7 @@ void FableMenu::DrawObjectsTab()
                 }
                 i++;
             }
+			ImGui::EndChild();
         }
     }
 
@@ -1187,11 +1178,12 @@ void FableMenu::DrawObjectsTab()
                 Patch<char>(0x773538, 0x74);
             }
         }
+		ImGui::Separator();
         ImGui::Text("Search");
         ImGui::PushItemWidth(-FLT_MIN);
         filter.Draw("##rolist");
         ImGui::PopItemWidth();
-        ImGui::BeginChild("##regionObjectsList", { 0, -ImGui::GetFrameHeightWithSpacing() + 200 }, true);
+        ImGui::BeginChild("##regionObjectsList", { 0, -ImGui::GetFrameHeightWithSpacing() + 400 }, true);
         if (objectCount != 0)
         {
             int i = 0;
@@ -1477,6 +1469,7 @@ void FableMenu::DrawObjectData(const char* windowTitle, CThing* object, bool* is
             ImGui::Separator();
             ImGui::Text("Object");
             ImGui::Separator();
+
             if (ImGui::Button("Show"))
             {
                 object->SetInLimbo(0);
@@ -1528,19 +1521,18 @@ void FableMenu::DrawObjectData(const char* windowTitle, CThing* object, bool* is
                 ImGui::Text("House Features");
                 ImGui::Separator();
                 bool isUsed = buyableHouse->isBuildingBeingUsed(0);
-                ImGui::Text("Occupied: %s", isUsed ? "Yes" : "No");
+                ImGui::Text("Is Occupied: %s", isUsed ? "Yes" : "No");
 
                 if (ImGui::Button("Remove Owner"))
                 {
                     buyableHouse->Evict();
                 }
                 ImGui::SameLine();
-
                 if (ImGui::Button("Set Rented"))
                 {
                     buyableHouse->SetRented(1);
                 }
-
+                ImGui::SameLine();
                 if (ImGui::Button("Set Owned By Player"))
                 {
                     CThing* playerCharacter = CMainGameComponent::Get()->GetPlayerManager()->GetMainPlayer()->GetCharacterThing();
@@ -1644,7 +1636,7 @@ void FableMenu::DrawCreatureData(const char* windowTitle, CThing* creature, bool
                 ImGui::SameLine();
                 ImGui::Text("Brain Name");
 
-                if (ImGui::Button("Set Brain"))
+                if (ImGui::Button("Set Brain", { -FLT_MIN, 0 }))
                 {
                     ImGui::Text("Brain");
                     ImGui::Separator();
@@ -1689,7 +1681,7 @@ void FableMenu::DrawCreatureData(const char* windowTitle, CThing* creature, bool
                 ImGui::SameLine();
                 ImGui::Text("Combat Name");
 
-                if (ImGui::Button("Set Combat"))
+                if (ImGui::Button("Set Combat", { -FLT_MIN, 0 }))
                 {
                     CGameDefinitionManager* defManager = CGameDefinitionManager::GetDefinitionManager();
                     CCharString combatName((char*)szAttackStyleNames[attackStyleID]);
@@ -1732,7 +1724,7 @@ void FableMenu::DrawCreatureData(const char* windowTitle, CThing* creature, bool
                     }
                     ImGui::SameLine();
                     ImGui::Text("Faction Name");
-                    if (ImGui::Button("Set Faction"))
+                    if (ImGui::Button("Set Faction", { -FLT_MIN, 0 }))
                     {
                         CCharString factionName((char*)szFactions[factionID]);
                         enemy->SetFaction(&factionName);
@@ -1766,12 +1758,12 @@ void FableMenu::DrawCreatureData(const char* windowTitle, CThing* creature, bool
                 {
                     modeManager->AddMode(creatureMode);
                 }
+				ImGui::SameLine();
                 if (ImGui::Button("Remove Mode"))
                 {
                     modeManager->RemoveMode(creatureMode);
                 }
-                ImGui::SameLine();
-                if (ImGui::Button("Reset Modes"))
+                if (ImGui::Button("Reset Modes", { -FLT_MIN, 0 }))
                 {
                     for (int n = 0; n < IM_ARRAYSIZE(szCreatureModeNames); n++)
                     {
@@ -1870,7 +1862,7 @@ void FableMenu::DrawCreatureData(const char* windowTitle, CThing* creature, bool
                         creature->SetCurrentAction((CTCBase*)genericBox);
                     }
                 }
-
+                ImGui::SameLine();
                 if (ImGui::Button("Remove Thing"))
                 {
                     if (selectedCarrySlot != 2)
@@ -1898,7 +1890,7 @@ void FableMenu::DrawCreatureData(const char* windowTitle, CThing* creature, bool
             {
                 CTCWife* wife = (CTCWife*)creature->GetTC(TCI_WIFE);
 
-                if (ImGui::Button("Set As Wife", { -FLT_MIN, 0 }))
+                if (ImGui::Button("Set As Marryable", { -FLT_MIN, 0 }))
                 {
                     if (!creature->HasTC(TCI_WIFE))
                     {
@@ -2105,7 +2097,7 @@ void FableMenu::DrawWorldTab()
         {
             ImGui::EndDisabled();
         }
-        if (ImGui::Button("Reload Region", { -FLT_MIN, 0 }))
+        if (ImGui::Button("Reload Current Region", { -FLT_MIN, 0 }))
         {
             CWorldMap* map = CThing::GetWorldMap();
             map->ReloadCurrentRegion();
@@ -2116,7 +2108,7 @@ void FableMenu::DrawWorldTab()
         ImGui::TextWrapped("Particle list is available in Help menu.");
         static CVector particlePosition = {};
         static char particleName[512];
-        static int attachType;
+        static int attachType = -1;
         static bool isTemporaryParticle;
         static bool attachParticleToCamera;
         static bool particleNameError;
@@ -2315,8 +2307,8 @@ void FableMenu::DrawQuestTab()
         ImGui::Checkbox("Scripts", &scriptQuests);
         ImGui::SameLine();
         ImGui::Checkbox("Localize Names", &localizedQuests);
-        ImGui::Separator();
 
+        ImGui::BeginChild("#qlist", { 0, -ImGui::GetFrameHeightWithSpacing() }, true);
         for (int i = 0; i < IM_ARRAYSIZE(szBuiltInQuests); i++)
         {
             CCharString quest_name((char*)szBuiltInQuests[i]);
@@ -2389,6 +2381,7 @@ void FableMenu::DrawQuestTab()
                 ImGui::PopID();
             }
         }
+		ImGui::EndChild();
 #ifdef _DEBUG
         if (activeQuests > 0)
         {
@@ -2477,8 +2470,11 @@ void FableMenu::DrawMiscTab()
         NGlobalConsole::ForcePrimitiveFadeDistance = (NGlobalConsole::PrimitiveFadeDistance > 0);
     }
     ImGui::InputFloat("Override Speed Multiplier", &NGlobalConsole::ConsoleOverrideMultiplier);
-    ImGui::Checkbox("Debug Stress Test", &NGlobalConsole::GCombatStressTestDebug);
 #ifdef _DEBUG
+    ImGui::Checkbox("Debug Stress Test", &NGlobalConsole::GCombatStressTestDebug);
+    ImGui::Separator();
+    ImGui::Text("Debug");
+    ImGui::Separator();
     if (TheCamera)
     {
         ImGui::Text("Camera: 0x%X", TheCamera);
@@ -2646,7 +2642,7 @@ void FableMenu::DrawCreatureList()
     filter.Draw("##wclist");
     ImGui::PopItemWidth();
 
-    ImGui::BeginChild("##list", { 0, -ImGui::GetFrameHeightWithSpacing() }, true);
+    ImGui::BeginChild("##clist", { 0, -ImGui::GetFrameHeightWithSpacing() }, true);
 
     static int selectID = 0;
     for (int n = 0; n < IM_ARRAYSIZE(szCreatureList); n++)
