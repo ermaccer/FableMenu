@@ -19,3 +19,4 @@
 #include "fable/ProgressDisplay.h"
 #include "fable/UserProfileManager.h"
 #include "fable/GameInputProcess.h"
+#include "fable/WorldMap.h"

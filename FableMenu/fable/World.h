@@ -13,12 +13,12 @@ public:
 	void SetMinimap(bool status);
 	void TeleportHeroToHSP(CCharString* hsp_name);
 	void AutoSave(int ignore_being_between_start_and_finish_screens);
-	CPlayer* GetPlayer(int id);
 
+	CPlayer* GetPlayer(int id);
 	CBulletTimeManager* GetBulletTime();
 	CThingSearchTools* GetThingSearchTools();
 	CScriptInfoManager* GetScriptInfoManager();
-	CGameScriptInterface* GetGameScriptInterface();
+	CGameScriptInterface* GetScriptInterface();
 
 	static int& ms_curFrame;
 };

@@ -60,3 +60,8 @@ void CPlayer::EnableInput()
 {
 	RemoveMode(PLAYER_MODE_FREEZE_CONTROLS);
 }
+
+CTCVillage* CPlayer::GetPNearestTCVillage()
+{
+	return CallMethodAndReturn<CTCVillage*, 0x488620, CPlayer*>(this);
+}
