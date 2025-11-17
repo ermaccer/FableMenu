@@ -218,7 +218,6 @@ void GUIImplementationDX9::GUI_Process()
 
 	Notifications->Draw();
 	TheMenu->Draw();
-	TheMenu->Process();
 }
 
 void GUIImplementationDX9::OnBeforeReset(LPDIRECT3DDEVICE9 pDevice, D3DPRESENT_PARAMETERS* pPresentationParameters)

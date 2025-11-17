@@ -28,6 +28,7 @@ void PluginProcess()
 	{
 		eMouse::UpdateMouse();
 		Notifications->Update();
+		TheMenu->Process();
 		Sleep(1);
 	}
 }
