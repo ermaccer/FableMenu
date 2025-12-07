@@ -1,9 +1,9 @@
 #pragma once
 #include <math.h>
 #include <list>
+#include <vector>
 
-class CBaseClass
-{
+class CBaseClass {
 
 };
 
@@ -101,25 +101,17 @@ struct RHSet
 class CRGBAColour
 {
 public:
-	unsigned char B;
-	unsigned char G;
-	unsigned char R;
-	unsigned char A;
-
-	CRGBAColour(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+	unsigned char B, G, R, A;
 	CRGBAColour(void) {};
+	CRGBAColour(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 };
 
 class CRGBAFloat
 {
 public:
-	float R;
-	float G;
-	float B;
-	float A;
-
-	CRGBAFloat(float r, float g, float b, float a);
+	float R, G, B, A;
 	CRGBAFloat(void) {};
+	CRGBAFloat(float r, float g, float b, float a);
 
 	CRGBAColour GetUINTColor();
 };
@@ -147,7 +139,7 @@ public:
 
 class CDefString {
 public:
-	int m_nTablePos;
+	int tablePos;
 	CDefString();
 	static CCharString* GetString(CCharString* a2, int a3);
 };

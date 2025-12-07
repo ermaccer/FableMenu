@@ -25,9 +25,6 @@
     <Filter Include="Header Files\minhook">
       <UniqueIdentifier>{65c64884-a8ab-4f66-b12c-b1e2bc50cca4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\fable\ThingCreature">
-      <UniqueIdentifier>{0f8a8122-a0eb-4986-9aa0-27107e7b2d1b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\fable\CreatureActions">
       <UniqueIdentifier>{7fcfd833-5b87-4042-afd5-1bd597e2b0e9}</UniqueIdentifier>
     </Filter>
@@ -40,6 +37,9 @@
     <Filter Include="Header Files\utils">
       <UniqueIdentifier>{9fd52d41-8ec5-4d9c-a10f-45039bebff3d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\fable\ThingComponents">
+      <UniqueIdentifier>{fa94bbca-ee7f-4ba1-b017-1d9de9081604}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -51,53 +51,17 @@
     <ClInclude Include="Fable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="fable\MainGameComponent.h">
-      <Filter>Header Files\fable</Filter>
-    </ClInclude>
     <ClInclude Include="fable\World.h">
-      <Filter>Header Files\fable</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\PlayerManager.h">
-      <Filter>Header Files\fable</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\Player.h">
       <Filter>Header Files\fable</Filter>
     </ClInclude>
     <ClInclude Include="core.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="fable\Thing.h">
-      <Filter>Header Files\fable</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\GameCamera.h">
-      <Filter>Header Files\fable</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\HUD.h">
-      <Filter>Header Files\fable</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\InputProcess.h">
-      <Filter>Header Files\fable</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\BulletTime.h">
-      <Filter>Header Files\fable</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="fable\EngineWeather.h">
-      <Filter>Header Files\fable</Filter>
-    </ClInclude>
     <ClInclude Include="helper\eKeyboardMan.h">
       <Filter>Header Files\helper</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\Creature.h">
-      <Filter>Header Files\fable</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\Pointer.h">
-      <Filter>Header Files\fable</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\Matrix.h">
-      <Filter>Header Files\fable</Filter>
     </ClInclude>
     <ClInclude Include="plugin\FreeCamera.h">
       <Filter>Header Files\plugin</Filter>
@@ -126,18 +90,6 @@
     <ClInclude Include="minhook\src\hde\table64.h">
       <Filter>Header Files\minhook</Filter>
     </ClInclude>
-    <ClInclude Include="fable\Script.h">
-      <Filter>Header Files\fable</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\QuestManager.h">
-      <Filter>Header Files\fable</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ScriptInterface.h">
-      <Filter>Header Files\fable</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\FGlobals.h">
-      <Filter>Header Files\fable</Filter>
-    </ClInclude>
     <ClInclude Include="fable\CreatureActions\ActionPlayAnimation.h">
       <Filter>Header Files\fable\CreatureActions</Filter>
     </ClInclude>
@@ -147,130 +99,10 @@
     <ClInclude Include="fable\CreatureActions\CreatureAction_PickUpJugToFill.h">
       <Filter>Header Files\fable\CreatureActions</Filter>
     </ClInclude>
-    <ClInclude Include="fable\ThingCreature\ActionUse.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\AIScratchPad.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\Base.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\Carrying.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\Combat.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\CreatureAI.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\Enemy.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\Followed.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\GraphicAppearance.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\Hero.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\HeroMorph.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\HeroOpinionLog.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\HeroStats.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\InventoryClothing.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\ModeManager.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\PhysicsBase.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\QuestCard.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\RegionFollower.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\ScriptedControl.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\VillageMember.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\Wife.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\ParticleEmitter.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\Village.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\FCore.h">
-      <Filter>Header Files\fable</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingSearchTools.h">
-      <Filter>Header Files\fable</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\GameDefinitionManager.h">
-      <Filter>Header Files\fable</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\OwnedEntity.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\ThingOwner.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\BuyableHouse.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ProgressDisplay.h">
-      <Filter>Header Files\fable</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\Door.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
     <ClInclude Include="fable\CreatureActions\CreatureAction_DropWeapon.h">
       <Filter>Header Files\fable\CreatureActions</Filter>
     </ClInclude>
-    <ClInclude Include="fable\ThingCreature\Haste.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\InventoryItem.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\Light.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\InventoryAbilities.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\UserProfileManager.h">
-      <Filter>Header Files\fable</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\GameInputProcess.h">
-      <Filter>Header Files\fable</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\Weapon.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\ObjectAugmentations.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\ThingCreature\HeroReceiveItems.h">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClInclude>
-    <ClInclude Include="fable\CreatureActions\CCreatureAction_AddRealObjectToInventory.h">
+    <ClInclude Include="fable\CreatureActions\CreatureAction_AddRealObjectToInventory.h">
       <Filter>Header Files\fable\CreatureActions</Filter>
     </ClInclude>
     <ClInclude Include="gui\dx9hook.h">
@@ -324,6 +156,186 @@
     <ClInclude Include="utils\MemoryMgr.h">
       <Filter>Header Files\utils</Filter>
     </ClInclude>
+    <ClInclude Include="fable\UserProfileManager.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\BulletTime.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\Creature.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\EngineWeather.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\FCore.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\FGlobals.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\GameCamera.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\GameDefinitionManager.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\GameInputProcess.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\HUD.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\InputProcess.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\MainGameComponent.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\Matrix.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\Player.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\PlayerManager.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\Pointer.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ProgressDisplay.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\QuestManager.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\Script.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ScriptInterface.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\Thing.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingSearchTools.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\RegionFollower.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\ScriptedControl.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\ThingOwner.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\Village.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\VillageMember.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\Weapon.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\Wife.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\ActionUse.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\AIScratchPad.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\Base.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\BuyableHouse.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\Carrying.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\Combat.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\CreatureAI.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\Door.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\Enemy.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\Followed.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\GraphicAppearance.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\Haste.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\Hero.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\HeroMorph.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\HeroOpinionDeedLog.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\HeroReceiveItems.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\HeroStats.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\InventoryAbilities.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\InventoryBase.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\InventoryClothing.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\InventoryItem.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\Light.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\CreatureModeManager.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\ObjectAugmentations.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\OwnedEntity.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\ParticleEmitter.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\PhysicsBase.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\QuestCard.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\WorldMap.h">
+      <Filter>Header Files\fable</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\Look.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="fable\ThingComponents\Chest.h">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -332,44 +344,11 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="fable\MainGameComponent.cpp">
-      <Filter>Header Files\fable</Filter>
-    </ClCompile>
     <ClCompile Include="fable\World.cpp">
-      <Filter>Header Files\fable</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\PlayerManager.cpp">
-      <Filter>Header Files\fable</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\Player.cpp">
-      <Filter>Header Files\fable</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\Thing.cpp">
-      <Filter>Header Files\fable</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\GameCamera.cpp">
-      <Filter>Header Files\fable</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\HUD.cpp">
-      <Filter>Header Files\fable</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\InputProcess.cpp">
-      <Filter>Header Files\fable</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\EngineWeather.cpp">
       <Filter>Header Files\fable</Filter>
     </ClCompile>
     <ClCompile Include="helper\eKeyboardMan.cpp">
       <Filter>Header Files\helper</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\Creature.cpp">
-      <Filter>Header Files\fable</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\Matrix.cpp">
-      <Filter>Header Files\fable</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\Pointer.cpp">
-      <Filter>Header Files\fable</Filter>
     </ClCompile>
     <ClCompile Include="plugin\FreeCamera.cpp">
       <Filter>Header Files\plugin</Filter>
@@ -392,15 +371,6 @@
     <ClCompile Include="minhook\src\hde\hde64.c">
       <Filter>Header Files\minhook</Filter>
     </ClCompile>
-    <ClCompile Include="fable\Script.cpp">
-      <Filter>Header Files\fable</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\QuestManager.cpp">
-      <Filter>Header Files\fable</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\FGlobals.cpp">
-      <Filter>Header Files\fable</Filter>
-    </ClCompile>
     <ClCompile Include="fable\CreatureActions\ActionPlayAnimation.cpp">
       <Filter>Header Files\fable\CreatureActions</Filter>
     </ClCompile>
@@ -410,130 +380,10 @@
     <ClCompile Include="fable\CreatureActions\CreatureAction_PickUpJugToFill.cpp">
       <Filter>Header Files\fable\CreatureActions</Filter>
     </ClCompile>
-    <ClCompile Include="fable\ThingCreature\ActionUse.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\AIScratchPad.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\Base.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\Carrying.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\Combat.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\CreatureAI.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\Enemy.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\Followed.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\GraphicAppearance.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\Hero.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\HeroMorph.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\HeroOpinionLog.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\HeroStats.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\InventoryClothing.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\ModeManager.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\PhysicsBase.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\QuestCard.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\RegionFollower.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\ScriptedControl.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\VillageMember.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\Wife.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\ParticleEmitter.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\Village.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\FCore.cpp">
-      <Filter>Header Files\fable</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingSearchTools.cpp">
-      <Filter>Header Files\fable</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\GameDefinitionManager.cpp">
-      <Filter>Header Files\fable</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\OwnedEntity.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\ThingOwner.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\BuyableHouse.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\Haste.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ProgressDisplay.cpp">
-      <Filter>Header Files\fable</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\Door.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
     <ClCompile Include="fable\CreatureActions\CreatureAction_DropWeapon.cpp">
       <Filter>Header Files\fable\CreatureActions</Filter>
     </ClCompile>
-    <ClCompile Include="fable\ThingCreature\InventoryItem.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\Light.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\InventoryAbilities.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\UserProfileManager.cpp">
-      <Filter>Header Files\fable</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\GameInputProcess.cpp">
-      <Filter>Header Files\fable</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\Weapon.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\ObjectAugmentations.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\ThingCreature\HeroReceiveItems.cpp">
-      <Filter>Header Files\fable\ThingCreature</Filter>
-    </ClCompile>
-    <ClCompile Include="fable\CreatureActions\CCreatureAction_AddRealObjectToInventory.cpp">
+    <ClCompile Include="fable\CreatureActions\CreatureAction_AddRealObjectToInventory.cpp">
       <Filter>Header Files\fable\CreatureActions</Filter>
     </ClCompile>
     <ClCompile Include="gui\dx9hook.cpp">
@@ -580,6 +430,180 @@
     </ClCompile>
     <ClCompile Include="utils\IniReader.cpp">
       <Filter>Header Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\Creature.cpp">
+      <Filter>Header Files\fable</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\EngineWeather.cpp">
+      <Filter>Header Files\fable</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\FCore.cpp">
+      <Filter>Header Files\fable</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\FGlobals.cpp">
+      <Filter>Header Files\fable</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\GameCamera.cpp">
+      <Filter>Header Files\fable</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\GameDefinitionManager.cpp">
+      <Filter>Header Files\fable</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\GameInputProcess.cpp">
+      <Filter>Header Files\fable</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\HUD.cpp">
+      <Filter>Header Files\fable</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\InputProcess.cpp">
+      <Filter>Header Files\fable</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\MainGameComponent.cpp">
+      <Filter>Header Files\fable</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\Matrix.cpp">
+      <Filter>Header Files\fable</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\Player.cpp">
+      <Filter>Header Files\fable</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\PlayerManager.cpp">
+      <Filter>Header Files\fable</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\Pointer.cpp">
+      <Filter>Header Files\fable</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\QuestManager.cpp">
+      <Filter>Header Files\fable</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\Script.cpp">
+      <Filter>Header Files\fable</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\Thing.cpp">
+      <Filter>Header Files\fable</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingSearchTools.cpp">
+      <Filter>Header Files\fable</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\UserProfileManager.cpp">
+      <Filter>Header Files\fable</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\RegionFollower.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\ScriptedControl.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\ThingOwner.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\Village.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\VillageMember.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\Weapon.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\Wife.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\ActionUse.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\AIScratchPad.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\Base.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\BuyableHouse.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\Carrying.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\Combat.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\CreatureAI.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\Door.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\Enemy.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\Followed.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\GraphicAppearance.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\Haste.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\Hero.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\HeroMorph.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\HeroOpinionDeedLog.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\HeroReceiveItems.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\HeroStats.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\InventoryAbilities.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\InventoryBase.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\InventoryClothing.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\InventoryItem.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\Light.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\CreatureModeManager.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\ObjectAugmentations.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\OwnedEntity.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\ParticleEmitter.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\PhysicsBase.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\QuestCard.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\WorldMap.cpp">
+      <Filter>Header Files\fable</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\Look.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ThingComponents\Chest.cpp">
+      <Filter>Header Files\fable\ThingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="fable\ScriptInterface.cpp">
+      <Filter>Header Files\fable</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

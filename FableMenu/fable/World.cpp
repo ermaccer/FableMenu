@@ -43,7 +43,7 @@ CScriptInfoManager* CWorld::GetScriptInfoManager()
 	return *(CScriptInfoManager**)((int)this + 88);
 }
 
-CGameScriptInterface* CWorld::GetGameScriptInterface()
+CGameScriptInterface* CWorld::GetScriptInterface()
 {
 	return *(CGameScriptInterface**)((int)this + 56);
 }

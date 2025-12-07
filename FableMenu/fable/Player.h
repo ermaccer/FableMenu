@@ -65,7 +65,7 @@ public:
     bool m_bShowWorldThing;
     bool m_bZTargeting;
     char ___pad[0x5];
-    std::list<enum EPlayerMode> m_listPlayerModes;
+    std::list<enum EPlayerMode> m_lPlayerModes;
 
     void AddMode(EPlayerMode mode, bool set_mode_as_only_mode);
     bool HasMode(EPlayerMode mode);
@@ -76,6 +76,7 @@ public:
     void ToggleAggressiveMode();
 
 	CThing* GetCharacterThing();
+    CTCVillage* GetPNearestTCVillage();
 
     void InitCharacterAs(CCharString* def_name);
     void SetControlledCreature(CThing* creature);
